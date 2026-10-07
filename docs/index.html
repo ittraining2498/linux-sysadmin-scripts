@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sysadmin Scripts</title>
+<meta name="description" content="Safe, production-minded scripts for Linux, Windows Server and Proxmox administrators.">
+<style>
+  :root{
+    --bg:#0b1929; --panel:#11243a; --panel-2:#0e1d30; --line:#1e3755;
+    --text:#e6edf5; --muted:#93a7bd; --accent:#4da3d4; --gold:#f0a030;
+    --ok:#3fb950; --warn:#d29922; --code:#0a1624;
+    --radius:14px;
+  }
+  @media (prefers-color-scheme: light){
+    :root:not([data-theme="dark"]){
+      --bg:#f6f8fb; --panel:#ffffff; --panel-2:#f0f4f9; --line:#dde5ee;
+      --text:#17222e; --muted:#5a6b7e; --accent:#1b6ea8; --gold:#b9761a;
+      --code:#eef3f8;
+    }
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:var(--bg); color:var(--text);
+    font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans Thai",sans-serif;
+  }
+  .wrap{max-width:1040px; margin:0 auto; padding:0 16px}
+  header{padding:56px 0 32px; border-bottom:1px solid var(--line)}
+  h1{margin:0 0 10px; font-size:clamp(28px,5vw,40px); letter-spacing:-.02em}
+  h1 .dot{color:var(--gold)}
+  .sub{color:var(--muted); max-width:62ch; margin:0 0 20px}
+  .pills{display:flex; flex-wrap:wrap; gap:8px}
+  .pill{
+    border:1px solid var(--line); background:var(--panel-2); color:var(--muted);
+    padding:7px 14px; border-radius:999px; font-size:14px; cursor:pointer;
+    transition:.15s;
+  }
+  .pill:hover{border-color:var(--accent); color:var(--text)}
+  .pill[aria-pressed="true"]{background:var(--accent); border-color:var(--accent); color:#fff}
+  main{padding:28px 0 8px; display:grid; gap:18px}
+  .card{
+    background:var(--panel); border:1px solid var(--line); border-radius:var(--radius);
+    padding:22px; transition:.15s;
+  }
+  .card:hover{border-color:var(--accent)}
+  .card-top{display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin-bottom:8px}
+  .card h2{margin:0; font-size:19px; font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+  .badge{
+    font-size:12px; padding:3px 10px; border-radius:999px;
+    background:rgba(77,163,212,.14); color:var(--accent); border:1px solid var(--line);
+  }
+  .badge.danger{background:rgba(240,160,48,.14); color:var(--gold)}
+  .desc{color:var(--muted); margin:0 0 14px}
+  ul.feat{margin:0 0 16px; padding-left:18px; color:var(--muted); font-size:15px}
+  ul.feat li{margin:3px 0}
+  .runbox{position:relative; margin-bottom:10px}
+  pre{
+    margin:0; background:var(--code); border:1px solid var(--line); border-radius:10px;
+    padding:14px 92px 14px 14px; overflow-x:auto;
+    font:13.5px/1.7 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  }
+  pre .c{color:var(--muted)}
+  .copy{
+    position:absolute; top:10px; right:10px;
+    background:var(--panel-2); color:var(--muted); border:1px solid var(--line);
+    border-radius:8px; padding:5px 12px; font-size:12.5px; cursor:pointer; transition:.15s;
+  }
+  .copy:hover{color:var(--text); border-color:var(--accent)}
+  .copy.done{color:var(--ok); border-color:var(--ok)}
+  .links{display:flex; gap:16px; flex-wrap:wrap; font-size:14px; margin-top:14px}
+  .links a{color:var(--accent); text-decoration:none}
+  .links a:hover{text-decoration:underline}
+  .note{
+    border-left:3px solid var(--gold); background:var(--panel-2);
+    padding:12px 14px; border-radius:0 8px 8px 0; font-size:14.5px; color:var(--muted);
+    margin:0 0 16px;
+  }
+  footer{
+    margin-top:36px; padding:28px 0 56px; border-top:1px solid var(--line);
+    color:var(--muted); font-size:14.5px;
+  }
+  footer a{color:var(--accent); text-decoration:none}
+  footer a:hover{text-decoration:underline}
+  .hidden{display:none}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <h1>Sysadmin Scripts<span class="dot">.</span></h1>
+    <p class="sub">
+      Scripts that are actually run on production servers — not demos.
+      Every destructive tool is <strong>dry-run by default</strong>, protects system
+      accounts, and backs up before it removes anything.
+    </p>
+    <div class="pills" id="filters">
+      <button class="pill" data-f="all" aria-pressed="true">All</button>
+      <button class="pill" data-f="linux" aria-pressed="false">Linux</button>
+      <button class="pill" data-f="proxmox" aria-pressed="false">Proxmox</button>
+    </div>
+  </header>
+
+  <main id="cards">
+
+    <article class="card" data-p="linux">
+      <div class="card-top">
+        <h2>bulk-delete-users.sh</h2>
+        <span class="badge">Linux</span>
+        <span class="badge danger">destructive</span>
+      </div>
+      <p class="desc">Remove many user accounts in a single run — built for offboarding day.</p>
+      <ul class="feat">
+        <li>Dry-run unless you pass <code>--apply</code></li>
+        <li>Refuses <code>root</code> and every account below UID 1000</li>
+        <li>Archives each home directory to <code>/var/backups/</code> before deleting</li>
+        <li>Kills the user's running processes so <code>userdel</code> cannot fail halfway</li>
+        <li>Writes a timestamped log of every action</li>
+      </ul>
+      <div class="runbox">
+        <pre><span class="c"># preview only — nothing is changed</span>
+sudo ./linux/bulk-delete-users.sh alice bob carol
+
+<span class="c"># delete for real, removing home directories</span>
+sudo ./linux/bulk-delete-users.sh -f leavers.txt --apply --remove-home</pre>
+        <button class="copy">Copy</button>
+      </div>
+      <div class="links">
+        <a href="https://github.com/ittraining2498/linux-sysadmin-scripts/blob/main/linux/bulk-delete-users.sh">View source</a>
+        <a href="https://raw.githubusercontent.com/ittraining2498/linux-sysadmin-scripts/main/linux/bulk-delete-users.sh">Download raw</a>
+      </div>
+    </article>
+
+    <article class="card" data-p="linux">
+      <div class="card-top">
+        <h2>bulk-create-users.sh</h2>
+        <span class="badge">Linux</span>
+      </div>
+      <p class="desc">Create a whole intake of users from one CSV file, with generated passwords.</p>
+      <ul class="feat">
+        <li>Reads <code>username,full name,groups</code> from CSV — header and <code>#</code> comments ignored</li>
+        <li>Generates a 16-character password with no ambiguous characters (no 0/O/1/l/I)</li>
+        <li>Forces a password change at first login</li>
+        <li>Skips accounts that already exist, so re-running is safe</li>
+        <li>Writes credentials to a <code>chmod 600</code> file for secure hand-off</li>
+      </ul>
+      <div class="runbox">
+        <pre><span class="c"># preview what would be created</span>
+sudo ./linux/bulk-create-users.sh -f staff.csv
+
+<span class="c"># create the accounts</span>
+sudo ./linux/bulk-create-users.sh -f staff.csv --apply</pre>
+        <button class="copy">Copy</button>
+      </div>
+      <div class="links">
+        <a href="https://github.com/ittraining2498/linux-sysadmin-scripts/blob/main/linux/bulk-create-users.sh">View source</a>
+        <a href="https://raw.githubusercontent.com/ittraining2498/linux-sysadmin-scripts/main/linux/bulk-create-users.sh">Download raw</a>
+      </div>
+    </article>
+
+    <article class="card" data-p="linux">
+      <div class="card-top">
+        <h2>check-disk.sh</h2>
+        <span class="badge">Linux</span>
+      </div>
+      <p class="desc">Tell me which filesystems are about to fill up — and nothing else.</p>
+      <ul class="feat">
+        <li>Exits <code>1</code> when any filesystem is over the threshold, so cron and monitoring can use it</li>
+        <li>Optional inode check — the failure mode people forget until it bites</li>
+        <li><code>--quiet</code> prints nothing while everything is healthy</li>
+        <li>Skips pseudo filesystems by default; override with <code>--exclude</code></li>
+      </ul>
+      <div class="runbox">
+        <pre><span class="c"># warn at 90% and include inode usage</span>
+./linux/check-disk.sh -w 90 --inodes
+
+<span class="c"># in cron: mail only when there is a problem</span>
+./linux/check-disk.sh -w 85 -q</pre>
+        <button class="copy">Copy</button>
+      </div>
+      <div class="links">
+        <a href="https://github.com/ittraining2498/linux-sysadmin-scripts/blob/main/linux/check-disk.sh">View source</a>
+        <a href="https://raw.githubusercontent.com/ittraining2498/linux-sysadmin-scripts/main/linux/check-disk.sh">Download raw</a>
+      </div>
+    </article>
+
+    <article class="card" data-p="proxmox">
+      <div class="card-top">
+        <h2>cluster-health.sh</h2>
+        <span class="badge">Proxmox VE</span>
+      </div>
+      <p class="desc">A single page telling you whether this node — or the whole cluster — is in good shape.</p>
+      <ul class="feat">
+        <li>Quorum state and the list of cluster nodes</li>
+        <li><code>pve-cluster</code>, <code>pvedaemon</code>, <code>pveproxy</code>, <code>pvestatd</code> service status</li>
+        <li>Every storage backend: active or not, and how full</li>
+        <li>Running versus total VMs and containers</li>
+        <li>Exits <code>1</code> when anything needs attention</li>
+      </ul>
+      <div class="runbox">
+        <pre><span class="c"># full report</span>
+./proxmox/cluster-health.sh
+
+<span class="c"># only show problems, warn at 90% storage</span>
+./proxmox/cluster-health.sh -w 90 -q</pre>
+        <button class="copy">Copy</button>
+      </div>
+      <div class="links">
+        <a href="https://github.com/ittraining2498/linux-sysadmin-scripts/blob/main/proxmox/cluster-health.sh">View source</a>
+        <a href="https://raw.githubusercontent.com/ittraining2498/linux-sysadmin-scripts/main/proxmox/cluster-health.sh">Download raw</a>
+      </div>
+    </article>
+
+  </main>
+
+  <section style="margin-top:28px">
+    <p class="note">
+      <strong>Before production:</strong> read the script, then run it in a lab first.
+      These tools are provided under the MIT licence, as is and without warranty.
+    </p>
+    <div class="runbox">
+      <pre><span class="c"># get everything</span>
+git clone https://github.com/ittraining2498/linux-sysadmin-scripts.git
+cd linux-sysadmin-scripts
+chmod +x linux/*.sh proxmox/*.sh</pre>
+      <button class="copy">Copy</button>
+    </div>
+  </section>
+
+  <footer>
+    <p>
+      Maintained by <strong>IT Training Company Limited</strong> — server, DevOps and
+      cyber-security training in Thailand.
+    </p>
+    <p>
+      <a href="https://www.ittraining.co.th">ittraining.co.th</a> ·
+      <a href="https://github.com/ittraining2498/linux-sysadmin-scripts">GitHub repository</a> ·
+      LINE <strong>@linux</strong>
+    </p>
+    <p style="margin-bottom:0">
+      Found a bug or want a script for another distribution?
+      <a href="https://github.com/ittraining2498/linux-sysadmin-scripts/issues">Open an issue</a> —
+      pull requests are welcome.
+    </p>
+  </footer>
+</div>
+
+<script>
+  // ---- platform filter ----
+  const filters = document.getElementById('filters');
+  const cards = [...document.querySelectorAll('.card')];
+  filters.addEventListener('click', e => {
+    const btn = e.target.closest('.pill');
+    if (!btn) return;
+    [...filters.children].forEach(b => b.setAttribute('aria-pressed', String(b === btn)));
+    const want = btn.dataset.f;
+    cards.forEach(c => c.classList.toggle('hidden', want !== 'all' && c.dataset.p !== want));
+  });
+
+  // ---- copy buttons ----
+  document.querySelectorAll('.copy').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const pre = btn.parentElement.querySelector('pre');
+      const text = [...pre.childNodes]
+        .map(n => n.nodeType === 1 && n.classList.contains('c') ? '' : n.textContent)
+        .join('')
+        .split('\n').map(l => l.trim()).filter(Boolean).join('\n');
+      try {
+        await navigator.clipboard.writeText(text);
+      } catch (err) {
+        const ta = document.createElement('textarea');
+        ta.value = text; document.body.appendChild(ta); ta.select();
+        document.execCommand('copy'); ta.remove();
+      }
+      btn.textContent = 'Copied'; btn.classList.add('done');
+      setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('done'); }, 1600);
+    });
+  });
+</script>
+</body>
+</html>
