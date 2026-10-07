@@ -74,7 +74,7 @@ done
 
 # ---------- storage ----------
 head2 "Storage"
-while read -r name type status total used avail pct; do
+while read -r name type status total used _ pct; do
     [[ "$name" == "Name" || -z "$name" ]] && continue
     if [[ "$status" != "active" ]]; then
         warn "storage '$name' ($type) is $status"
@@ -92,7 +92,7 @@ done < <(pvesm status 2>/dev/null)
 
 # ---------- local disks ----------
 head2 "Local filesystems"
-while read -r fs size used avail pct mount; do
+while read -r _ size used _ pct mount; do
     [[ "$mount" =~ ^/(dev|proc|sys|run) ]] && continue
     pct_num="${pct%\%}"
     if (( pct_num >= WARN )); then
