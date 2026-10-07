@@ -45,7 +45,7 @@ problems=0
 report=""
 
 # ---------- block usage ----------
-while read -r fs size used avail pct mount; do
+while read -r fs size used _ pct mount; do
     [[ "$mount" =~ $EXCLUDE ]] && continue
     pct_num="${pct%\%}"
     if (( pct_num >= WARN )); then
@@ -57,7 +57,7 @@ done < <(df -hP -x tmpfs -x devtmpfs -x squashfs 2>/dev/null | tail -n +2)
 
 # ---------- inode usage ----------
 if $CHECK_INODES; then
-    while read -r fs inodes iused ifree ipct mount; do
+    while read -r fs inodes iused _ ipct mount; do
         [[ "$mount" =~ $EXCLUDE ]] && continue
         [[ "$ipct" == "-" ]] && continue
         ipct_num="${ipct%\%}"
