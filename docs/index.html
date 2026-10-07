@@ -1,10 +1,19 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Sysadmin Script Library · IT Training</title><meta name="description" content="Find the right Linux and Proxmox administration script. Preview commands, review requirements, and copy the full source from IT Training's open-source library."><style>
-:root{color-scheme:dark;--bg:#09121c;--panel:#101e2b;--line:#27394a;--text:#edf3f7;--muted:#a7b7c5;--accent:#7de1ca;--gold:#edbd77}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}button,input,select{font:inherit}button,a,input,select,summary{touch-action:manipulation}a{color:inherit;text-underline-offset:4px}button{cursor:pointer}button:disabled{cursor:wait;opacity:.5}:focus-visible{outline:3px solid var(--accent);outline-offset:5px}.wrap{max-width:1200px;margin:auto;padding:0 32px}.nav{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:25px 0;border-bottom:1px solid var(--line)}.brand{text-decoration:none;display:flex;align-items:center;gap:12px;font-size:13px;font-weight:750;letter-spacing:1.5px}.brandmark{display:grid;place-items:center;width:38px;height:38px;border:1px solid var(--accent);border-radius:11px;color:var(--accent);font-size:20px}.navlinks{display:flex;gap:24px;align-items:center;font-size:13px;color:var(--muted)}.navlinks a{text-decoration:none}.navlinks a:hover{color:var(--accent)}.hero{display:grid;grid-template-columns:1.25fr 1fr;gap:60px;align-items:center;padding:75px 0 65px}.eyebrow{font-size:11px;font-weight:700;letter-spacing:2.5px;color:var(--accent);text-transform:uppercase}.hero h1{font-size:clamp(40px,5.7vw,68px);line-height:1.08;letter-spacing:-3px;margin:20px 0 24px;font-weight:650}.hero h1 span{color:var(--accent)}.intro{max-width:48ch;color:var(--muted);font-size:17px}.hero-actions{display:flex;gap:20px;flex-wrap:wrap;align-items:center;margin-top:30px}.primary{display:inline-block;background:var(--accent);color:#0b2221;padding:12px 21px;border-radius:9px;text-decoration:none;font-size:14px;font-weight:750}.secondary{font-size:14px;color:var(--muted)}.terminal{border:1px solid #3b5266;border-radius:17px;background:linear-gradient(135deg,#15293a,#0c1824);box-shadow:0 25px 70px #0005;overflow:hidden;transform:rotate(1deg)}.terminal-bar{padding:15px 20px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;color:var(--muted);font:11px monospace}.dots{letter-spacing:5px;color:#617b8d}.terminal-body{padding:28px;font:13px/2.1 ui-monospace,monospace;overflow-wrap:anywhere}.terminal-body .dim{color:#91a7b9}.terminal-body .green{color:var(--accent)}.terminal-tag{padding:15px 25px;border-top:1px solid var(--line);font-size:11px;color:var(--muted);letter-spacing:1px}.facts{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:22px 0;gap:20px}.facts strong{font-size:18px;font-weight:600}.facts span{display:block;color:var(--muted);font-size:12px}.catalog{padding-top:60px;scroll-margin-top:24px}.section-head{display:flex;justify-content:space-between;align-items:end;gap:20px;margin-bottom:24px}h2{letter-spacing:-.7px}.section-head h2{font-size:30px;margin:4px 0}.section-head p{margin:0;color:var(--muted);font-size:14px}.toolbar{display:flex;flex-wrap:wrap;gap:12px;padding:16px;background:#0e1c29;border:1px solid var(--line);border-radius:12px}.search{flex:1;min-width:200px}.search label,.task label{display:block;font-size:11px;color:var(--muted);margin-bottom:5px}input,select{width:100%;background:#091520;color:var(--text);border:1px solid #3e5264;border-radius:7px;padding:10px 12px;font-size:14px}.pills{display:flex;gap:6px;align-self:end}.pill{padding:10px 17px;background:transparent;color:var(--muted);border:1px solid var(--line);border-radius:7px;font-size:13px}.pill[aria-pressed=true]{background:#23443e;border-color:#528e7e;color:#b2ffeb}.count{color:var(--muted);font-size:12px;margin:17px 0}#cards{display:grid;grid-template-columns:1fr 1fr;gap:22px}.card{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:17px;padding:28px;background:linear-gradient(135deg,#132333,#0e1b27)}.card-heading{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}.icon{width:48px;height:48px;display:grid;place-items:center;background:#193b3b;border:1px solid #396263;border-radius:13px;color:var(--accent)}.icon svg{width:25px;height:25px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}.number{color:#8fa3b4;font:12px monospace}.card-top{display:flex;align-items:center;flex-wrap:wrap;gap:8px}.card h2{font-size:23px;margin:0 0 3px;width:100%;font-weight:600}.badge{color:#b9cddd;border:1px solid #415667;padding:2px 9px;border-radius:5px;font-size:10px;text-transform:uppercase;letter-spacing:1px}.badge.danger{color:var(--gold);border-color:#68543b}.filename{font:12px/1.7 ui-monospace,monospace;color:var(--accent);overflow-wrap:anywhere;margin:15px 0 12px}.desc{font-size:14px;color:var(--muted);min-height:46px;margin:0 0 16px}.feat{font-size:13px;padding-left:18px;color:#c4d1dc;margin:0 0 22px}.feat li{padding:3px 0}.feat li::marker{color:var(--accent)}.requirements{border-top:1px solid var(--line);padding-top:16px;margin-top:auto}.requirements strong{font-size:12px}.requirements p{color:var(--muted);font-size:12px;margin:4px 0}.status{font-size:11px;color:#a4c6bb;margin:10px 0 18px}.pending{color:var(--gold)}.runbox{background:#07121b;border:1px solid var(--line);border-radius:9px;overflow:hidden}.code-label{padding:9px 12px;display:flex;gap:12px;align-items:center;justify-content:space-between;font-size:9px;letter-spacing:1px;color:#9cb3c4;border-bottom:1px solid #1c2d3c}.copy{background:#1c3140;border:1px solid #3c5464;border-radius:5px;color:#e4eff5;padding:5px 9px;font-size:11px;letter-spacing:0}.copy:hover{border-color:var(--accent)}pre{font:12px/1.9 ui-monospace,SFMono-Regular,Consolas,monospace;white-space:pre-wrap;overflow-wrap:anywhere;margin:0;padding:17px;color:#d0e3ee}code{font-family:ui-monospace,monospace;font-size:.93em}details{font-size:12px;color:var(--muted);margin:15px 0}summary{cursor:pointer;color:#c6d3df}details p{margin:10px 0}.source-button{width:100%;display:flex;justify-content:space-between;align-items:center;border-radius:7px;padding:12px 14px;border:1px solid #416165;background:#163234;color:#a7f4df;font-size:13px;font-weight:600}.source-button:hover{background:#214347}.links{display:flex;gap:20px;font-size:12px;color:var(--muted);margin-top:15px}.links a{text-decoration:none}.links a:hover{color:var(--accent)}[hidden]{display:none!important}.empty{padding:45px;text-align:center;border:1px dashed var(--line);border-radius:12px;color:var(--muted)}.start{display:grid;grid-template-columns:1fr 1.2fr;gap:45px;border:1px solid var(--line);border-radius:16px;padding:32px;margin:48px 0;background:#111f2b;scroll-margin-top:24px}.start h2{margin:8px 0;font-size:25px}.start p{color:var(--muted);font-size:14px}.note{font-size:12px;color:var(--muted);border-left:2px solid var(--gold);padding-left:16px;margin:25px 0 0}footer{border-top:1px solid var(--line);padding:32px 0 45px;display:flex;justify-content:space-between;gap:25px;color:var(--muted);font-size:12px}footer strong{color:var(--text)}.footerlinks{display:flex;gap:15px;flex-wrap:wrap}dialog{color:var(--text);background:#102030;border:1px solid #486174;border-radius:16px;max-width:900px;width:calc(100% - 32px);max-height:85vh;padding:24px}dialog::backdrop{background:#000b}.dialog-head{display:flex;align-items:start;justify-content:space-between;gap:15px}.dialog-head h2{font-size:21px;margin:0;overflow-wrap:anywhere}.dialog-head button{background:transparent;border:1px solid var(--line);color:var(--text);border-radius:6px;padding:6px 12px}dialog pre{max-height:48vh;overflow:auto;background:#07121b;border-radius:8px;margin:18px 0}dialog p{font-size:13px;color:var(--muted)}.dialog-actions{display:flex;gap:20px;align-items:center;font-size:13px}.dialog-actions button{border:0}.sr-only{position:absolute;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap}.skip{position:absolute;top:-100px;left:10px;background:var(--accent);color:#07121b;padding:10px;z-index:5}.skip:focus{top:10px}@media(max-width:800px){.hero{grid-template-columns:1fr;gap:35px;padding:45px 0}.hero h1{letter-spacing:-2px}.terminal{transform:none}.wrap{padding:0 20px}#cards{grid-template-columns:1fr}.start{grid-template-columns:1fr;gap:15px}.navlinks a:first-child{display:none}.section-head{align-items:start;flex-direction:column;gap:4px}.facts strong{font-size:15px}.facts span{font-size:11px}footer{flex-direction:column}.catalog{padding-top:40px}}@media(max-width:440px){.card{padding:21px}.pills{width:100%}.pill{flex:1}.task{width:100%}.facts{gap:10px}.brand{font-size:11px}.navlinks{font-size:11px}.start{padding:22px}.code-label{font-size:8px}.hero h1{font-size:42px}}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Sysadmin Script Library · IT Training</title><meta name="description" content="Find the right Linux and Proxmox administration script. Preview commands, review requirements, and copy the full source from IT Training's open-source library."><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Mali:wght@400;500;600;700&amp;family=Noto+Sans+Lao:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:light;--bg:#fafbfc;--panel:#ffffff;--line:#dce5ec;--text:#192f46;--muted:#53677a;--accent:#177b74;--gold:#986221}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font:16px/1.85 "Mali","Noto Sans Lao",sans-serif}button,input,select{font:inherit}button,a,input,select,summary{touch-action:manipulation}a{color:inherit;text-underline-offset:4px}button{cursor:pointer}button:disabled{cursor:wait;opacity:.5}:focus-visible{outline:3px solid var(--accent);outline-offset:5px}.wrap{max-width:1200px;margin:auto;padding:0 32px}.nav{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:25px 0;border-bottom:1px solid var(--line)}.brand{text-decoration:none;display:flex;align-items:center;gap:12px;font-size:13px;font-weight:750;letter-spacing:1.5px}.brandmark{display:grid;place-items:center;width:38px;height:38px;border:1px solid var(--accent);border-radius:11px;color:var(--accent);font-size:20px}.navlinks{display:flex;gap:24px;align-items:center;font-size:13px;color:var(--muted)}.navlinks a{text-decoration:none}.navlinks a:hover{color:var(--accent)}.hero{display:grid;grid-template-columns:1.25fr 1fr;gap:60px;align-items:center;padding:75px 0 65px}.eyebrow{font-size:11px;font-weight:700;letter-spacing:2.5px;color:var(--accent);text-transform:uppercase}.hero h1{font-size:clamp(40px,5.7vw,68px);line-height:1.08;letter-spacing:-3px;margin:20px 0 24px;font-weight:650}.hero h1 span{color:var(--accent)}.intro{max-width:48ch;color:var(--muted);font-size:17px}.hero-actions{display:flex;gap:20px;flex-wrap:wrap;align-items:center;margin-top:30px}.primary{display:inline-block;background:var(--accent);color:#0b2221;padding:12px 21px;border-radius:9px;text-decoration:none;font-size:14px;font-weight:750}.secondary{font-size:14px;color:var(--muted)}.terminal{border:1px solid #3b5266;border-radius:17px;background:linear-gradient(135deg,#15293a,#0c1824);box-shadow:0 25px 70px #0005;overflow:hidden;transform:rotate(1deg)}.terminal-bar{padding:15px 20px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;color:var(--muted);font:11px monospace}.dots{letter-spacing:5px;color:#617b8d}.terminal-body{padding:28px;font:13px/2.1 ui-monospace,monospace;overflow-wrap:anywhere}.terminal-body .dim{color:#91a7b9}.terminal-body .green{color:var(--accent)}.terminal-tag{padding:15px 25px;border-top:1px solid var(--line);font-size:11px;color:var(--muted);letter-spacing:1px}.facts{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:22px 0;gap:20px}.facts strong{font-size:18px;font-weight:600}.facts span{display:block;color:var(--muted);font-size:12px}.catalog{padding-top:60px;scroll-margin-top:24px}.section-head{display:flex;justify-content:space-between;align-items:end;gap:20px;margin-bottom:24px}h2{letter-spacing:-.7px}.section-head h2{font-size:30px;margin:4px 0}.section-head p{margin:0;color:var(--muted);font-size:14px}.toolbar{display:flex;flex-wrap:wrap;gap:12px;padding:16px;background:#f2f6f8;border:1px solid var(--line);border-radius:12px}.search{flex:1;min-width:200px}.search label,.task label{display:block;font-size:11px;color:var(--muted);margin-bottom:5px}input,select{width:100%;background:#ffffff;color:var(--text);border:1px solid #cedae3;border-radius:7px;padding:10px 12px;font-size:14px}.pills{display:flex;gap:6px;align-self:end}.pill{padding:10px 17px;background:transparent;color:var(--muted);border:1px solid var(--line);border-radius:7px;font-size:13px}.pill[aria-pressed=true]{background:#e2f2ee;border-color:#8cbbb0;color:#125f58}.count{color:var(--muted);font-size:12px;margin:17px 0}#cards{display:grid;grid-template-columns:1fr 1fr;gap:22px}.card{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:17px;padding:28px;background:linear-gradient(135deg,#ffffff,#ffffff)}.card-heading{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}.icon{width:48px;height:48px;display:grid;place-items:center;background:#eaf5f2;border:1px solid #c9e3db;border-radius:13px;color:var(--accent)}.icon svg{width:25px;height:25px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}.number{color:#677a8b;font:12px monospace}.card-top{display:flex;align-items:center;flex-wrap:wrap;gap:8px}.card h2{font-size:23px;margin:0 0 3px;width:100%;font-weight:600}.badge{color:#465f73;border:1px solid #d6e1e9;padding:2px 9px;border-radius:5px;font-size:10px;text-transform:uppercase;letter-spacing:1px}.badge.danger{color:var(--gold);border-color:#e2cda8}.filename{font:12px/1.7 ui-monospace,monospace;color:var(--accent);overflow-wrap:anywhere;margin:15px 0 12px}.desc{font-size:14px;color:var(--muted);min-height:46px;margin:0 0 16px}.feat{font-size:13px;padding-left:18px;color:#465c70;margin:0 0 22px}.feat li{padding:3px 0}.feat li::marker{color:var(--accent)}.requirements{border-top:1px solid var(--line);padding-top:16px;margin-top:auto}.requirements strong{font-size:12px}.requirements p{color:var(--muted);font-size:12px;margin:4px 0}.status{font-size:11px;color:#296c58;margin:10px 0 18px}.pending{color:var(--gold)}.runbox{background:#f4f7fa;border:1px solid var(--line);border-radius:9px;overflow:hidden}.code-label{padding:9px 12px;display:flex;gap:12px;align-items:center;justify-content:space-between;font-size:9px;letter-spacing:1px;color:#506b80;border-bottom:1px solid #dde6ed}.copy{background:#ffffff;border:1px solid #c8d8e2;border-radius:5px;color:#294c62;padding:5px 9px;font-size:11px;letter-spacing:0}.copy:hover{border-color:var(--accent)}pre{font:12px/1.9 ui-monospace,SFMono-Regular,Consolas,monospace;white-space:pre-wrap;overflow-wrap:anywhere;margin:0;padding:17px;color:#29465d}code{font-family:ui-monospace,monospace;font-size:.93em}details{font-size:12px;color:var(--muted);margin:15px 0}summary{cursor:pointer;color:#425d73}details p{margin:10px 0}.source-button{width:100%;display:flex;justify-content:space-between;align-items:center;border-radius:7px;padding:12px 14px;border:1px solid #bddbd2;background:#edf7f3;color:#146452;font-size:13px;font-weight:600}.source-button:hover{background:#e1f1eb}.links{display:flex;gap:20px;font-size:12px;color:var(--muted);margin-top:15px}.links a{text-decoration:none}.links a:hover{color:var(--accent)}[hidden]{display:none!important}.empty{padding:45px;text-align:center;border:1px dashed var(--line);border-radius:12px;color:var(--muted)}.start{display:grid;grid-template-columns:1fr 1.2fr;gap:45px;border:1px solid var(--line);border-radius:16px;padding:32px;margin:48px 0;background:#f0f6f5;scroll-margin-top:24px}.start h2{margin:8px 0;font-size:25px}.start p{color:var(--muted);font-size:14px}.note{font-size:12px;color:var(--muted);border-left:2px solid var(--gold);padding-left:16px;margin:25px 0 0}footer{border-top:1px solid var(--line);padding:32px 0 45px;display:flex;justify-content:space-between;gap:25px;color:var(--muted);font-size:12px}footer strong{color:var(--text)}.footerlinks{display:flex;gap:15px;flex-wrap:wrap}dialog{color:var(--text);background:#ffffff;border:1px solid #d4e0e8;border-radius:16px;max-width:900px;width:calc(100% - 32px);max-height:85vh;padding:24px}dialog::backdrop{background:#142b3c80}.dialog-head{display:flex;align-items:start;justify-content:space-between;gap:15px}.dialog-head h2{font-size:21px;margin:0;overflow-wrap:anywhere}.dialog-head button{background:transparent;border:1px solid var(--line);color:var(--text);border-radius:6px;padding:6px 12px}dialog pre{max-height:48vh;overflow:auto;background:#f4f7fa;border-radius:8px;margin:18px 0}dialog p{font-size:13px;color:var(--muted)}.dialog-actions{display:flex;gap:20px;align-items:center;font-size:13px}.dialog-actions button{border:0}.sr-only{position:absolute;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap}.skip{position:absolute;top:-100px;left:10px;background:var(--accent);color:#f4f7fa;padding:10px;z-index:5}.skip:focus{top:10px}@media(max-width:800px){.hero{grid-template-columns:1fr;gap:35px;padding:45px 0}.hero h1{letter-spacing:-2px}.terminal{transform:none}.wrap{padding:0 20px}#cards{grid-template-columns:1fr}.start{grid-template-columns:1fr;gap:15px}.navlinks a:first-child{display:none}.section-head{align-items:start;flex-direction:column;gap:4px}.facts strong{font-size:15px}.facts span{font-size:11px}footer{flex-direction:column}.catalog{padding-top:40px}}@media(max-width:440px){.card{padding:21px}.pills{width:100%}.pill{flex:1}.task{width:100%}.facts{gap:10px}.brand{font-size:11px}.navlinks{font-size:11px}.start{padding:22px}.code-label{font-size:8px}.hero h1{font-size:42px}}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+/* Light editorial theme with generous spacing for Thai and Lao glyphs. */
+body{background:radial-gradient(ellipse at 80% 5%,#edf8f4 0,transparent 35%),#fff}
+.hero{gap:46px;padding:66px 0 58px}.hero h1{font-size:clamp(34px,4vw,54px);line-height:1.48;letter-spacing:-1.2px;font-weight:700;margin:14px 0 18px}.hero h1 span{display:inline-block}.hero .intro{font-size:16px;max-width:45ch}.eyebrow{font-size:12px;letter-spacing:.8px;font-weight:600}.primary{color:white;background:#196e65;font-weight:600;box-shadow:0 6px 15px #17695e18}.primary:hover{background:#11584f}.hero-actions{gap:18px}.brand{letter-spacing:1px;font-weight:700}.brandmark{background:#196e65;color:white;border:0;box-shadow:0 4px 12px #17695e22}.nav{gap:18px;flex-wrap:wrap}.navlinks{gap:20px}.language-picker{display:flex;align-items:center;gap:8px;padding:5px 10px;background:#fff;border:1px solid #dbe5e9;border-radius:10px;color:#53677a}.language-picker label{font-size:12px;white-space:nowrap}.language-picker select{width:auto;min-width:93px;border:0;padding:6px 16px 6px 4px;color:#233e51;background:transparent;font-family:"Mali","Noto Sans Lao",sans-serif;cursor:pointer}.terminal{background:linear-gradient(145deg,#fff,#f3f7f9);border-color:#d3e1e8;box-shadow:0 18px 50px #233b5110;transform:none}.terminal-bar{background:#f8fafb;border-color:#e1e9ef;font-family:inherit;font-size:10px}.terminal-body{font-size:12px;color:#244156;padding:26px}.terminal-body .dim{color:#60778a}.terminal-tag{font-size:10px;letter-spacing:.1px;background:#f8fafb}.dots{color:#92b6aa}.facts{padding:24px 0}.facts strong{font-size:16px}.facts span{font-size:12px}.card{box-shadow:0 8px 28px #1b3b5610;border-color:#e0e8ee;border-radius:20px;transition:box-shadow .2s,border-color .2s}.card:hover{border-color:#accfc4;box-shadow:0 12px 32px #1b3b5618}.card h2{font-size:22px;line-height:1.65;letter-spacing:0}.desc{font-size:14px;min-height:60px;line-height:1.9}.feat{font-size:13px;line-height:1.9}.feat li{padding:5px 0;overflow-wrap:anywhere}.badge{letter-spacing:.1px;font-size:11px;background:#f6f9fb}.badge.danger{background:#fff8ea}.filename{margin-top:15px}.requirements p,.status,details{line-height:1.95}.status{font-size:11px}.code-label{font-size:10px;letter-spacing:0;flex-wrap:wrap;gap:8px}.copy{font-size:11px;white-space:nowrap;min-height:35px}.source-button{font-size:14px;min-height:48px;font-weight:600}.links{font-size:12px;justify-content:space-between}.section-head h2{font-size:30px;letter-spacing:0}.section-head p{font-size:13px}.toolbar{background:#f6f9fa;padding:18px;border-color:#e0e8ec}.search label,.task label{font-size:12px}input,select{min-height:44px}.pill{font-size:13px;min-height:44px}.count{font-size:12px}.start{background:linear-gradient(135deg,#f1f8f5,#f8fafb);border-color:#dce9e3}.start h2{letter-spacing:0}.note{line-height:1.95}dialog{box-shadow:0 30px 100px #182f4c40}dialog pre{border:1px solid #e0e8ed}.dialog-actions{flex-wrap:wrap}.dialog-head h2{font-family:ui-monospace,monospace;line-height:1.6}.dialog-head button{white-space:nowrap}.skip{color:#fff}.brandmark{font-family:"Mali",sans-serif}html:lang(lo) body{font-family:"Noto Sans Lao","Mali",sans-serif}html:lang(lo) .hero h1{line-height:1.55;letter-spacing:0}html:lang(lo) .eyebrow{letter-spacing:0}html:lang(lo) .hero .intro{max-width:47ch}
+@media(max-width:1000px){.navlinks{gap:12px}.navlinks>a:first-child{display:none}.hero{gap:28px}.hero h1{font-size:40px}}
+@media(max-width:800px){.hero{padding:36px 0 40px}.hero h1{font-size:42px;letter-spacing:-.5px}.nav{padding:18px 0}.navlinks{margin-left:auto}.facts strong{font-size:14px}.facts span{font-size:11px}.section-head h2{font-size:28px}.terminal{max-width:100%}.toolbar{gap:14px}.card{padding:25px}.start{padding:26px}.hero .intro{max-width:none}}
+@media(max-width:480px){.wrap{padding:0 18px}.brand{font-size:10px;gap:7px}.brandmark{width:32px;height:32px}.nav{gap:10px}.navlinks>a{display:none}.language-picker{gap:4px;padding:3px 6px}.language-picker label{font-size:10px}.language-picker select{min-width:77px;font-size:12px;padding-right:2px}.hero h1{font-size:33px;line-height:1.6}.hero-actions{align-items:flex-start;flex-direction:column;gap:12px}.hero .intro{font-size:14px}.facts{grid-template-columns:1fr;gap:16px}.facts>div{display:flex;justify-content:space-between;align-items:center;gap:16px}.facts strong{font-size:13px}.facts span{font-size:11px;text-align:right}.card{padding:21px}.card h2{font-size:21px}.search{min-width:0;width:100%;flex-basis:100%}.toolbar{padding:15px}.section-head h2{font-size:26px}.start{padding:22px}.start h2{font-size:23px}.terminal-body{padding:19px;font-size:11px}.terminal-bar{padding:12px;font-size:9px}.terminal-tag{padding:12px 15px}.desc{min-height:0}dialog{padding:18px}.dialog-head h2{font-size:16px}.code-label{align-items:flex-start}.code-label .copy{margin-left:auto}}
+@media(prefers-reduced-motion:reduce){.card{transition:none}}
 </style></head><body>
 <a class="skip" href="#catalog">Skip to scripts</a>
 <svg xmlns="http://www.w3.org/2000/svg" style="display:none"><symbol id="users" viewBox="0 0 24 24"><circle cx="9" cy="7" r="3"/><path d="M3 21v-3a6 6 0 0 1 12 0v3M16 4a3 3 0 0 1 0 6M17 14a5 5 0 0 1 4 5v2"/></symbol><symbol id="user-plus" viewBox="0 0 24 24"><circle cx="9" cy="7" r="3"/><path d="M3 21v-3a6 6 0 0 1 12 0v3M19 7v8M15 11h8"/></symbol><symbol id="disk" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="11" cy="11" r="4"/><path d="m11 11 5 5M6 17h1M18 7h.01"/></symbol><symbol id="server" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="7" rx="2"/><rect x="3" y="14" width="18" height="7" rx="2"/><path d="M7 6h.01M7 17h.01M12 6h5M12 17h5"/></symbol></svg>
-<div class="wrap"><nav class="nav" aria-label="Main navigation"><a class="brand" href="#"><span class="brandmark" aria-hidden="true">i</span>IT TRAINING <span style="color:var(--muted);font-weight:400">/ LAB</span></a><div class="navlinks"><a href="https://courses.ittraining.co.th">Explore courses</a><a href="https://github.com/ittraining2498/linux-sysadmin-scripts">GitHub ↗</a></div></nav>
+<div class="wrap"><nav class="nav" aria-label="Main navigation"><a class="brand" href="#"><span class="brandmark" aria-hidden="true">i</span>IT TRAINING <span style="color:var(--muted);font-weight:400">/ LAB</span></a><div class="navlinks"><a href="https://courses.ittraining.co.th">Explore courses</a><a href="https://github.com/ittraining2498/linux-sysadmin-scripts">GitHub ↗</a><div class="language-picker"><label for="language">Language</label><select id="language" aria-label="Language"><option value="th" lang="th">ไทย</option><option value="en" lang="en">English</option><option value="lo" lang="lo">ລາວ</option></select></div></div></nav>
 <header class="hero"><div><div class="eyebrow">The sysadmin toolkit · Open source</div><h1>Less repetition.<br><span>More control.</span></h1><p class="intro">Practical scripts for Linux &amp; Proxmox. Find the right tool, understand what it changes, and review the code before you run it.</p><div class="hero-actions"><a class="primary" href="#catalog">Explore the scripts ↓</a><a class="secondary" href="#get-started">First time here? Start here</a></div></div><div class="terminal" aria-label="Example of a disk check, illustrative output"><div class="terminal-bar"><span class="dots" aria-hidden="true">●●●</span><span>YOUR NEXT ROUTINE CHECK</span></div><div class="terminal-body"><span class="dim"># Example · a healthy filesystem</span><br><span class="green">$</span> ./linux/check-disk.sh --warn 90<br><br><span class="green">OK</span> - no filesystem is at or above 90%<br><span class="dim"># Choose. Review. Run in your lab.</span></div><div class="terminal-tag">ILLUSTRATIVE OUTPUT · YOUR RESULTS WILL VARY</div></div></header>
 <div class="facts"><div><strong>04 focused tools</strong><span>One script. A clear purpose.</span></div><div><strong>02 platforms</strong><span>Linux &amp; Proxmox VE</span></div><div><strong>MIT licensed</strong><span>Read, adapt &amp; contribute.</span></div></div>
 <main><section class="catalog" id="catalog" aria-labelledby="library-title"><div class="section-head"><div><div class="eyebrow">Find your tool</div><h2 id="library-title">The script library</h2></div><p>Choose by platform and the job you need to do.</p></div><div class="toolbar"><div class="search"><label for="search">SEARCH THE LIBRARY</label><input type="search" id="search" placeholder="Try users, disk, quorum…" autocomplete="off"></div><div class="task"><label for="task">YOUR TASK</label><select id="task"><option value="all">All tasks</option><option value="accounts">Account management</option><option value="monitoring">Health &amp; monitoring</option></select></div><div class="pills" id="filters" aria-label="Filter by platform"><button class="pill" data-f="all" aria-pressed="true">All</button><button class="pill" data-f="linux" aria-pressed="false">Linux</button><button class="pill" data-f="proxmox" aria-pressed="false">Proxmox</button></div></div><p class="count" id="count" role="status">Showing 4 of 4 scripts</p><div id="cards">    <article class="card" data-p="linux" data-task="accounts" id="bulk-delete-users">
@@ -83,19 +92,612 @@ chmod +x linux/*.sh proxmox/*.sh
 <footer><div><strong>IT Training Company Limited</strong><br>Practical skills. Real understanding.<br>LINE @linux</div><div><div class="footerlinks"><a href="https://www.ittraining.co.th">Website</a><a href="https://courses.ittraining.co.th">Courses</a><a href="https://github.com/ittraining2498/linux-sysadmin-scripts/issues">Report an issue</a><a href="https://github.com/ittraining2498/linux-sysadmin-scripts/blob/main/LICENSE">MIT License</a></div><p>Built for the people who keep systems running.</p></div></footer></div>
 <dialog id="source-dialog" aria-labelledby="source-title"><div class="dialog-head"><div><div class="eyebrow">Review before running</div><h2 id="source-title">Script source</h2></div><button id="close-dialog" aria-label="Close script source">Close ×</button></div><p id="source-status" role="status"></p><pre id="source-code" tabindex="0"></pre><div class="dialog-actions"><button id="copy-source" class="primary" disabled>Copy full script</button><a id="source-link" href="https://github.com/ittraining2498/linux-sysadmin-scripts">View source on GitHub ↗</a></div></dialog><div id="announcement" class="sr-only" role="status"></div>
 <script>
+
+const translations = {
+  "Skip to scripts": {
+    "en": "Skip to scripts",
+    "th": "ข้ามไปยังสคริปต์",
+    "lo": "ຂ້າມໄປຫາສະຄຣິບ"
+  },
+  "Main navigation": {
+    "en": "Main navigation",
+    "th": "เมนูหลัก",
+    "lo": "ເມນູຫຼັກ"
+  },
+  "Explore courses": {
+    "en": "Explore courses",
+    "th": "ดูหลักสูตร",
+    "lo": "ເບິ່ງຫຼັກສູດ"
+  },
+  "The sysadmin toolkit · Open source": {
+    "en": "The sysadmin toolkit · Open source",
+    "th": "เครื่องมือผู้ดูแลระบบ · โอเพนซอร์ส",
+    "lo": "ເຄື່ອງມືຜູ້ດູແລລະບົບ · ໂອເພນຊອດ"
+  },
+  "Less repetition.": {
+    "en": "Less repetition.",
+    "th": "ลดงานซ้ำซ้อน",
+    "lo": "ຫຼຸດວຽກຊ້ຳຊ້ອນ"
+  },
+  "More control.": {
+    "en": "More control.",
+    "th": "ดูแลระบบอย่างมั่นใจ",
+    "lo": "ດູແລລະບົບຢ່າງໝັ້ນໃຈ"
+  },
+  "Practical scripts for Linux & Proxmox. Find the right tool, understand what it changes, and review the code before you run it.": {
+    "en": "Practical scripts for Linux & Proxmox. Find the right tool, understand what it changes, and review the code before you run it.",
+    "th": "รวมสคริปต์สำหรับ Linux และ Proxmox เลือกเครื่องมือให้ตรงงาน เข้าใจสิ่งที่จะเปลี่ยนแปลง และตรวจโค้ดก่อนใช้งาน",
+    "lo": "ລວມສະຄຣິບສຳລັບ Linux ແລະ Proxmox ເລືອກເຄື່ອງມືໃຫ້ກົງກັບວຽກ ເຂົ້າໃຈສິ່ງທີ່ຈະປ່ຽນແປງ ແລະ ກວດໂຄດກ່ອນໃຊ້ງານ"
+  },
+  "Explore the scripts ↓": {
+    "en": "Explore the scripts ↓",
+    "th": "เลือกสคริปต์ที่ต้องการ ↓",
+    "lo": "ເລືອກສະຄຣິບທີ່ຕ້ອງການ ↓"
+  },
+  "First time here? Start here": {
+    "en": "First time here? Start here",
+    "th": "เริ่มใช้งานครั้งแรก",
+    "lo": "ເລີ່ມໃຊ້ງານຄັ້ງທຳອິດ"
+  },
+  "Example of a disk check, illustrative output": {
+    "en": "Example of a disk check, illustrative output",
+    "th": "ตัวอย่างการตรวจพื้นที่ดิสก์ เป็นผลลัพธ์ประกอบการอธิบาย",
+    "lo": "ຕົວຢ່າງການກວດພື້ນທີ່ດິສ ເປັນຜົນລັບປະກອບການອະທິບາຍ"
+  },
+  "YOUR NEXT ROUTINE CHECK": {
+    "en": "YOUR NEXT ROUTINE CHECK",
+    "th": "ตรวจระบบประจำวัน",
+    "lo": "ກວດລະບົບປະຈຳວັນ"
+  },
+  "ILLUSTRATIVE OUTPUT · YOUR RESULTS WILL VARY": {
+    "en": "ILLUSTRATIVE OUTPUT · YOUR RESULTS WILL VARY",
+    "th": "ผลลัพธ์ตัวอย่าง · ผลจริงขึ้นอยู่กับระบบของคุณ",
+    "lo": "ຜົນລັບຕົວຢ່າງ · ຜົນຈິງຂຶ້ນກັບລະບົບຂອງທ່ານ"
+  },
+  "04 focused tools": {
+    "en": "04 focused tools",
+    "th": "04 เครื่องมือพร้อมเลือก",
+    "lo": "04 ເຄື່ອງມືໃຫ້ເລືອກ"
+  },
+  "One script. A clear purpose.": {
+    "en": "One script. A clear purpose.",
+    "th": "แต่ละสคริปต์ มีหน้าที่ชัดเจน",
+    "lo": "ແຕ່ລະສະຄຣິບ ມີໜ້າທີ່ຊັດເຈນ"
+  },
+  "02 platforms": {
+    "en": "02 platforms",
+    "th": "02 แพลตฟอร์ม",
+    "lo": "02 ແພລດຟອມ"
+  },
+  "MIT licensed": {
+    "en": "MIT licensed",
+    "th": "สัญญาอนุญาต MIT",
+    "lo": "ສັນຍາອະນຸຍາດ MIT"
+  },
+  "Read, adapt & contribute.": {
+    "en": "Read, adapt & contribute.",
+    "th": "ศึกษา ปรับใช้ และร่วมพัฒนา",
+    "lo": "ສຶກສາ ປັບໃຊ້ ແລະ ຮ່ວມພັດທະນາ"
+  },
+  "Find your tool": {
+    "en": "Find your tool",
+    "th": "เลือกเครื่องมือให้ตรงงาน",
+    "lo": "ເລືອກເຄື່ອງມືໃຫ້ກົງກັບວຽກ"
+  },
+  "The script library": {
+    "en": "The script library",
+    "th": "คลังสคริปต์สำหรับคุณ",
+    "lo": "ຄັງສະຄຣິບສຳລັບທ່ານ"
+  },
+  "Choose by platform and the job you need to do.": {
+    "en": "Choose by platform and the job you need to do.",
+    "th": "ค้นหาตามระบบและงานที่คุณต้องการทำ",
+    "lo": "ຄົ້ນຫາຕາມລະບົບ ແລະ ວຽກທີ່ທ່ານຕ້ອງການເຮັດ"
+  },
+  "SEARCH THE LIBRARY": {
+    "en": "SEARCH THE LIBRARY",
+    "th": "ค้นหาสคริปต์",
+    "lo": "ຄົ້ນຫາສະຄຣິບ"
+  },
+  "Try users, disk, quorum…": {
+    "en": "Try users, disk, quorum…",
+    "th": "ลองค้นหา ผู้ใช้, ดิสก์, quorum…",
+    "lo": "ລອງຄົ້ນຫາ ຜູ້ໃຊ້, ດິສ, quorum…"
+  },
+  "YOUR TASK": {
+    "en": "YOUR TASK",
+    "th": "ประเภทงาน",
+    "lo": "ປະເພດວຽກ"
+  },
+  "All tasks": {
+    "en": "All tasks",
+    "th": "ทุกประเภทงาน",
+    "lo": "ທຸກປະເພດວຽກ"
+  },
+  "Account management": {
+    "en": "Account management",
+    "th": "จัดการบัญชีผู้ใช้",
+    "lo": "ຈັດການບັນຊີຜູ້ໃຊ້"
+  },
+  "Health & monitoring": {
+    "en": "Health & monitoring",
+    "th": "ตรวจสอบสถานะระบบ",
+    "lo": "ກວດສອບສະຖານະລະບົບ"
+  },
+  "Filter by platform": {
+    "en": "Filter by platform",
+    "th": "กรองตามแพลตฟอร์ม",
+    "lo": "ກັ່ນຕອງຕາມແພລດຟອມ"
+  },
+  "All": {
+    "en": "All",
+    "th": "ทั้งหมด",
+    "lo": "ທັງໝົດ"
+  },
+  "Offboard user accounts": {
+    "en": "Offboard user accounts",
+    "th": "ลบบัญชีผู้ใช้ที่พ้นหน้าที่",
+    "lo": "ລຶບບັນຊີຜູ້ໃຊ້ທີ່ພົ້ນໜ້າທີ່"
+  },
+  "destructive": {
+    "en": "destructive",
+    "th": "มีการลบข้อมูล",
+    "lo": "ມີການລຶບຂໍ້ມູນ"
+  },
+  "Remove many user accounts in a single run — built for offboarding day.": {
+    "en": "Remove many user accounts in a single run — built for offboarding day.",
+    "th": "ลบบัญชีผู้ใช้หลายคนในครั้งเดียว เหมาะกับการจัดการบัญชีเมื่อพนักงานออกจากองค์กร",
+    "lo": "ລຶບບັນຊີຜູ້ໃຊ້ຫຼາຍຄົນໃນຄັ້ງດຽວ ເໝາະກັບການຈັດການບັນຊີເມື່ອພະນັກງານອອກຈາກອົງກອນ"
+  },
+  "Dry-run by default; changes require --apply": {
+    "en": "Dry-run by default; changes require --apply",
+    "th": "ค่าเริ่มต้นเป็นการทดลอง ต้องใส่ --apply จึงเปลี่ยนแปลงจริง",
+    "lo": "ຄ່າເລີ່ມຕົ້ນເປັນການທົດລອງ ຕ້ອງໃສ່ --apply ຈຶ່ງປ່ຽນແປງຈິງ"
+  },
+  "Protected account list and a default minimum UID of 1000": {
+    "en": "Protected account list and a default minimum UID of 1000",
+    "th": "มีรายชื่อบัญชีที่ป้องกัน และกำหนด UID ขั้นต่ำไว้ที่ 1000",
+    "lo": "ມີລາຍຊື່ບັນຊີທີ່ປ້ອງກັນ ແລະ ກຳນົດ UID ຂັ້ນຕ່ຳໄວ້ທີ່ 1000"
+  },
+  "Archives existing home directories before deletion": {
+    "en": "Archives existing home directories before deletion",
+    "th": "สำรองโฟลเดอร์ส่วนตัวที่มีอยู่ก่อนลบบัญชี",
+    "lo": "ສຳຮອງໂຟນເດີສ່ວນຕົວທີ່ມີຢູ່ກ່ອນລຶບບັນຊີ"
+  },
+  "Timestamped deletion log in /var/log/bulk-delete-users.log": {
+    "en": "Timestamped deletion log in /var/log/bulk-delete-users.log",
+    "th": "บันทึกการลบพร้อมเวลาใน /var/log/bulk-delete-users.log",
+    "lo": "ບັນທຶກການລຶບພ້ອມເວລາໃນ /var/log/bulk-delete-users.log"
+  },
+  "Before you start": {
+    "en": "Before you start",
+    "th": "สิ่งที่ต้องเตรียม",
+    "lo": "ສິ່ງທີ່ຕ້ອງກຽມ"
+  },
+  "Linux · root access · review usernames and home paths": {
+    "en": "Linux · root access · review usernames and home paths",
+    "th": "Linux · สิทธิ์ root · ตรวจชื่อผู้ใช้และเส้นทางโฟลเดอร์ส่วนตัว",
+    "lo": "Linux · ສິດ root · ກວດຊື່ຜູ້ໃຊ້ ແລະ ເສັ້ນທາງໂຟນເດີສ່ວນຕົວ"
+  },
+  "Debian-family tests reported in README": {
+    "en": "Debian-family tests reported in README",
+    "th": "README ระบุผลทดสอบบน Linux ตระกูล Debian",
+    "lo": "README ລະບຸຜົນທົດສອບເທິງ Linux ຕະກູນ Debian"
+  },
+  "DRY-RUN PREVIEW": {
+    "en": "DRY-RUN PREVIEW",
+    "th": "คำสั่งทดลอง · ยังไม่เปลี่ยนแปลง",
+    "lo": "ຄຳສັ່ງທົດລອງ · ຍັງບໍ່ປ່ຽນແປງ"
+  },
+  "Copy command": {
+    "en": "Copy command",
+    "th": "คัดลอกคำสั่ง",
+    "lo": "ຄັດລອກຄຳສັ່ງ"
+  },
+  "Usage notes & limitations": {
+    "en": "Usage notes & limitations",
+    "th": "วิธีใช้และข้อจำกัด",
+    "lo": "ວິທີໃຊ້ ແລະ ຂໍ້ຈຳກັດ"
+  },
+  "Deletion is irreversible. Review the source and home paths first. Do not lower --min-uid below 1000.": {
+    "en": "Deletion is irreversible. Review the source and home paths first. Do not lower --min-uid below 1000.",
+    "th": "การลบย้อนกลับไม่ได้ ตรวจโค้ดและเส้นทางโฟลเดอร์ก่อนใช้งาน ห้ามตั้ง --min-uid ต่ำกว่า 1000",
+    "lo": "ການລຶບຍ້ອນກັບບໍ່ໄດ້ ກວດໂຄດ ແລະ ເສັ້ນທາງໂຟນເດີກ່ອນໃຊ້ງານ ຫ້າມຕັ້ງ --min-uid ຕ່ຳກວ່າ 1000"
+  },
+  "Run": {
+    "en": "Run",
+    "th": "ใช้คำสั่ง",
+    "lo": "ໃຊ້ຄຳສັ່ງ"
+  },
+  "to read all options.": {
+    "en": "to read all options.",
+    "th": "เพื่ออ่านตัวเลือกทั้งหมด",
+    "lo": "ເພື່ອອ່ານຕົວເລືອກທັງໝົດ"
+  },
+  "View & copy full script": {
+    "en": "View & copy full script",
+    "th": "ดูและคัดลอกสคริปต์เต็ม",
+    "lo": "ເບິ່ງ ແລະ ຄັດລອກສະຄຣິບເຕັມ"
+  },
+  "View source": {
+    "en": "View source",
+    "th": "ดูซอร์สโค้ด",
+    "lo": "ເບິ່ງຊອດໂຄດ"
+  },
+  "Download raw": {
+    "en": "Download raw",
+    "th": "เปิดไฟล์ต้นฉบับ",
+    "lo": "ເປີດໄຟລ໌ຕົ້ນສະບັບ"
+  },
+  "Onboard a team": {
+    "en": "Onboard a team",
+    "th": "สร้างบัญชีให้สมาชิกใหม่",
+    "lo": "ສ້າງບັນຊີໃຫ້ສະມາຊິກໃໝ່"
+  },
+  "Create a whole intake of users from one CSV file, with generated passwords.": {
+    "en": "Create a whole intake of users from one CSV file, with generated passwords.",
+    "th": "สร้างบัญชีผู้ใช้จากไฟล์ CSV พร้อมสร้างรหัสผ่านให้แต่ละบัญชี",
+    "lo": "ສ້າງບັນຊີຜູ້ໃຊ້ຈາກໄຟລ໌ CSV ພ້ອມສ້າງລະຫັດຜ່ານໃຫ້ແຕ່ລະບັນຊີ"
+  },
+  "Preview CSV accounts before creating them": {
+    "en": "Preview CSV accounts before creating them",
+    "th": "ตรวจรายการบัญชีใน CSV ก่อนสร้างจริง",
+    "lo": "ກວດລາຍການບັນຊີໃນ CSV ກ່ອນສ້າງຈິງ"
+  },
+  "Generated passwords and first-login password expiry by default": {
+    "en": "Generated passwords and first-login password expiry by default",
+    "th": "สร้างรหัสผ่าน และให้เปลี่ยนรหัสผ่านเมื่อเข้าใช้ครั้งแรกเป็นค่าเริ่มต้น",
+    "lo": "ສ້າງລະຫັດຜ່ານ ແລະ ໃຫ້ປ່ຽນເມື່ອເຂົ້າໃຊ້ຄັ້ງທຳອິດເປັນຄ່າເລີ່ມຕົ້ນ"
+  },
+  "Existing usernames are skipped": {
+    "en": "Existing usernames are skipped",
+    "th": "ข้ามชื่อผู้ใช้ที่มีบัญชีอยู่แล้ว",
+    "lo": "ຂ້າມຊື່ຜູ້ໃຊ້ທີ່ມີບັນຊີຢູ່ແລ້ວ"
+  },
+  "Credentials saved to a file with mode 600": {
+    "en": "Credentials saved to a file with mode 600",
+    "th": "บันทึกรหัสผ่านลงไฟล์ที่กำหนดสิทธิ์เป็น 600",
+    "lo": "ບັນທຶກລະຫັດຜ່ານລົງໄຟລ໌ທີ່ກຳນົດສິດເປັນ 600"
+  },
+  "Linux · root access · prepare staff.csv and existing groups": {
+    "en": "Linux · root access · prepare staff.csv and existing groups",
+    "th": "Linux · สิทธิ์ root · เตรียม staff.csv และสร้างกลุ่มไว้ก่อน",
+    "lo": "Linux · ສິດ root · ກຽມ staff.csv ແລະ ສ້າງກຸ່ມໄວ້ກ່ອນ"
+  },
+  "Preview first. The current parser supports simple CSV rows; avoid commas inside full names. Review group names before creating accounts.": {
+    "en": "Preview first. The current parser supports simple CSV rows; avoid commas inside full names. Review group names before creating accounts.",
+    "th": "ทดลองก่อนเสมอ ตัวอ่านรองรับ CSV แบบง่าย หลีกเลี่ยงเครื่องหมายจุลภาคในชื่อเต็ม และตรวจชื่อกลุ่มก่อนสร้างบัญชี",
+    "lo": "ທົດລອງກ່ອນສະເໝີ ຕົວອ່ານຮອງຮັບ CSV ແບບງ່າຍ ຫຼີກລ້ຽງເຄື່ອງໝາຍຈຸດໃນຊື່ເຕັມ ແລະ ກວດຊື່ກຸ່ມກ່ອນສ້າງບັນຊີ"
+  },
+  "Check disk & inode usage": {
+    "en": "Check disk & inode usage",
+    "th": "ตรวจพื้นที่ดิสก์และ inode",
+    "lo": "ກວດພື້ນທີ່ດິສ ແລະ inode"
+  },
+  "Tell me which filesystems are about to fill up — and nothing else.": {
+    "en": "Tell me which filesystems are about to fill up — and nothing else.",
+    "th": "ตรวจว่าระบบไฟล์ใดใช้พื้นที่ถึงเกณฑ์ที่กำหนด เพื่อวางแผนก่อนพื้นที่เต็ม",
+    "lo": "ກວດວ່າລະບົບໄຟລ໌ໃດໃຊ້ພື້ນທີ່ເຖິງເກນທີ່ກຳນົດ ເພື່ອວາງແຜນກ່ອນພື້ນທີ່ເຕັມ"
+  },
+  "Block usage and optional inode checks": {
+    "en": "Block usage and optional inode checks",
+    "th": "ตรวจพื้นที่จัดเก็บ และเลือกตรวจ inode เพิ่มได้",
+    "lo": "ກວດພື້ນທີ່ຈັດເກັບ ແລະ ເລືອກກວດ inode ເພີ່ມໄດ້"
+  },
+  "Configurable threshold with --warn": {
+    "en": "Configurable threshold with --warn",
+    "th": "กำหนดเกณฑ์แจ้งเตือนด้วย --warn",
+    "lo": "ກຳນົດເກນແຈ້ງເຕືອນດ້ວຍ --warn"
+  },
+  "Quiet output with --quiet": {
+    "en": "Quiet output with --quiet",
+    "th": "ใช้ --quiet เพื่อแสดงเฉพาะเมื่อพบปัญหา",
+    "lo": "ໃຊ້ --quiet ເພື່ອສະແດງສະເພາະເມື່ອພົບບັນຫາ"
+  },
+  "Non-zero exit code when a threshold is reached": {
+    "en": "Non-zero exit code when a threshold is reached",
+    "th": "คืนรหัสออกที่ไม่ใช่ 0 เมื่อใช้งานถึงเกณฑ์",
+    "lo": "ສົ່ງລະຫັດອອກທີ່ບໍ່ແມ່ນ 0 ເມື່ອໃຊ້ງານເຖິງເກນ"
+  },
+  "Linux · GNU df · no root access required": {
+    "en": "Linux · GNU df · no root access required",
+    "th": "Linux · GNU df · ไม่จำเป็นต้องใช้สิทธิ์ root",
+    "lo": "Linux · GNU df · ບໍ່ຈຳເປັນຕ້ອງໃຊ້ສິດ root"
+  },
+  "READ-ONLY CHECK": {
+    "en": "READ-ONLY CHECK",
+    "th": "ตรวจสอบ · ไม่แก้ไขระบบ",
+    "lo": "ກວດສອບ · ບໍ່ແກ້ໄຂລະບົບ"
+  },
+  "Returns 0 when healthy and 1 at or above the threshold. A report is only as complete as the filesystems df can read.": {
+    "en": "Returns 0 when healthy and 1 at or above the threshold. A report is only as complete as the filesystems df can read.",
+    "th": "คืนค่า 0 เมื่อปกติ และ 1 เมื่อถึงหรือเกินเกณฑ์ รายงานครอบคลุมเฉพาะระบบไฟล์ที่ df อ่านได้",
+    "lo": "ສົ່ງຄ່າ 0 ເມື່ອປົກກະຕິ ແລະ 1 ເມື່ອເຖິງ ຫຼື ເກີນເກນ ລາຍງານຄອບຄຸມສະເພາະລະບົບໄຟລ໌ທີ່ df ອ່ານໄດ້"
+  },
+  "Inspect a Proxmox node": {
+    "en": "Inspect a Proxmox node",
+    "th": "ตรวจสถานะโหนด Proxmox",
+    "lo": "ກວດສະຖານະໂນດ Proxmox"
+  },
+  "A single page telling you whether this node — or the whole cluster — is in good shape.": {
+    "en": "A single page telling you whether this node — or the whole cluster — is in good shape.",
+    "th": "ดูภาพรวมโหนดและคลัสเตอร์ ทั้งบริการ พื้นที่จัดเก็บ และเครื่องเสมือนในรายงานเดียว",
+    "lo": "ເບິ່ງພາບລວມໂນດ ແລະ ຄລັດສະເຕີ ທັງບໍລິການ ພື້ນທີ່ຈັດເກັບ ແລະ ເຄື່ອງສະເໝືອນໃນລາຍງານດຽວ"
+  },
+  "Cluster quorum and node overview": {
+    "en": "Cluster quorum and node overview",
+    "th": "รายงาน quorum และภาพรวมโหนดในคลัสเตอร์",
+    "lo": "ລາຍງານ quorum ແລະ ພາບລວມໂນດໃນຄລັດສະເຕີ"
+  },
+  "Checks four Proxmox services": {
+    "en": "Checks four Proxmox services",
+    "th": "ตรวจบริการหลักของ Proxmox ทั้ง 4 รายการ",
+    "lo": "ກວດບໍລິການຫຼັກຂອງ Proxmox ທັງ 4 ລາຍການ"
+  },
+  "Storage usage and local filesystem report": {
+    "en": "Storage usage and local filesystem report",
+    "th": "รายงานพื้นที่จัดเก็บและระบบไฟล์ภายในโหนด",
+    "lo": "ລາຍງານພື້ນທີ່ຈັດເກັບ ແລະ ລະບົບໄຟລ໌ພາຍໃນໂນດ"
+  },
+  "Running and total VMs and containers": {
+    "en": "Running and total VMs and containers",
+    "th": "นับ VM และคอนเทนเนอร์ที่ทำงานอยู่เทียบกับทั้งหมด",
+    "lo": "ນັບ VM ແລະ ຄອນເທນເນີທີ່ເຮັດວຽກຢູ່ທຽບກັບທັງໝົດ"
+  },
+  "Proxmox VE node · run as root for complete reporting": {
+    "en": "Proxmox VE node · run as root for complete reporting",
+    "th": "โหนด Proxmox VE · ใช้สิทธิ์ root เพื่อรายงานที่ครบถ้วน",
+    "lo": "ໂນດ Proxmox VE · ໃຊ້ສິດ root ເພື່ອລາຍງານທີ່ຄົບຖ້ວນ"
+  },
+  "Live cluster test pending": {
+    "en": "Live cluster test pending",
+    "th": "ยังไม่ได้ทดสอบบนคลัสเตอร์จริง",
+    "lo": "ຍັງບໍ່ໄດ້ທົດສອບເທິງຄລັດສະເຕີຈິງ"
+  },
+  "Not verified on a live cluster. A failed cluster-status command can be reported as standalone; verify quorum independently.": {
+    "en": "Not verified on a live cluster. A failed cluster-status command can be reported as standalone; verify quorum independently.",
+    "th": "ยังไม่ได้ยืนยันบนคลัสเตอร์จริง หากคำสั่งอ่านสถานะคลัสเตอร์ล้มเหลว อาจรายงานว่าเป็นโหนดเดี่ยว ควรตรวจ quorum แยกอีกครั้ง",
+    "lo": "ຍັງບໍ່ໄດ້ຢືນຢັນເທິງຄລັດສະເຕີຈິງ ຖ້າຄຳສັ່ງອ່ານສະຖານະຄລັດສະເຕີລົ້ມເຫຼວ ອາດລາຍງານວ່າເປັນໂນດດ່ຽວ ຄວນກວດ quorum ແຍກອີກຄັ້ງ"
+  },
+  "No matching scripts. Try another search or reset the filters.": {
+    "en": "No matching scripts. Try another search or reset the filters.",
+    "th": "ไม่พบสคริปต์ที่ตรงกัน ลองเปลี่ยนคำค้นหาหรือล้างตัวกรอง",
+    "lo": "ບໍ່ພົບສະຄຣິບທີ່ກົງກັນ ລອງປ່ຽນຄຳຄົ້ນຫາ ຫຼື ລ້າງຕົວກັ່ນຕອງ"
+  },
+  "Reset filters": {
+    "en": "Reset filters",
+    "th": "ล้างตัวกรอง",
+    "lo": "ລ້າງຕົວກັ່ນຕອງ"
+  },
+  "A good first step": {
+    "en": "A good first step",
+    "th": "เริ่มต้นอย่างเป็นขั้นตอน",
+    "lo": "ເລີ່ມຕົ້ນຢ່າງເປັນຂັ້ນຕອນ"
+  },
+  "Start with a local copy.": {
+    "en": "Start with a local copy.",
+    "th": "ดาวน์โหลดไว้ศึกษาก่อนใช้",
+    "lo": "ດາວໂຫຼດໄວ້ສຶກສາກ່ອນໃຊ້"
+  },
+  "Clone the repository, choose a script, then read its source and": {
+    "en": "Clone the repository, choose a script, then read its source and",
+    "th": "โคลนรีโป เลือกสคริปต์ แล้วอ่านซอร์สโค้ดและ",
+    "lo": "ໂຄລນຣີໂປ ເລືອກສະຄຣິບ ແລ້ວອ່ານຊອດໂຄດ ແລະ"
+  },
+  ". Replace example usernames and file paths before running any command.": {
+    "en": ". Replace example usernames and file paths before running any command.",
+    "th": "เปลี่ยนชื่อผู้ใช้และเส้นทางไฟล์ตัวอย่างให้ตรงกับระบบก่อนรันคำสั่ง",
+    "lo": "ປ່ຽນຊື່ຜູ້ໃຊ້ ແລະ ເສັ້ນທາງໄຟລ໌ຕົວຢ່າງໃຫ້ກົງກັບລະບົບກ່ອນເອີ້ນໃຊ້ຄຳສັ່ງ"
+  },
+  "Test in a disposable lab before production. Account previews still require root. “Copy command” copies only the preview or read-only check shown above; it never includes": {
+    "en": "Test in a disposable lab before production. Account previews still require root. “Copy command” copies only the preview or read-only check shown above; it never includes",
+    "th": "ทดสอบในแล็บก่อนใช้กับระบบจริง การทดลองจัดการบัญชียังต้องใช้สิทธิ์ root ปุ่ม “คัดลอกคำสั่ง” จะคัดลอกเฉพาะคำสั่งทดลองหรือตรวจสอบ โดยไม่รวม",
+    "lo": "ທົດສອບໃນແລັບກ່ອນໃຊ້ກັບລະບົບຈິງ ການທົດລອງຈັດການບັນຊີຍັງຕ້ອງໃຊ້ສິດ root ປຸ່ມ “ຄັດລອກຄຳສັ່ງ” ຈະຄັດລອກສະເພາະຄຳສັ່ງທົດລອງ ຫຼື ກວດສອບ ໂດຍບໍ່ລວມ"
+  },
+  "GET THE REPOSITORY": {
+    "en": "GET THE REPOSITORY",
+    "th": "ดาวน์โหลดรีโป",
+    "lo": "ດາວໂຫຼດຣີໂປ"
+  },
+  "Copy setup": {
+    "en": "Copy setup",
+    "th": "คัดลอกขั้นตอนเริ่มต้น",
+    "lo": "ຄັດລອກຂັ້ນຕອນເລີ່ມຕົ້ນ"
+  },
+  "Copy repository setup commands": {
+    "en": "Copy repository setup commands",
+    "th": "คัดลอกคำสั่งเตรียมรีโป",
+    "lo": "ຄັດລອກຄຳສັ່ງກຽມຣີໂປ"
+  },
+  "Testing labels reflect the repository README, not certification for your environment. Proxmox live-cluster verification is still pending. MIT licensed; provided as is, without warranty.": {
+    "en": "Testing labels reflect the repository README, not certification for your environment. Proxmox live-cluster verification is still pending. MIT licensed; provided as is, without warranty.",
+    "th": "สถานะการทดสอบอ้างอิง README ไม่ใช่การรับรองสำหรับระบบของคุณ ส่วน Proxmox ยังรอทดสอบบนคลัสเตอร์จริง เผยแพร่ภายใต้ MIT ตามสภาพโดยไม่มีการรับประกัน",
+    "lo": "ສະຖານະການທົດສອບອ້າງອີງ README ບໍ່ແມ່ນການຮັບຮອງສຳລັບລະບົບຂອງທ່ານ ສ່ວນ Proxmox ຍັງລໍຖ້າທົດສອບເທິງຄລັດສະເຕີຈິງ ເຜີຍແຜ່ພາຍໃຕ້ MIT ຕາມສະພາບໂດຍບໍ່ມີການຮັບປະກັນ"
+  },
+  "Practical skills. Real understanding.": {
+    "en": "Practical skills. Real understanding.",
+    "th": "ทักษะที่ใช้ได้จริง เข้าใจอย่างเป็นระบบ",
+    "lo": "ທັກສະທີ່ໃຊ້ໄດ້ຈິງ ເຂົ້າໃຈຢ່າງເປັນລະບົບ"
+  },
+  "Website": {
+    "en": "Website",
+    "th": "เว็บไซต์",
+    "lo": "ເວັບໄຊ"
+  },
+  "Courses": {
+    "en": "Courses",
+    "th": "หลักสูตร",
+    "lo": "ຫຼັກສູດ"
+  },
+  "Report an issue": {
+    "en": "Report an issue",
+    "th": "แจ้งปัญหา",
+    "lo": "ແຈ້ງບັນຫາ"
+  },
+  "MIT License": {
+    "en": "MIT License",
+    "th": "สัญญาอนุญาต MIT",
+    "lo": "ສັນຍາອະນຸຍາດ MIT"
+  },
+  "Built for the people who keep systems running.": {
+    "en": "Built for the people who keep systems running.",
+    "th": "เพื่อคนที่ดูแลให้ทุกระบบทำงานต่อไป",
+    "lo": "ເພື່ອຄົນທີ່ດູແລໃຫ້ທຸກລະບົບເຮັດວຽກຕໍ່ໄປ"
+  },
+  "Review before running": {
+    "en": "Review before running",
+    "th": "ตรวจโค้ดก่อนใช้งาน",
+    "lo": "ກວດໂຄດກ່ອນໃຊ້ງານ"
+  },
+  "Script source": {
+    "en": "Script source",
+    "th": "ซอร์สโค้ดสคริปต์",
+    "lo": "ຊອດໂຄດສະຄຣິບ"
+  },
+  "Close ×": {
+    "en": "Close ×",
+    "th": "ปิด ×",
+    "lo": "ປິດ ×"
+  },
+  "Close script source": {
+    "en": "Close script source",
+    "th": "ปิดหน้าซอร์สโค้ด",
+    "lo": "ປິດໜ້າຊອດໂຄດ"
+  },
+  "Copy full script": {
+    "en": "Copy full script",
+    "th": "คัดลอกสคริปต์เต็ม",
+    "lo": "ຄັດລອກສະຄຣິບເຕັມ"
+  },
+  "View source on GitHub ↗": {
+    "en": "View source on GitHub ↗",
+    "th": "ดูซอร์สโค้ดบน GitHub ↗",
+    "lo": "ເບິ່ງຊອດໂຄດເທິງ GitHub ↗"
+  },
+  "Showing {n} of {total} scripts": {
+    "en": "Showing {n} of {total} scripts",
+    "th": "แสดง {n} จาก {total} สคริปต์",
+    "lo": "ສະແດງ {n} ຈາກ {total} ສະຄຣິບ"
+  },
+  "Copy command for": {
+    "en": "Copy command for",
+    "th": "คัดลอกคำสั่งสำหรับ",
+    "lo": "ຄັດລອກຄຳສັ່ງສຳລັບ"
+  },
+  "Copied ✓": {
+    "en": "Copied ✓",
+    "th": "คัดลอกแล้ว ✓",
+    "lo": "ຄັດລອກແລ້ວ ✓"
+  },
+  "Copied to clipboard.": {
+    "en": "Copied to clipboard.",
+    "th": "คัดลอกลงคลิปบอร์ดแล้ว",
+    "lo": "ຄັດລອກລົງຄລິບບອດແລ້ວ"
+  },
+  "Select and copy manually": {
+    "en": "Select and copy manually",
+    "th": "เลือกข้อความเพื่อคัดลอก",
+    "lo": "ເລືອກຂໍ້ຄວາມເພື່ອຄັດລອກ"
+  },
+  "Clipboard unavailable. Select the displayed code and copy manually.": {
+    "en": "Clipboard unavailable. Select the displayed code and copy manually.",
+    "th": "ไม่สามารถใช้คลิปบอร์ดได้ โปรดเลือกโค้ดที่แสดงแล้วคัดลอกด้วยตนเอง",
+    "lo": "ບໍ່ສາມາດໃຊ້ຄລິບບອດໄດ້ ກະລຸນາເລືອກໂຄດທີ່ສະແດງ ແລ້ວຄັດລອກດ້ວຍຕົນເອງ"
+  },
+  "Loading the current source from GitHub…": {
+    "en": "Loading the current source from GitHub…",
+    "th": "กำลังโหลดซอร์สโค้ดล่าสุดจาก GitHub…",
+    "lo": "ກຳລັງໂຫຼດຊອດໂຄດລ່າສຸດຈາກ GitHub…"
+  },
+  "Full Bash script from the main branch. Review all options before running; copying does not execute it.": {
+    "en": "Full Bash script from the main branch. Review all options before running; copying does not execute it.",
+    "th": "สคริปต์ Bash ฉบับเต็มจากสาขา main โปรดตรวจตัวเลือกก่อนใช้งาน การคัดลอกไม่ได้รันสคริปต์",
+    "lo": "ສະຄຣິບ Bash ສະບັບເຕັມຈາກສາຂາ main ກະລຸນາກວດຕົວເລືອກກ່ອນໃຊ້ງານ ການຄັດລອກບໍ່ໄດ້ເອີ້ນໃຊ້ສະຄຣິບ"
+  },
+  "Could not load the source. Use “View source on GitHub” to read and copy it there.": {
+    "en": "Could not load the source. Use “View source on GitHub” to read and copy it there.",
+    "th": "โหลดซอร์สโค้ดไม่สำเร็จ ใช้ลิงก์ “ดูซอร์สโค้ดบน GitHub” เพื่ออ่านและคัดลอกจากต้นทาง",
+    "lo": "ໂຫຼດຊອດໂຄດບໍ່ສຳເລັດ ໃຊ້ລິງ “ເບິ່ງຊອດໂຄດເທິງ GitHub” ເພື່ອອ່ານ ແລະ ຄັດລອກຈາກຕົ້ນທາງ"
+  },
+  "Language": {
+    "en": "Language",
+    "th": "ภาษา",
+    "lo": "ພາສາ"
+  },
+  "Sysadmin Script Library · IT Training": {
+    "en": "Sysadmin Script Library · IT Training",
+    "th": "คลังสคริปต์ผู้ดูแลระบบ · IT Training",
+    "lo": "ຄັງສະຄຣິບຜູ້ດູແລລະບົບ · IT Training"
+  }
+};
+let language = 'th';
+try {
+  const saved = localStorage.getItem('ittraining-script-language');
+  if (['th', 'en', 'lo'].includes(saved)) language = saved;
+} catch { /* Storage is optional; language selection still works. */ }
+const t = key => translations[key]?.[language] ?? key;
+const textBindings = [];
+const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+while (walker.nextNode()) {
+  const node = walker.currentNode;
+  if (node.parentElement.closest('script, style, pre, code, svg, .terminal-body, #language, #count, #source-title, #source-status, #announcement, .copy, #copy-source')) continue;
+  const original = node.nodeValue;
+  if (translations[original.trim()]) textBindings.push({node, original, key: original.trim()});
+}
+const attributeBindings = [];
+document.querySelectorAll('[aria-label], [placeholder]').forEach(element => {
+  for (const name of ['aria-label', 'placeholder']) {
+    const key = element.getAttribute(name);
+    if (key && translations[key]) attributeBindings.push({element, name, key});
+    else if (key?.startsWith('Copy command for ')) {
+      element.dataset.copyFile = key.slice('Copy command for '.length);
+    }
+  }
+});
+document.querySelectorAll('.copy, #copy-source').forEach(button => {
+  button.dataset.label = button.textContent.trim();
+});
+function setSourceStatus(key) {
+  sourceStatus.dataset.message = key;
+  sourceStatus.textContent = t(key);
+}
+function applyLanguage() {
+  document.documentElement.lang = language;
+  document.title = t('Sysadmin Script Library · IT Training');
+  document.querySelector('meta[name="description"]').content = t('Practical scripts for Linux & Proxmox. Find the right tool, understand what it changes, and review the code before you run it.');
+  document.getElementById('language').value = language;
+  textBindings.forEach(({node, original, key}) => { node.nodeValue = original.replace(key, t(key)); });
+  attributeBindings.forEach(({element, name, key}) => element.setAttribute(name, t(key)));
+  document.querySelectorAll('[data-copy-file]').forEach(button => button.setAttribute('aria-label', `${t('Copy command for')} ${button.dataset.copyFile}`));
+  document.querySelectorAll('[data-label]').forEach(button => { button.textContent = t(button.dataset.copyState || button.dataset.label); });
+  if (sourceStatus.dataset.message) sourceStatus.textContent = t(sourceStatus.dataset.message);
+  if (!dialog.open) document.getElementById('source-title').textContent = t('Script source');
+  filterCards();
+}
+document.getElementById('language').addEventListener('change', event => {
+  language = event.target.value;
+  try { localStorage.setItem('ittraining-script-language', language); } catch { /* Private browsing may block storage. */ }
+  applyLanguage();
+});
+
 const cards = [...document.querySelectorAll('.card')];
+// Index all languages so changing language never breaks a useful search.
+const searchIndex = new Map(cards.map(card => {
+  const keys = Object.keys(translations).filter(key => card.textContent.includes(key));
+  return [card, (card.textContent + ' ' + keys.flatMap(key => Object.values(translations[key])).join(' ')).normalize('NFC').toLowerCase()];
+}));
 const filters = document.getElementById('filters');
 const search = document.getElementById('search');
 const task = document.getElementById('task');
 let platform = 'all';
 function filterCards() {
-  const query = search.value.trim().toLowerCase();
+  const query = search.value.trim().normalize('NFC').toLowerCase();
   let visible = 0;
   cards.forEach(card => {
-    card.hidden = !((platform === 'all' || card.dataset.p === platform) && (task.value === 'all' || card.dataset.task === task.value) && card.textContent.toLowerCase().includes(query));
+    card.hidden = !((platform === 'all' || card.dataset.p === platform) && (task.value === 'all' || card.dataset.task === task.value) && searchIndex.get(card).includes(query));
     if (!card.hidden) visible += 1;
   });
-  document.getElementById('count').textContent = `Showing ${visible} of ${cards.length} scripts`;
+  document.getElementById('count').textContent = t('Showing {n} of {total} scripts').replace('{n}', visible).replace('{total}', cards.length);
   document.getElementById('empty').hidden = visible > 0;
 }
 filters.addEventListener('click', event => {
@@ -111,16 +713,18 @@ document.getElementById('reset').addEventListener('click', () => {
   search.value = ''; task.value = 'all'; filters.querySelector('[data-f="all"]').click(); search.focus();
 });
 async function copyText(text, button) {
-  const label = button.textContent;
+  clearTimeout(button.copyTimer);
   try {
     await navigator.clipboard.writeText(text);
-    button.textContent = 'Copied ✓';
-    document.getElementById('announcement').textContent = 'Copied to clipboard.';
+    button.dataset.copyState = 'Copied ✓';
+    button.textContent = t(button.dataset.copyState);
+    document.getElementById('announcement').textContent = t('Copied to clipboard.');
   } catch {
-    button.textContent = 'Select and copy manually';
-    document.getElementById('announcement').textContent = 'Clipboard unavailable. Select the displayed code and copy manually.';
+    button.dataset.copyState = 'Select and copy manually';
+    button.textContent = t(button.dataset.copyState);
+    document.getElementById('announcement').textContent = t('Clipboard unavailable. Select the displayed code and copy manually.');
   }
-  setTimeout(() => { button.textContent = label; }, 2400);
+  button.copyTimer = setTimeout(() => { delete button.dataset.copyState; button.textContent = t(button.dataset.label); }, 2400);
 }
 document.querySelectorAll('.copy').forEach(button => button.addEventListener('click', () => copyText(button.closest('.runbox').querySelector('pre').textContent.trim(), button)));
 const dialog = document.getElementById('source-dialog');
@@ -136,7 +740,7 @@ document.querySelectorAll('[data-source]').forEach(button => button.addEventList
   document.getElementById('source-title').textContent = path;
   document.getElementById('source-link').href = `https://github.com/ittraining2498/linux-sysadmin-scripts/blob/main/${path}`;
   sourceCode.textContent = ''; copySource.disabled = true;
-  sourceStatus.textContent = 'Loading the current source from GitHub…';
+  setSourceStatus('Loading the current source from GitHub…');
   dialog.showModal();
   const timeout = setTimeout(() => currentRequest.abort(), 15000);
   try {
@@ -146,13 +750,14 @@ document.querySelectorAll('[data-source]').forEach(button => button.addEventList
     if (!source.startsWith('#!/usr/bin/env bash')) throw new Error('Unexpected source');
     if (request !== currentRequest || !dialog.open) return;
     sourceCode.textContent = source;
-    sourceStatus.textContent = 'Full Bash script from the main branch. Review all options before running; copying does not execute it.';
+    setSourceStatus('Full Bash script from the main branch. Review all options before running; copying does not execute it.');
     copySource.disabled = false;
   } catch {
-    if (request === currentRequest && dialog.open) sourceStatus.textContent = 'Could not load the source. Use “View source on GitHub” to read and copy it there.';
+    if (request === currentRequest && dialog.open) setSourceStatus('Could not load the source. Use “View source on GitHub” to read and copy it there.');
   } finally { clearTimeout(timeout); }
 }));
 copySource.addEventListener('click', () => copyText(sourceCode.textContent, copySource));
 document.getElementById('close-dialog').addEventListener('click', () => dialog.close());
 dialog.addEventListener('close', () => { if (request) request.abort(); });
+applyLanguage();
 </script></body></html>
