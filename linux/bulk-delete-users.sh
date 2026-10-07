@@ -117,7 +117,7 @@ for u in "${TARGETS[@]}"; do
             log INFO "$u - home backed up to $archive"
         else
             log WARN "$u - backup failed, skipping this user"
-            ((failed++)); continue
+            failed=$((failed + 1)); continue
         fi
     fi
 
@@ -125,9 +125,9 @@ for u in "${TARGETS[@]}"; do
     sleep 1
 
     if $REMOVE_HOME; then
-        if userdel -r "$u"; then log INFO "$u - deleted (home removed)"; else log ERROR "$u - userdel failed"; ((failed++)); fi
+        if userdel -r "$u"; then log INFO "$u - deleted (home removed)"; else log ERROR "$u - userdel failed"; failed=$((failed + 1)); fi
     else
-        if userdel "$u"; then log INFO "$u - deleted (home kept)"; else log ERROR "$u - userdel failed"; ((failed++)); fi
+        if userdel "$u"; then log INFO "$u - deleted (home kept)"; else log ERROR "$u - userdel failed"; failed=$((failed + 1)); fi
     fi
 done
 
