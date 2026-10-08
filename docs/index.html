@@ -90,7 +90,7 @@ cd linux-sysadmin-scripts
 chmod +x linux/*.sh proxmox/*.sh
 ./linux/check-disk.sh --help</code></pre></div><p class="note">Testing labels reflect the repository README, not certification for your environment. Proxmox live-cluster verification is still pending. MIT licensed; provided as is, without warranty.</p></div></section></main>
 <footer><div><strong>IT Training Company Limited</strong><br>Practical skills. Real understanding.<br>LINE @linux</div><div><div class="footerlinks"><a href="https://www.ittraining.co.th">Website</a><a href="https://courses.ittraining.co.th">Courses</a><a href="https://github.com/ittraining2498/linux-sysadmin-scripts/issues">Report an issue</a><a href="https://github.com/ittraining2498/linux-sysadmin-scripts/blob/main/LICENSE">MIT License</a></div><p>Built for the people who keep systems running.</p></div></footer></div>
-<dialog id="source-dialog" aria-labelledby="source-title"><div class="dialog-head"><div><div class="eyebrow">Review before running</div><h2 id="source-title">Script source</h2></div><button id="close-dialog" aria-label="Close script source">Close ×</button></div><p id="source-status" role="status"></p><pre id="source-code" tabindex="0"></pre><div class="dialog-actions"><button id="copy-source" class="primary" disabled>Copy full script</button><a id="source-link" href="https://github.com/ittraining2498/linux-sysadmin-scripts">View source on GitHub ↗</a></div></dialog><div id="announcement" class="sr-only" role="status"></div>
+<dialog id="source-dialog" aria-labelledby="source-title"><div class="dialog-head"><div><div class="eyebrow">Review before running</div><h2 id="source-title">Script source</h2></div><button id="close-dialog" aria-label="Close script source">Close ×</button></div><p id="source-status" role="status"></p><pre id="source-code" tabindex="0"></pre><div class="dialog-actions"><button id="copy-source" class="primary" disabled>Copy full script</button></div></dialog><div id="announcement" class="sr-only" role="status"></div>
 <script>
 
 const translations = {
@@ -569,11 +569,6 @@ const translations = {
     "th": "คัดลอกสคริปต์เต็ม",
     "lo": "ຄັດລອກສະຄຣິບເຕັມ"
   },
-  "View source on GitHub ↗": {
-    "en": "View source on GitHub ↗",
-    "th": "ดูซอร์สโค้ดบน GitHub ↗",
-    "lo": "ເບິ່ງຊອດໂຄດເທິງ GitHub ↗"
-  },
   "Showing {n} of {total} scripts": {
     "en": "Showing {n} of {total} scripts",
     "th": "แสดง {n} จาก {total} สคริปต์",
@@ -614,10 +609,10 @@ const translations = {
     "th": "สคริปต์ Bash ฉบับเต็มจากสาขา main โปรดตรวจตัวเลือกก่อนใช้งาน การคัดลอกไม่ได้รันสคริปต์",
     "lo": "ສະຄຣິບ Bash ສະບັບເຕັມຈາກສາຂາ main ກະລຸນາກວດຕົວເລືອກກ່ອນໃຊ້ງານ ການຄັດລອກບໍ່ໄດ້ເອີ້ນໃຊ້ສະຄຣິບ"
   },
-  "Could not load the source. Use “View source on GitHub” to read and copy it there.": {
-    "en": "Could not load the source. Use “View source on GitHub” to read and copy it there.",
-    "th": "โหลดซอร์สโค้ดไม่สำเร็จ ใช้ลิงก์ “ดูซอร์สโค้ดบน GitHub” เพื่ออ่านและคัดลอกจากต้นทาง",
-    "lo": "ໂຫຼດຊອດໂຄດບໍ່ສຳເລັດ ໃຊ້ລິງ “ເບິ່ງຊອດໂຄດເທິງ GitHub” ເພື່ອອ່ານ ແລະ ຄັດລອກຈາກຕົ້ນທາງ"
+  "Could not load the source. Close this window and try again.": {
+    "en": "Could not load the source. Close this window and try again.",
+    "th": "โหลดซอร์สโค้ดไม่สำเร็จ กรุณาปิดหน้าต่างนี้แล้วลองใหม่",
+    "lo": "ໂຫຼດຊອດໂຄດບໍ່ສຳເລັດ ກະລຸນາປິດປ່ອງຢ້ຽມນີ້ແລ້ວລອງໃໝ່"
   },
   "Language": {
     "en": "Language",
@@ -738,7 +733,6 @@ document.querySelectorAll('[data-source]').forEach(button => button.addEventList
   const currentRequest = request;
   const path = button.dataset.source;
   document.getElementById('source-title').textContent = path;
-  document.getElementById('source-link').href = `https://github.com/ittraining2498/linux-sysadmin-scripts/blob/main/${path}`;
   sourceCode.textContent = ''; copySource.disabled = true;
   setSourceStatus('Loading the current source from GitHub…');
   dialog.showModal();
@@ -753,7 +747,7 @@ document.querySelectorAll('[data-source]').forEach(button => button.addEventList
     setSourceStatus('Full Bash script from the main branch. Review all options before running; copying does not execute it.');
     copySource.disabled = false;
   } catch {
-    if (request === currentRequest && dialog.open) setSourceStatus('Could not load the source. Use “View source on GitHub” to read and copy it there.');
+    if (request === currentRequest && dialog.open) setSourceStatus('Could not load the source. Close this window and try again.');
   } finally { clearTimeout(timeout); }
 }));
 copySource.addEventListener('click', () => copyText(sourceCode.textContent, copySource));
