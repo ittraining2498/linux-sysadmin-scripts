@@ -6,7 +6,10 @@ Every script here is used in real administration work and in the courses taught 
 [IT Training](https://www.ittraining.co.th). They are written to be **safe by default**:
 dry-run first, protected system accounts, backups before destructive actions, and a log of what happened.
 
-**Browse them on the web:** https://ittraining2498.github.io/linux-sysadmin-scripts/
+<p align="center"><strong>IT TRAINING · OPEN SOURCE TOOLKIT</strong><br>
+<a href="https://ittraining2498.github.io/linux-sysadmin-scripts/"><strong>Explore the script library →</strong></a> &nbsp; · &nbsp;
+<a href="https://github.com/ittraining2498#start-of-content"><strong>Meet &amp; follow the maintainer ↗</strong></a><br>
+<sub>Open the maintainer profile, then select GitHub’s Follow button below the profile photo.</sub></p>
 
 ## Scripts
 
@@ -102,3 +105,10 @@ Provided as is, without warranty. Test in a lab before running on production sys
 ดูรายการสคริปต์แบบหน้าเว็บได้ที่ https://ittraining2498.github.io/linux-sysadmin-scripts/
 
 เนื้อหาส่วนหนึ่งมาจากคอร์สอบรมของ [ไอทีเทรนนิ่ง](https://www.ittraining.co.th) — LINE: `@linux`
+
+
+### ติดตามผู้พัฒนาและผลงานใหม่
+
+<a href="https://github.com/ittraining2498#start-of-content"><img src="https://raw.githubusercontent.com/ittraining2498/ittraining2498/main/assets/profile/follow-community-3d-v3.png" width="100%" alt="ติดตาม IT Training — เปิดโปรไฟล์แล้วกด Follow ใต้รูปโปรไฟล์ด้วยตนเอง"></a>
+
+<p align="center"><a href="https://github.com/ittraining2498#start-of-content"><strong>เปิดโปรไฟล์ IT Training · ไปที่ปุ่ม Follow ↑</strong></a><br><sub>ลิงก์นี้พาไปหน้าโปรไฟล์ ไม่ได้ติดตามอัตโนมัติ กรุณาลงชื่อเข้าใช้แล้วกด Follow ด้วยตนเอง</sub></p>
