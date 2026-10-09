@@ -25,9 +25,9 @@ body{background:radial-gradient(ellipse at 80% 5%,#edf8f4 0,transparent 35%),#ff
       <p class="filename">linux/bulk-delete-users.sh</p><p class="desc">Remove many user accounts in a single run — built for offboarding day.</p>
       <ul class="feat"><li>Dry-run by default; changes require --apply</li><li>Protected account list and a default minimum UID of 1000</li><li>Archives existing home directories before deletion</li><li>Timestamped deletion log in /var/log/bulk-delete-users.log</li></ul>
       <div class="requirements"><strong>Before you start</strong><p>Linux · root access · review usernames and home paths</p></div>
-      <p class="status ">Debian-family tests reported in README</p>
-      <div class="runbox"><div class="code-label">DRY-RUN PREVIEW<button class="copy" aria-label="Copy command for bulk-delete-users.sh">Copy command</button></div><pre><code>sudo ./linux/bulk-delete-users.sh alice bob carol</code></pre></div>
-      <details><summary>Usage notes &amp; limitations</summary><p>Deletion is irreversible. Review the source and home paths first. Do not lower --min-uid below 1000.</p><p>Run <code>./linux/bulk-delete-users.sh --help</code> to read all options.</p></details>
+      <p class="status ">Ubuntu 24.04 container tested · see README</p>
+      <div class="runbox"><div class="code-label">DRY-RUN PREVIEW<button class="copy" aria-label="Copy command for bulk-delete-users.sh">Copy command</button></div><pre><code>sudo bash ./linux/bulk-delete-users.sh alice bob carol</code></pre></div>
+      <details><summary>Usage notes &amp; limitations</summary><p>Deletion is irreversible. Review the source and home paths first. Do not lower --min-uid below 1000.</p><p>Run <code>bash ./linux/bulk-delete-users.sh --help</code> to read all options.</p></details>
       <button class="source-button" data-source="linux/bulk-delete-users.sh">View &amp; copy full script <span aria-hidden="true">↗</span></button>
       <div class="links">
         <a href="https://raw.githubusercontent.com/ittraining2498/linux-sysadmin-scripts/main/linux/bulk-delete-users.sh">Download raw</a>
@@ -40,10 +40,10 @@ body{background:radial-gradient(ellipse at 80% 5%,#edf8f4 0,transparent 35%),#ff
       </div>
       <p class="filename">linux/bulk-create-users.sh</p><p class="desc">Create a whole intake of users from one CSV file, with generated passwords.</p>
       <ul class="feat"><li>Preview CSV accounts before creating them</li><li>Generated passwords and first-login password expiry by default</li><li>Existing usernames are skipped</li><li>Credentials saved to a file with mode 600</li></ul>
-      <div class="requirements"><strong>Before you start</strong><p>Linux · root access · prepare staff.csv and existing groups</p></div>
-      <p class="status ">Debian-family tests reported in README</p>
-      <div class="runbox"><div class="code-label">DRY-RUN PREVIEW<button class="copy" aria-label="Copy command for bulk-create-users.sh">Copy command</button></div><pre><code>sudo ./linux/bulk-create-users.sh --file staff.csv</code></pre></div>
-      <details><summary>Usage notes &amp; limitations</summary><p>Preview first. The current parser supports simple CSV rows; avoid commas inside full names. Review group names before creating accounts.</p><p>Run <code>./linux/bulk-create-users.sh --help</code> to read all options.</p></details>
+      <div class="requirements"><strong>Before you start</strong><p>Linux · Bash · root · Python 3 · staff.csv and existing groups</p></div>
+      <p class="status ">Ubuntu 24.04 container tested · see README</p>
+      <div class="runbox"><div class="code-label">DRY-RUN PREVIEW<button class="copy" aria-label="Copy command for bulk-create-users.sh">Copy command</button></div><pre><code>sudo bash ./linux/bulk-create-users.sh --file staff.csv</code></pre></div>
+      <details><summary>Usage notes &amp; limitations</summary><p>Preview first. CSV supports quoted commas, BOM and CRLF. Groups must exist. Use a new password output file for each run.</p><p>Run <code>bash ./linux/bulk-create-users.sh --help</code> to read all options.</p></details>
       <button class="source-button" data-source="linux/bulk-create-users.sh">View &amp; copy full script <span aria-hidden="true">↗</span></button>
       <div class="links">
         <a href="https://raw.githubusercontent.com/ittraining2498/linux-sysadmin-scripts/main/linux/bulk-create-users.sh">Download raw</a>
@@ -57,9 +57,9 @@ body{background:radial-gradient(ellipse at 80% 5%,#edf8f4 0,transparent 35%),#ff
       <p class="filename">linux/check-disk.sh</p><p class="desc">Tell me which filesystems are about to fill up — and nothing else.</p>
       <ul class="feat"><li>Block usage and optional inode checks</li><li>Configurable threshold with --warn</li><li>Quiet output with --quiet</li><li>Non-zero exit code when a threshold is reached</li></ul>
       <div class="requirements"><strong>Before you start</strong><p>Linux · GNU df · no root access required</p></div>
-      <p class="status ">Debian-family tests reported in README</p>
-      <div class="runbox"><div class="code-label">READ-ONLY CHECK<button class="copy" aria-label="Copy command for check-disk.sh">Copy command</button></div><pre><code>./linux/check-disk.sh --warn 90 --inodes</code></pre></div>
-      <details><summary>Usage notes &amp; limitations</summary><p>Returns 0 when healthy and 1 at or above the threshold. A report is only as complete as the filesystems df can read.</p><p>Run <code>./linux/check-disk.sh --help</code> to read all options.</p></details>
+      <p class="status ">Ubuntu 24.04 container tested · see README</p>
+      <div class="runbox"><div class="code-label">READ-ONLY CHECK<button class="copy" aria-label="Copy command for check-disk.sh">Copy command</button></div><pre><code>bash ./linux/check-disk.sh --warn 90 --inodes</code></pre></div>
+      <details><summary>Usage notes &amp; limitations</summary><p>Returns 0 when healthy, 1 at the threshold, and 2 for invalid options or failed collection. Requires Linux and GNU df.</p><p>Run <code>bash ./linux/check-disk.sh --help</code> to read all options.</p></details>
       <button class="source-button" data-source="linux/check-disk.sh">View &amp; copy full script <span aria-hidden="true">↗</span></button>
       <div class="links">
         <a href="https://raw.githubusercontent.com/ittraining2498/linux-sysadmin-scripts/main/linux/check-disk.sh">Download raw</a>
@@ -74,8 +74,8 @@ body{background:radial-gradient(ellipse at 80% 5%,#edf8f4 0,transparent 35%),#ff
       <ul class="feat"><li>Cluster quorum and node overview</li><li>Checks four Proxmox services</li><li>Storage usage and local filesystem report</li><li>Running and total VMs and containers</li></ul>
       <div class="requirements"><strong>Before you start</strong><p>Proxmox VE node · run as root for complete reporting</p></div>
       <p class="status pending">Live cluster test pending</p>
-      <div class="runbox"><div class="code-label">READ-ONLY CHECK<button class="copy" aria-label="Copy command for cluster-health.sh">Copy command</button></div><pre><code>./proxmox/cluster-health.sh --warn 90</code></pre></div>
-      <details><summary>Usage notes &amp; limitations</summary><p>Not verified on a live cluster. A failed cluster-status command can be reported as standalone; verify quorum independently.</p><p>Run <code>./proxmox/cluster-health.sh --help</code> to read all options.</p></details>
+      <div class="runbox"><div class="code-label">READ-ONLY CHECK<button class="copy" aria-label="Copy command for cluster-health.sh">Copy command</button></div><pre><code>sudo bash ./proxmox/cluster-health.sh --warn 90</code></pre></div>
+      <details><summary>Usage notes &amp; limitations</summary><p>Tested with simulated Proxmox commands only. Failed checks return a warning; real node and cluster verification is still pending.</p><p>Run <code>sudo bash ./proxmox/cluster-health.sh --help</code> to read all options.</p></details>
       <button class="source-button" data-source="proxmox/cluster-health.sh">View &amp; copy full script <span aria-hidden="true">↗</span></button>
       <div class="links">
         <a href="https://raw.githubusercontent.com/ittraining2498/linux-sysadmin-scripts/main/proxmox/cluster-health.sh">Download raw</a>
@@ -275,11 +275,6 @@ const translations = {
     "th": "Linux · สิทธิ์ root · ตรวจชื่อผู้ใช้และเส้นทางโฟลเดอร์ส่วนตัว",
     "lo": "Linux · ສິດ root · ກວດຊື່ຜູ້ໃຊ້ ແລະ ເສັ້ນທາງໂຟນເດີສ່ວນຕົວ"
   },
-  "Debian-family tests reported in README": {
-    "en": "Debian-family tests reported in README",
-    "th": "README ระบุผลทดสอบบน Linux ตระกูล Debian",
-    "lo": "README ລະບຸຜົນທົດສອບເທິງ Linux ຕະກູນ Debian"
-  },
   "DRY-RUN PREVIEW": {
     "en": "DRY-RUN PREVIEW",
     "th": "คำสั่งทดลอง · ยังไม่เปลี่ยนแปลง",
@@ -350,16 +345,6 @@ const translations = {
     "th": "บันทึกรหัสผ่านลงไฟล์ที่กำหนดสิทธิ์เป็น 600",
     "lo": "ບັນທຶກລະຫັດຜ່ານລົງໄຟລ໌ທີ່ກຳນົດສິດເປັນ 600"
   },
-  "Linux · root access · prepare staff.csv and existing groups": {
-    "en": "Linux · root access · prepare staff.csv and existing groups",
-    "th": "Linux · สิทธิ์ root · เตรียม staff.csv และสร้างกลุ่มไว้ก่อน",
-    "lo": "Linux · ສິດ root · ກຽມ staff.csv ແລະ ສ້າງກຸ່ມໄວ້ກ່ອນ"
-  },
-  "Preview first. The current parser supports simple CSV rows; avoid commas inside full names. Review group names before creating accounts.": {
-    "en": "Preview first. The current parser supports simple CSV rows; avoid commas inside full names. Review group names before creating accounts.",
-    "th": "ทดลองก่อนเสมอ ตัวอ่านรองรับ CSV แบบง่าย หลีกเลี่ยงเครื่องหมายจุลภาคในชื่อเต็ม และตรวจชื่อกลุ่มก่อนสร้างบัญชี",
-    "lo": "ທົດລອງກ່ອນສະເໝີ ຕົວອ່ານຮອງຮັບ CSV ແບບງ່າຍ ຫຼີກລ້ຽງເຄື່ອງໝາຍຈຸດໃນຊື່ເຕັມ ແລະ ກວດຊື່ກຸ່ມກ່ອນສ້າງບັນຊີ"
-  },
   "Check disk & inode usage": {
     "en": "Check disk & inode usage",
     "th": "ตรวจพื้นที่ดิสก์และ inode",
@@ -400,11 +385,6 @@ const translations = {
     "th": "ตรวจสอบ · ไม่แก้ไขระบบ",
     "lo": "ກວດສອບ · ບໍ່ແກ້ໄຂລະບົບ"
   },
-  "Returns 0 when healthy and 1 at or above the threshold. A report is only as complete as the filesystems df can read.": {
-    "en": "Returns 0 when healthy and 1 at or above the threshold. A report is only as complete as the filesystems df can read.",
-    "th": "คืนค่า 0 เมื่อปกติ และ 1 เมื่อถึงหรือเกินเกณฑ์ รายงานครอบคลุมเฉพาะระบบไฟล์ที่ df อ่านได้",
-    "lo": "ສົ່ງຄ່າ 0 ເມື່ອປົກກະຕິ ແລະ 1 ເມື່ອເຖິງ ຫຼື ເກີນເກນ ລາຍງານຄອບຄຸມສະເພາະລະບົບໄຟລ໌ທີ່ df ອ່ານໄດ້"
-  },
   "Inspect a Proxmox node": {
     "en": "Inspect a Proxmox node",
     "th": "ตรวจสถานะโหนด Proxmox",
@@ -444,11 +424,6 @@ const translations = {
     "en": "Live cluster test pending",
     "th": "ยังไม่ได้ทดสอบบนคลัสเตอร์จริง",
     "lo": "ຍັງບໍ່ໄດ້ທົດສອບເທິງຄລັດສະເຕີຈິງ"
-  },
-  "Not verified on a live cluster. A failed cluster-status command can be reported as standalone; verify quorum independently.": {
-    "en": "Not verified on a live cluster. A failed cluster-status command can be reported as standalone; verify quorum independently.",
-    "th": "ยังไม่ได้ยืนยันบนคลัสเตอร์จริง หากคำสั่งอ่านสถานะคลัสเตอร์ล้มเหลว อาจรายงานว่าเป็นโหนดเดี่ยว ควรตรวจ quorum แยกอีกครั้ง",
-    "lo": "ຍັງບໍ່ໄດ້ຢືນຢັນເທິງຄລັດສະເຕີຈິງ ຖ້າຄຳສັ່ງອ່ານສະຖານະຄລັດສະເຕີລົ້ມເຫຼວ ອາດລາຍງານວ່າເປັນໂນດດ່ຽວ ຄວນກວດ quorum ແຍກອີກຄັ້ງ"
   },
   "No matching scripts. Try another search or reset the filters.": {
     "en": "No matching scripts. Try another search or reset the filters.",
@@ -614,6 +589,31 @@ const translations = {
     "en": "Sysadmin Script Library · IT Training",
     "th": "คลังสคริปต์ผู้ดูแลระบบ · IT Training",
     "lo": "ຄັງສະຄຣິບຜູ້ດູແລລະບົບ · IT Training"
+  },
+  "Ubuntu 24.04 container tested · see README": {
+    "en": "Ubuntu 24.04 container tested · see README",
+    "th": "ทดสอบใน Ubuntu 24.04 container แล้ว · ดู README",
+    "lo": "ທົດສອບໃນ Ubuntu 24.04 container ແລ້ວ · ເບິ່ງ README"
+  },
+  "Linux · Bash · root · Python 3 · staff.csv and existing groups": {
+    "en": "Linux · Bash · root · Python 3 · staff.csv and existing groups",
+    "th": "Linux · Bash · root · Python 3 · เตรียม staff.csv และกลุ่มที่มีอยู่",
+    "lo": "Linux · Bash · root · Python 3 · ກຽມ staff.csv ແລະ ກຸ່ມທີ່ມີຢູ່"
+  },
+  "Preview first. CSV supports quoted commas, BOM and CRLF. Groups must exist. Use a new password output file for each run.": {
+    "en": "Preview first. CSV supports quoted commas, BOM and CRLF. Groups must exist. Use a new password output file for each run.",
+    "th": "ทดลองก่อน รองรับ CSV ที่ใส่เครื่องหมายคำพูดครอบจุลภาค รวมถึง BOM และ CRLF กลุ่มต้องมีอยู่แล้ว และใช้ไฟล์รหัสผ่านชื่อใหม่ในแต่ละรอบ",
+    "lo": "ທົດລອງກ່ອນ ຮອງຮັບ CSV ທີ່ມີຈຸດຈ້ຳໃນເຄື່ອງໝາຍຄຳເວົ້າ, BOM ແລະ CRLF ກຸ່ມຕ້ອງມີຢູ່ແລ້ວ ແລະ ໃຊ້ໄຟລ໌ລະຫັດຜ່ານໃໝ່ໃນແຕ່ລະຄັ້ງ"
+  },
+  "Returns 0 when healthy, 1 at the threshold, and 2 for invalid options or failed collection. Requires Linux and GNU df.": {
+    "en": "Returns 0 when healthy, 1 at the threshold, and 2 for invalid options or failed collection. Requires Linux and GNU df.",
+    "th": "รหัสออก 0 คือปกติ, 1 คือถึงเกณฑ์แจ้งเตือน, 2 คือตัวเลือกผิดหรืออ่านข้อมูลไม่สำเร็จ ต้องใช้บน Linux ที่มี GNU df",
+    "lo": "ລະຫັດອອກ 0 ແມ່ນປົກກະຕິ, 1 ແມ່ນເຖິງເກນແຈ້ງເຕືອນ, 2 ແມ່ນຕົວເລືອກຜິດ ຫຼື ອ່ານຂໍ້ມູນບໍ່ສຳເລັດ ໃຊ້ Linux ແລະ GNU df"
+  },
+  "Tested with simulated Proxmox commands only. Failed checks return a warning; real node and cluster verification is still pending.": {
+    "en": "Tested with simulated Proxmox commands only. Failed checks return a warning; real node and cluster verification is still pending.",
+    "th": "ทดสอบด้วยคำสั่ง Proxmox จำลองเท่านั้น หากตรวจไม่สำเร็จจะแจ้งเตือน ยังรอทดสอบบนโหนดและคลัสเตอร์จริง",
+    "lo": "ທົດສອບດ້ວຍຄຳສັ່ງ Proxmox ຈຳລອງເທົ່ານັ້ນ ຖ້າກວດບໍ່ສຳເລັດຈະແຈ້ງເຕືອນ ຍັງລໍຖ້າທົດສອບໃນໂໜດ ແລະ ຄລັດສະເຕີຈິງ"
   }
 };
 let language = 'th';

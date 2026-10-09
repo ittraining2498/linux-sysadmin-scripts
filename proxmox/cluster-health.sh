@@ -1,121 +1,103 @@
 #!/usr/bin/env bash
 #
-# cluster-health.sh — One-page health check for a Proxmox VE node or cluster.
-#
-# Checks: cluster quorum, node status, pvedaemon/pveproxy/pve-cluster services,
-#         storage usage, local disk usage, and running guests.
+# cluster-health.sh — Report Proxmox VE node, cluster, storage and guest health.
 #
 # Usage:
-#   ./cluster-health.sh              # warn when storage is 85% full
-#   ./cluster-health.sh -w 90
-#   ./cluster-health.sh -q           # only print problems
+#   ./cluster-health.sh
+#   ./cluster-health.sh --warn 90
+#   ./cluster-health.sh --quiet
 #
 # Options:
-#   -w, --warn PERCENT   storage usage considered a problem (default 85)
-#   -q, --quiet          print only warnings and errors
-#   -h, --help           show this help
+#   --warn PERCENT    alert at or above 0-100 (default 85; -w accepted)
+#   --quiet           print only warnings and errors (-q accepted)
+#   -h, --help        show this help
 #
-# Exit codes: 0 = healthy, 1 = at least one problem found
+# Exit codes: 0 = healthy, 1 = problem or failed check, 2 = usage/environment error.
 #
 # IT Training Company Limited | https://www.ittraining.co.th | LINE @linux
 
-set -uo pipefail
-
+set -euo pipefail
+usage() { sed -n '2,/^$/p' "$0" | sed 's/^# *//'; }
+die() { printf '%s [ERROR] %s\n' "$(date '+%F %T')" "$*" >&2; exit 2; }
 WARN=85
 QUIET=false
 problems=0
-
-usage() { sed -n '3,19p' "$0" | sed 's/^# \{0,1\}//'; exit 0; }
-
 while [[ $# -gt 0 ]]; do
     case "$1" in
-        -w|--warn) WARN="$2"; shift 2 ;;
+        -w|--warn) [[ $# -ge 2 && -n "$2" ]] || die "$1 requires a percentage"; WARN=$2; shift 2 ;;
         -q|--quiet) QUIET=true; shift ;;
-        -h|--help) usage ;;
-        *) echo "unknown option: $1" >&2; exit 2 ;;
+        -h|--help) usage; exit 0 ;;
+        *) die "unknown option: $1" ;;
     esac
 done
+[[ "$WARN" =~ ^[0-9]{1,3}$ ]] || die '--warn must be an integer from 0 to 100'
+WARN=$((10#$WARN))
+(( WARN <= 100 )) || die '--warn must be an integer from 0 to 100'
+[[ $(uname -s) == Linux ]] || die 'run this script on a Proxmox VE Linux node'
+[[ $EUID -eq 0 ]] || die 'run as root on the Proxmox node (sudo bash cluster-health.sh)'
+for cmd in pveversion pvecm pvesm qm pct systemctl df awk; do
+    command -v "$cmd" >/dev/null || die "required command missing: $cmd; run on a Proxmox VE node"
+done
+ok() { if ! $QUIET; then printf '%s [OK] %s\n' "$(date '+%F %T')" "$*"; fi; }
+warn() { printf '%s [WARN] %s\n' "$(date '+%F %T')" "$*"; problems=$((problems + 1)); }
+if version=$(pveversion); then ok "$version"; else warn 'pveversion failed'; fi
 
-ok()   { $QUIET || printf '  [ OK ]  %s\n' "$1"; }
-warn() { printf '  [WARN]  %s\n' "$1"; problems=$((problems + 1)); }
-head2() { $QUIET || printf '\n%s\n%s\n' "$1" "$(printf '%.0s-' {1..60})"; }
-
-command -v pveversion >/dev/null 2>&1 || { echo "ERROR: this is not a Proxmox VE node" >&2; exit 2; }
-
-# ---------- version ----------
-head2 "Proxmox VE"
-$QUIET || printf '  %s on %s\n' "$(pveversion | head -1)" "$(hostname -f 2>/dev/null || hostname)"
-
-# ---------- cluster quorum ----------
-head2 "Cluster"
-if command -v pvecm >/dev/null 2>&1 && pvecm status >/dev/null 2>&1; then
-    if pvecm status 2>/dev/null | grep -qi 'Quorate:.*Yes'; then
-        ok "cluster is quorate"
+# A failed cluster command is not evidence that the node is standalone.
+if [[ -f /etc/pve/corosync.conf ]]; then
+    if cluster=$(pvecm status); then
+        if grep -Eiq '^[[:space:]]*Quorate:[[:space:]]+Yes[[:space:]]*$' <<< "$cluster"; then
+            ok 'cluster is quorate'
+        else
+            warn 'cluster is NOT quorate or quorum could not be determined'
+        fi
+        if nodes=$(pvecm nodes); then ok "cluster nodes: $nodes"; else warn 'could not read cluster nodes'; fi
     else
-        warn "cluster is NOT quorate - check corosync and node connectivity"
+        warn 'pvecm status failed for a configured cluster; check corosync and node connectivity'
     fi
-    while read -r line; do
-        [[ -z "$line" ]] && continue
-        $QUIET || printf '  node: %s\n' "$line"
-    done < <(pvecm nodes 2>/dev/null | tail -n +5 | awk '{print $3, $4}')
 else
-    ok "standalone node (no cluster configured)"
+    ok 'standalone node (no corosync configuration)'
 fi
-
-# ---------- services ----------
-head2 "Services"
 for svc in pve-cluster pvedaemon pveproxy pvestatd; do
-    if systemctl is-active --quiet "$svc" 2>/dev/null; then
-        ok "$svc is active"
+    if systemctl is-active --quiet "$svc"; then ok "$svc is active"; else warn "$svc is NOT active"; fi
+done
+if storage=$(LC_ALL=C pvesm status); then
+    storage_count=0
+    while read -r name type status total used _ pct_value; do
+        [[ -n "$name" && "$name" != Name ]] || continue
+        storage_count=$((storage_count + 1))
+        if [[ "$status" != active ]]; then warn "storage '$name' ($type) is $status"; continue; fi
+        if [[ ! "$pct_value" =~ ^[0-9]+([.][0-9]+)?%$ ]]; then warn "invalid usage for storage '$name': $pct_value"; continue; fi
+        pct_num=${pct_value%\%}; pct_num=${pct_num%%.*}; pct_num=$((10#$pct_num))
+        if (( pct_num >= WARN )); then warn "storage '$name' is $pct_value full ($used of $total)"; else ok "storage '$name' $pct_value used"; fi
+    done <<< "$storage"
+    if (( storage_count == 0 )); then warn 'no storage rows returned'; fi
+else
+    warn 'pvesm status failed; storage health is unknown'
+fi
+if disks=$(LC_ALL=C df -hP -x tmpfs -x devtmpfs -x squashfs); then
+    first=true; disk_count=0
+    while read -r fs size used _ pct_value mount; do
+        if $first; then first=false; continue; fi
+        [[ -n "$fs" ]] || continue
+        [[ "$mount" =~ ^/(dev|proc|sys|run)(/|$) ]] && continue
+        if [[ ! "$pct_value" =~ ^[0-9]+%$ || -z "$mount" ]]; then warn 'invalid filesystem row'; continue; fi
+        disk_count=$((disk_count + 1)); pct_num=${pct_value%\%}; pct_num=$((10#$pct_num))
+        if (( pct_num >= WARN )); then warn "$mount is $pct_value full ($used of $size)"; else ok "$mount $pct_value used"; fi
+    done <<< "$disks"
+    if (( disk_count == 0 )); then warn 'no local filesystems were checked'; fi
+else
+    warn 'df failed; local filesystem health is unknown'
+fi
+for kind in qm pct; do
+    if guests=$("$kind" list); then
+        if [[ "$guests" != *VMID* ]]; then warn "$kind list returned an invalid report"; continue; fi
+        status_column=3; [[ "$kind" != pct ]] || status_column=2
+        counts=$(awk -v col="$status_column" 'NR>1 && NF {total++; if ($col=="running") running++} END {printf "%d running / %d total",running,total}' <<< "$guests")
+        ok "$kind: $counts"
     else
-        warn "$svc is NOT active"
+        warn "$kind list failed; guest counts are unknown"
     fi
 done
-
-# ---------- storage ----------
-head2 "Storage"
-while read -r name type status total used _ pct; do
-    [[ "$name" == "Name" || -z "$name" ]] && continue
-    if [[ "$status" != "active" ]]; then
-        warn "storage '$name' ($type) is $status"
-        continue
-    fi
-    pct_num="${pct%\%}"
-    pct_num="${pct_num%%.*}"
-    [[ "$pct_num" =~ ^[0-9]+$ ]] || continue
-    if (( pct_num >= WARN )); then
-        warn "storage '$name' is ${pct_num}% full ($used of $total)"
-    else
-        ok "storage '$name' ${pct_num}% used"
-    fi
-done < <(pvesm status 2>/dev/null)
-
-# ---------- local disks ----------
-head2 "Local filesystems"
-while read -r _ size used _ pct mount; do
-    [[ "$mount" =~ ^/(dev|proc|sys|run) ]] && continue
-    pct_num="${pct%\%}"
-    if (( pct_num >= WARN )); then
-        warn "$mount is ${pct} full ($used of $size)"
-    else
-        ok "$mount ${pct} used"
-    fi
-done < <(df -hP -x tmpfs -x devtmpfs 2>/dev/null | tail -n +2)
-
-# ---------- guests ----------
-head2 "Guests"
-vm_run=$(qm list 2>/dev/null | awk 'NR>1 && $3=="running"' | wc -l)
-vm_all=$(qm list 2>/dev/null | awk 'NR>1' | wc -l)
-ct_run=$(pct list 2>/dev/null | awk 'NR>1 && $2=="running"' | wc -l)
-ct_all=$(pct list 2>/dev/null | awk 'NR>1' | wc -l)
-$QUIET || printf '  VMs:        %s running / %s total\n' "$vm_run" "$vm_all"
-$QUIET || printf '  Containers: %s running / %s total\n' "$ct_run" "$ct_all"
-
-# ---------- summary ----------
-echo
-if (( problems > 0 )); then
-    printf '%d problem(s) found.\n' "$problems"
-    exit 1
-fi
-$QUIET || printf 'All checks passed.\n'
+if (( problems > 0 )); then printf '%d problem(s) found.\n' "$problems"; exit 1; fi
+ok 'All checks passed.'
 exit 0

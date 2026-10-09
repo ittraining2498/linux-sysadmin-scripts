@@ -30,3 +30,137 @@ jobs:
         run: |
           find . -name '*.sh' -not -path './.git/*' -print0 \
             | xargs -0 -n1 bash -n
+
+  runtime:
+    name: Ubuntu container regression
+    runs-on: ubuntu-latest
+    container: ubuntu:24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install runtime dependencies
+        run: apt-get update -qq && DEBIAN_FRONTEND=noninteractive apt-get install -y -qq python3 procps passwd tar coreutils gawk
+      - name: Exercise scripts in the disposable container
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import os, pathlib, subprocess, tarfile, pwd, stat
+          P=pathlib.Path
+          root=P.cwd()
+          passed=0
+
+          def check(label, args, code=0, contains=None, env=None):
+              global passed
+              r=subprocess.run(args,text=True,capture_output=True,env=env)
+              assert r.returncode==code,(label,r.returncode,r.stdout,r.stderr)
+              if contains: assert contains in r.stdout+r.stderr,(label,r.stdout,r.stderr)
+              passed+=1
+              print('PASS',label, 'exit='+str(r.returncode))
+              return r
+
+          def script(name,*args,**kw):
+              return check(name+' '+' '.join(args),['bash',str(root/name),*args],**kw)
+
+          for name in ['linux/bulk-create-users.sh','linux/bulk-delete-users.sh','linux/check-disk.sh','proxmox/cluster-health.sh']:
+              script(name,'--help',contains='Exit codes:')
+              script(name,'--not-an-option',code=2,contains='unknown option')
+          for name,opt in [('linux/bulk-create-users.sh','--file'),('linux/bulk-create-users.sh','--out'),('linux/bulk-create-users.sh','--shell'),('linux/bulk-delete-users.sh','--file'),('linux/bulk-delete-users.sh','--min-uid'),('linux/check-disk.sh','--warn'),('linux/check-disk.sh','--exclude'),('proxmox/cluster-health.sh','--warn')]:
+              script(name,opt,code=2,contains='requires')
+          for name in ['linux/check-disk.sh','proxmox/cluster-health.sh']:
+              for value in ['abc','-1','101']:
+                  script(name,'--warn',value,code=2,contains='0 to 100')
+          script('linux/check-disk.sh','--warn','100','--inodes',contains='OK')
+          r=script('linux/check-disk.sh','--warn','100','--quiet');assert not r.stdout
+          script('linux/check-disk.sh','--warn','0',code=1,contains='threshold check')
+          script('linux/check-disk.sh','--warn','008','--exclude','[',code=2,contains='invalid regex')
+          script('linux/check-disk.sh','--exclude','.*',code=2,contains='no eligible')
+          P('/tmp/faildf').mkdir(exist_ok=True)
+          P('/tmp/faildf/df').write_text('#!/bin/sh\necho forced-df-failure >&2\nexit 7\n');P('/tmp/faildf/df').chmod(0o755)
+          env=dict(os.environ,PATH='/tmp/faildf:'+os.environ['PATH'])
+          script('linux/check-disk.sh',code=2,contains='health is unknown',env=env)
+
+          check('test group',['groupadd','labteam'])
+          P('staff.csv').write_bytes(b'\xef\xbb\xbfusername,full name,groups\r\nlabalice,"Alice, Example",labteam\r\nlabbob,Bob Example,\r\n')
+          script('linux/bulk-create-users.sh','--file','staff.csv',contains='2 would be created')
+          check('dry run did not create Alice',['id','labalice'],code=1)
+          P('invalid.csv').write_text('labinvalid,Invalid,missinggroup\n')
+          script('linux/bulk-create-users.sh','--file','invalid.csv','--apply',code=2,contains='does not exist')
+          check('invalid group did not create user',['id','labinvalid'],code=1)
+          P('invalid.csv').write_text('labalice,One,\nlabalice,Two,\n')
+          script('linux/bulk-create-users.sh','--file','invalid.csv',code=2,contains='duplicate')
+          P('invalid.csv').write_text('labalice,"Bad name,\n')
+          script('linux/bulk-create-users.sh','--file','invalid.csv',code=2,contains='CSV validation failed')
+          script('linux/bulk-create-users.sh','--file','staff.csv','--apply','--out','/missing-parent/passwords.csv',code=2,contains='no accounts changed')
+          check('bad output did not create user',['id','labalice'],code=1)
+          r=script('linux/bulk-create-users.sh','--file','staff.csv','--apply','--out',str(root/'passwords.csv'),contains='2 created')
+          print('CREATE OUTPUT:\n'+r.stdout+r.stderr)
+          assert pwd.getpwnam('labalice').pw_uid>=1000
+          assert pwd.getpwnam('labalice').pw_gecos=='Alice, Example'
+          assert stat.S_IMODE(P('passwords.csv').stat().st_mode)==0o600
+          assert len(P('passwords.csv').read_text().splitlines())==3
+          check('supplementary group',['id','labalice'],contains='labteam')
+          shadow=subprocess.check_output(['getent','shadow','labalice'],text=True).split(':');assert shadow[2]=='0' and shadow[1] not in ('!','*','')
+          script('linux/bulk-create-users.sh','--file','staff.csv','--apply','--out',str(root/'passwords.csv'),contains='2 skipped')
+          P('other.csv').write_text('labother,Other,\n')
+          script('linux/bulk-create-users.sh','--file','other.csv','--apply','--out',str(root/'passwords.csv'),code=2,contains='already exists')
+          check('existing output prevented create',['id','labother'],code=1)
+          script('linux/bulk-create-users.sh','--file','other.csv','--apply','--out',str(root/'otherpass.csv'),'--no-expire')
+          assert subprocess.check_output(['getent','shadow','labother'],text=True).split(':')[2]!='0'
+
+          script('linux/bulk-delete-users.sh','--min-uid','0','root','--apply','--yes',code=2,contains='cannot be below')
+          script('linux/bulk-delete-users.sh','root','nobody','--apply','--yes',code=1,contains='protected account')
+          check('system user',['useradd','--uid','999','labsystem'])
+          script('linux/bulk-delete-users.sh','labsystem','--apply','--yes',code=1,contains='below minimum')
+          check('system user survived',['id','labsystem'])
+          P('leavers.txt').write_bytes(b'# comment\r\nlabalice\r\nlabbob\r\nlabalice')
+          script('linux/bulk-delete-users.sh','--file','leavers.txt',contains='Total: 2 user(s)')
+          check('delete dry run kept user',['id','labalice'])
+          P('/home/labalice/proof.txt').write_text('preserve me')
+          r=script('linux/bulk-delete-users.sh','labalice','--apply','--yes','--remove-home',contains='1 deleted, 0 failed')
+          print('DELETE OUTPUT:\n'+r.stdout+r.stderr)
+          check('Alice deleted',['id','labalice'],code=1);assert not P('/home/labalice').exists()
+          archive=next(P('/var/backups/deleted-users').glob('labalice-*.tar.gz'))
+          with tarfile.open(archive) as t: assert t.extractfile('labalice/proof.txt').read()==b'preserve me'
+          assert list(P('/var/backups/deleted-users').glob('accounts-*/shadow'))
+          script('linux/bulk-delete-users.sh','labbob','--apply','--yes',contains='home kept')
+          assert P('/home/labbob').exists()
+          check('dangerous home account',['useradd','-M','-d','/home','labunsafe'])
+          script('linux/bulk-delete-users.sh','labunsafe','--apply','--yes','--remove-home',code=1,contains='refusing system/shared home')
+          check('unsafe user survived',['id','labunsafe'])
+          check('root-owned home account',['useradd','-M','-d','/srv/root-owned','labowned'])
+          P('/srv/root-owned').mkdir(parents=True,exist_ok=True)
+          script('linux/bulk-delete-users.sh','labowned','--apply','--yes','--remove-home',code=1,contains='not owned')
+          check('root-owned home user survived',['id','labowned'])
+          check('backup failure account',['useradd','-m','labbackup'])
+          P('/tmp/failtar').mkdir(exist_ok=True)
+          P('/tmp/failtar/tar').write_text('#!/bin/sh\nexit 1\n');P('/tmp/failtar/tar').chmod(0o755)
+          tarenv=dict(os.environ,PATH='/tmp/failtar:'+os.environ['PATH'])
+          script('linux/bulk-delete-users.sh','labbackup','--apply','--yes','--remove-home',code=1,contains='backup failed',env=tarenv)
+          check('backup failure kept account',['id','labbackup']);assert P('/home/labbackup').exists()
+          script('proxmox/cluster-health.sh',code=2,contains='required command missing')
+
+          # These are command fixtures, not a real Proxmox installation or cluster.
+          mock=P('/tmp/mockpve');mock.mkdir(exist_ok=True)
+          def cmd(name,body):
+           p=mock/name;p.write_text('#!/bin/sh\n'+body+'\n');p.chmod(0o755)
+          cmd('pveversion','echo pve-manager/test-fixture')
+          cmd('pvecm','[ "$1" = status ] && echo "Quorate: Yes"; exit 0')
+          cmd('systemctl','exit 0')
+          cmd('pvesm','printf "Name Type Status Total Used Available %%\\nlocal dir active 100 10 90 10.00%%\\n"')
+          cmd('qm','printf "VMID NAME STATUS MEM BOOTDISK PID\\n100 test running 1024 8 10\\n"')
+          cmd('pct','printf "VMID STATUS LOCK NAME\\n101 running - test\\n"')
+          env=dict(os.environ,PATH=str(mock)+':'+os.environ['PATH'])
+          script('proxmox/cluster-health.sh','--warn','100',contains='All checks passed',env=env)
+          r=script('proxmox/cluster-health.sh','--warn','100','--quiet',env=env);assert not r.stdout
+          P('/etc/pve').mkdir(exist_ok=True);P('/etc/pve/corosync.conf').touch()
+          script('proxmox/cluster-health.sh','--warn','100',contains='cluster is quorate',env=env)
+          cmd('pvecm','echo forced-cluster-error >&2; exit 1')
+          r=script('proxmox/cluster-health.sh','--warn','100','--quiet',code=1,contains='configured cluster',env=env)
+          print('PROXMOX SIMULATED FAILURE OUTPUT:\n'+r.stdout+r.stderr)
+          P('/etc/pve/corosync.conf').unlink()
+          cmd('pvesm','exit 1')
+          script('proxmox/cluster-health.sh','--warn','100','--quiet',code=1,contains='storage health is unknown',env=env)
+          cmd('pvesm','printf "Name Type Status Total Used Available %%\\nlocal dir active 100 10 90 10.00%%\\n"')
+          cmd('qm','exit 1')
+          script('proxmox/cluster-health.sh','--warn','100','--quiet',code=1,contains='qm list failed',env=env)
+          print('TOTAL:',passed,'checks passed; real Linux account operations, Proxmox command fixtures only.')
+          PY
