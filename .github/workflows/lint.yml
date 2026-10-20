@@ -60,6 +60,11 @@ jobs:
           def script(name,*args,**kw):
               return check(name+' '+' '.join(args),['bash',str(root/name),*args],**kw)
 
+          r=script('linux/bulk-delete-users.sh',code=2,contains='no accounts changed')
+          assert 'Preview only:' in r.stderr and '#guide-delete' in r.stderr
+          print('NO-ARGUMENT OUTPUT:\n'+r.stderr)
+          P('/tmp/test.sh').write_text((root/'linux/bulk-delete-users.sh').read_text())
+          check('renamed script guidance',['bash','/tmp/test.sh'],code=2,contains='sudo bash /tmp/test.sh alice')
           for name in ['linux/bulk-create-users.sh','linux/bulk-delete-users.sh','linux/check-disk.sh','proxmox/cluster-health.sh']:
               script(name,'--help',contains='Exit codes:')
               script(name,'--not-an-option',code=2,contains='unknown option')

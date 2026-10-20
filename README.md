@@ -19,6 +19,12 @@ dry-run first, protected system accounts, backups before destructive actions, an
 | [`linux/check-disk.sh`](linux/check-disk.sh) | Linux | Check space/inodes; exit 1 for thresholds and 2 for failed collection or invalid options |
 | [`proxmox/cluster-health.sh`](proxmox/cluster-health.sh) | Proxmox VE | Quorum, services, storage and guests; failed checks return non-zero, never a false healthy result |
 
+## Beginner guide
+
+Read the [step-by-step guide](https://ittraining2498.github.io/linux-sysadmin-scripts/#user-guide) for download/save instructions, choosing usernames, preparing CSV, previewing changes, interpreting results, and common errors. It is available in Thai, English and Lao.
+
+Running the deletion script without arguments now prints safe examples using its actual filename and exits 2 without changing accounts.
+
 ## Usage
 
 ```bash
@@ -89,19 +95,19 @@ sudo ./linux/bulk-create-users.sh --file staff.csv --apply   # create
 
 | Script | Tested on |
 |---|---|
-| `linux/bulk-delete-users.sh` | Ubuntu 24.04 container, 2026-10-10 — real dry-run, deletion, backup content, protected UIDs and unsafe-home checks |
-| `linux/bulk-create-users.sh` | Ubuntu 24.04 container, 2026-10-10 — real account creation, quoted CSV/BOM/CRLF, groups, password expiry and output permissions |
-| `linux/check-disk.sh` | Ubuntu 24.04 container, 2026-10-10 — real block/inode checks; simulated df failure must return 2 |
-| `proxmox/cluster-health.sh` | Ubuntu 24.04 container with simulated Proxmox commands, 2026-10-10 — quorum/storage/guest failure paths; **not tested on a real Proxmox node or cluster** |
+| `linux/bulk-delete-users.sh` | Ubuntu 24.04 container, 2026-10-20 — real dry-run, deletion, backup content, protected UIDs and unsafe-home checks |
+| `linux/bulk-create-users.sh` | Ubuntu 24.04 container, 2026-10-20 — real account creation, quoted CSV/BOM/CRLF, groups, password expiry and output permissions |
+| `linux/check-disk.sh` | Ubuntu 24.04 container, 2026-10-20 — real block/inode checks; simulated df failure must return 2 |
+| `proxmox/cluster-health.sh` | Ubuntu 24.04 container with simulated Proxmox commands, 2026-10-20 — quorum/storage/guest failure paths; **not tested on a real Proxmox node or cluster** |
 
 CI runs ShellCheck, `bash -n`, and isolated Ubuntu container regression checks on every push and pull request. Proxmox command fixtures are not a substitute for a real-cluster test.
 
-Latest local run: **69 command/exit-code checks passed**, plus assertions for backup contents, UID limits, password-file permissions, CSV full names and password expiry. Excerpts from the actual Ubuntu container output (timestamps are UTC):
+Latest local run (2026-10-20; also checks missing-user guidance and a renamed script): **71 command/exit-code checks passed**, plus assertions for backup contents, UID limits, password-file permissions, CSV full names and password expiry. Excerpts from the actual Ubuntu container output (timestamps are UTC):
 
 ```text
-2026-10-09 22:16:26 [INFO] finished: 2 created, 0 skipped, 0 failed
-2026-10-09 22:16:27 [INFO] finished: 1 deleted, 0 failed
-TOTAL: 69 checks passed; real Linux account operations, Proxmox command fixtures only.
+2026-10-20 08:55:24 [INFO] finished: 2 created, 0 skipped, 0 failed
+2026-10-20 08:55:25 [INFO] finished: 1 deleted, 0 failed
+TOTAL: 71 checks passed; real Linux account operations, Proxmox command fixtures only.
 ```
 
 These results do not verify every distribution or the reporter's environment. Include the exact command, OS/version and full error when reporting a failure; remove credentials first.
@@ -136,3 +142,9 @@ Provided as is, without warranty. Test in a lab before running on production sys
 <a href="https://github.com/ittraining2498#start-of-content"><img src="https://raw.githubusercontent.com/ittraining2498/ittraining2498/main/assets/profile/follow-community-3d-v3.png" width="100%" alt="ติดตาม IT Training — เปิดโปรไฟล์แล้วกด Follow ใต้รูปโปรไฟล์ด้วยตนเอง"></a>
 
 <p align="center"><a href="https://github.com/ittraining2498#start-of-content"><strong>เปิดโปรไฟล์ IT Training · ไปที่ปุ่ม Follow ↑</strong></a><br><sub>ลิงก์นี้พาไปหน้าโปรไฟล์ ไม่ได้ติดตามอัตโนมัติ กรุณาลงชื่อเข้าใช้แล้วกด Follow ด้วยตนเอง</sub></p>
+
+### คู่มือสำหรับผู้เริ่มต้น
+
+อ่าน [คู่มือทีละขั้น](https://ittraining2498.github.io/linux-sysadmin-scripts/#user-guide) ก่อนใช้ มีวิธีบันทึกไฟล์ หาชื่อบัญชี เตรียม CSV ทดลองก่อนทำจริง และแปลผลลัพธ์ครบทั้งสี่สคริปต์
+
+หากบันทึกเป็น `test.sh` การรัน `bash ./test.sh` อย่างเดียวยังไม่ระบุว่าจะลบใคร ให้ดู `bash ./test.sh --help` และทดลองด้วย `sudo bash ./test.sh ชื่อบัญชีจริง` โดยเปลี่ยนข้อความชื่อบัญชีจริงเป็นชื่อสำหรับล็อกอิน ไม่ใช่ชื่อ-นามสกุล ยังไม่เติม `--apply` จนกว่าจะตรวจรายการเรียบร้อย

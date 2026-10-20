@@ -3,7 +3,7 @@
 # bulk-delete-users.sh — Delete multiple Linux users safely in one run.
 #
 # Usage:
-#   ./bulk-delete-users.sh alice bob carol          # dry-run (default)
+#   sudo bash bulk-delete-users.sh alice bob carol  # replace example names; preview only
 #   ./bulk-delete-users.sh --file users.txt --apply     # actually delete
 #   ./bulk-delete-users.sh --file users.txt --apply --remove-home
 #
@@ -40,6 +40,17 @@ log() {
 }
 die() { log ERROR "$1"; exit 2; }
 usage() { sed -n '2,/^$/p' "$0" | sed 's/^# *//'; exit 0; }
+
+# Explain missing input before checking privileges; never guess deletion targets.
+if [[ $# -eq 0 ]]; then
+    log ERROR 'no users specified; no accounts changed'
+    printf '\nChoose existing login names, not full names. Replace alice with your target.\n' >&2
+    printf 'Preview only: sudo bash %q alice\n' "$0" >&2
+    printf 'Several users: sudo bash %q alice bob\n' "$0" >&2
+    printf 'Read all options: bash %q --help\n' "$0" >&2
+    printf 'Step-by-step guide: https://ittraining2498.github.io/linux-sysadmin-scripts/#guide-delete\n' >&2
+    exit 2
+fi
 
 # ---------- parse arguments ----------
 while [[ $# -gt 0 ]]; do
