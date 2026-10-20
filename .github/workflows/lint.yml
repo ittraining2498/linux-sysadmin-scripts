@@ -282,5 +282,22 @@ jobs:
           r=menu_run('Proxmox menu failed fixture',[('เลือกหมายเลข:','2\n'),('กี่เปอร์เซ็นต์','100\n')],path=pve_menu,env=env,code=1)
           assert 'แจ้งเตือน' in r and 'qm list failed' in r
           print('PROXMOX MENU FIXTURE OUTPUT:\n'+r)
+          info=str(root/'linux/system-info.sh')
+          script('linux/system-info.sh','--help',contains='Exit codes:')
+          script('linux/system-info.sh','--bad',code=2,contains='unknown option')
+          script('linux/system-info.sh','--all','--disk',code=2,contains='one option')
+          script('linux/system-info.sh','--menu',code=2,contains='Terminal')
+          for option in ['--all','--system','--memory','--disk']:
+              r=script('linux/system-info.sh',option,contains='อ่านข้อมูลเสร็จ')
+              if option=='--all': print('SYSTEM INFO REAL OUTPUT:\n'+r.stdout)
+          for selection in ['1','2','3','4']:
+              menu_run('system info menu '+selection,[('เลือกหมายเลข:',selection+'\n')],path=info)
+          menu_run('system info menu cancel',[('เลือกหมายเลข:','0\n')],path=info)
+          menu_run('system info invalid choice',[('เลือกหมายเลข:','x\n'),('เลือกหมายเลข:','0\n')],path=info)
+          menu_run('system info EOF',[('เลือกหมายเลข:','\x04')],path=info)
+          script('linux/system-info.sh','--disk',code=1,contains='รายงานไม่ครบ',env=dict(os.environ,PATH='/tmp/faildf:'+os.environ['PATH']))
+          P('/tmp/info-renamed.sh').write_text(P(info).read_text());P('/tmp/info-renamed.sh').chmod(0o755)
+          check('system info unprivileged',['runuser','-u','nobody','--','/tmp/info-renamed.sh','--all'],contains='อ่านข้อมูลเสร็จ')
+          menu_run('system info renamed direct',[('เลือกหมายเลข:','0\n')],path='/tmp/info-renamed.sh',direct=True)
           print('TOTAL:',passed,'checks passed; real Linux account operations, Proxmox command fixtures only.')
           PY

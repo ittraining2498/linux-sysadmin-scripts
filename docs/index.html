@@ -17,8 +17,8 @@ body{background:radial-gradient(ellipse at 80% 5%,#edf8f4 0,transparent 35%),#ff
 <svg xmlns="http://www.w3.org/2000/svg" style="display:none"><symbol id="users" viewBox="0 0 24 24"><circle cx="9" cy="7" r="3"/><path d="M3 21v-3a6 6 0 0 1 12 0v3M16 4a3 3 0 0 1 0 6M17 14a5 5 0 0 1 4 5v2"/></symbol><symbol id="user-plus" viewBox="0 0 24 24"><circle cx="9" cy="7" r="3"/><path d="M3 21v-3a6 6 0 0 1 12 0v3M19 7v8M15 11h8"/></symbol><symbol id="disk" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="11" cy="11" r="4"/><path d="m11 11 5 5M6 17h1M18 7h.01"/></symbol><symbol id="server" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="7" rx="2"/><rect x="3" y="14" width="18" height="7" rx="2"/><path d="M7 6h.01M7 17h.01M12 6h5M12 17h5"/></symbol></svg>
 <div class="wrap"><nav class="nav" aria-label="Main navigation"><a class="brand" href="#"><span class="brandmark" aria-hidden="true">i</span>IT TRAINING <span style="color:var(--muted);font-weight:400">/ LAB</span></a><div class="navlinks"><a href="https://courses.ittraining.co.th">Explore courses</a><a href="https://github.com/ittraining2498">GitHub ↗</a><div class="language-picker"><label for="language">Language</label><select id="language" aria-label="Language"><option value="th" lang="th">ไทย</option><option value="en" lang="en">English</option><option value="lo" lang="lo">ລາວ</option></select></div></div></nav>
 <header class="hero"><div><div class="eyebrow">The sysadmin toolkit · Open source</div><h1>Less repetition.<br><span>More control.</span></h1><p class="intro">Practical scripts for Linux &amp; Proxmox. Find the right tool, understand what it changes, and review the code before you run it.</p><div class="hero-actions"><a class="primary" href="#catalog">Explore the scripts ↓</a><a class="secondary" href="#user-guide">First time here? Start here</a></div></div><div class="terminal" aria-label="Example of a disk check, illustrative output"><div class="terminal-bar"><span class="dots" aria-hidden="true">●●●</span><span>YOUR NEXT ROUTINE CHECK</span></div><div class="terminal-body"><span class="dim"># Example · a healthy filesystem</span><br><span class="green">$</span> ./linux/check-disk.sh --warn 90<br><br><span class="green">OK</span> - no filesystem is at or above 90%<br><span class="dim"># Choose. Review. Run in your lab.</span></div><div class="terminal-tag">ILLUSTRATIVE OUTPUT · YOUR RESULTS WILL VARY</div></div></header>
-<div class="facts"><div><strong>04 focused tools</strong><span>One script. A clear purpose.</span></div><div><strong>02 platforms</strong><span>Linux &amp; Proxmox VE</span></div><div><strong>MIT licensed</strong><span>Read, adapt &amp; contribute.</span></div></div>
-<main><section class="catalog" id="catalog" aria-labelledby="library-title"><div class="section-head"><div><div class="eyebrow">Find your tool</div><h2 id="library-title">The script library</h2></div><p>Choose by platform and the job you need to do.</p></div><div class="toolbar"><div class="search"><label for="search">SEARCH THE LIBRARY</label><input type="search" id="search" placeholder="Try users, disk, quorum…" autocomplete="off"></div><div class="task"><label for="task">YOUR TASK</label><select id="task"><option value="all">All tasks</option><option value="accounts">Account management</option><option value="monitoring">Health &amp; monitoring</option></select></div><div class="pills" id="filters" aria-label="Filter by platform"><button class="pill" data-f="all" aria-pressed="true">All</button><button class="pill" data-f="linux" aria-pressed="false">Linux</button><button class="pill" data-f="proxmox" aria-pressed="false">Proxmox</button></div></div><p class="count" id="count" role="status">Showing 4 of 4 scripts</p><div id="cards">    <article class="card" data-p="linux" data-task="accounts" id="bulk-delete-users">
+<div class="facts"><div><strong>05 focused tools</strong><span>One script. A clear purpose.</span></div><div><strong>02 platforms</strong><span>Linux &amp; Proxmox VE</span></div><div><strong>MIT licensed</strong><span>Read, adapt &amp; contribute.</span></div></div>
+<main><section class="catalog" id="catalog" aria-labelledby="library-title"><div class="section-head"><div><div class="eyebrow">Find your tool</div><h2 id="library-title">The script library</h2></div><p>Choose by platform and the job you need to do.</p></div><div class="toolbar"><div class="search"><label for="search">SEARCH THE LIBRARY</label><input type="search" id="search" placeholder="Try users, disk, quorum…" autocomplete="off"></div><div class="task"><label for="task">YOUR TASK</label><select id="task"><option value="all">All tasks</option><option value="accounts">Account management</option><option value="monitoring">Health &amp; monitoring</option></select></div><div class="pills" id="filters" aria-label="Filter by platform"><button class="pill" data-f="all" aria-pressed="true">All</button><button class="pill" data-f="linux" aria-pressed="false">Linux</button><button class="pill" data-f="proxmox" aria-pressed="false">Proxmox</button></div></div><p class="count" id="count" role="status">Showing 5 of 5 scripts</p><div id="cards">    <article class="card" data-p="linux" data-task="accounts" id="bulk-delete-users">
       <div class="card-heading"><span class="icon"><svg aria-hidden="true"><use href="#users"></use></svg></span><span class="number">01</span></div><div class="card-top">
         <h2>Offboard user accounts</h2>
         <span class="badge">Linux</span>
@@ -86,7 +86,24 @@ body{background:radial-gradient(ellipse at 80% 5%,#edf8f4 0,transparent 35%),#ff
       <div class="links">
         <a href="https://raw.githubusercontent.com/ittraining2498/linux-sysadmin-scripts/main/proxmox/cluster-health.sh">Download raw</a>
       </div>
-    </article></div><div id="empty" class="empty" hidden>No matching scripts. Try another search or reset the filters.<br><button class="pill" id="reset">Reset filters</button></div></section>
+    </article>    <article class="card" data-p="linux" data-task="monitoring" id="system-info">
+      <div class="card-heading"><span class="icon"><svg aria-hidden="true"><use href="#server"></use></svg></span><span class="number">05</span></div><div class="card-top">
+        <h2>Explore your Linux machine</h2>
+        <span class="badge">Linux</span>
+      </div>
+      <p class="filename">linux/system-info.sh</p><p class="desc">A beginner-friendly Thai menu for system, CPU, memory and disk information.</p>
+      <ul class="feat"><li>Operating system, kernel and CPU count</li><li>RAM, swap and filesystem usage</li><li>Read-only; no administrator access needed</li><li>Reports collection errors without claiming healthy status</li></ul>
+      <div class="requirements"><strong>Before you start</strong><p>Linux · procps and coreutils · no sudo</p></div>
+      <p class="status ">Ubuntu 24.04 container tested · see README</p>
+      <div class="runbox"><div class="code-label">OPEN THAI MENU<button class="copy" aria-label="Copy command for system-info.sh">Copy command</button></div><pre><code>bash ./linux/system-info.sh --menu</code></pre></div>
+      <details><summary>Usage notes &amp; limitations</summary><p>Exit 0 means the report was collected, not that the machine is healthy. Exit 1 means incomplete collection; 2 means invalid input/environment.</p><p>Run <code>bash ./linux/system-info.sh --help</code> to read all options.</p></details>
+      <a class="guide-link" href="#guide-info">Read the step-by-step guide</a>
+<button class="source-button" data-source="linux/system-info.sh">View &amp; copy full script <span aria-hidden="true">↗</span></button>
+      <div class="links">
+        <a href="https://raw.githubusercontent.com/ittraining2498/linux-sysadmin-scripts/main/linux/system-info.sh">Download raw</a>
+      </div>
+    </article>
+</div><div id="empty" class="empty" hidden>No matching scripts. Try another search or reset the filters.<br><button class="pill" id="reset">Reset filters</button></div></section>
 <section id="user-guide" aria-label="Step-by-step user guide"><h2>Step-by-step user guide</h2><article class="guide" id="guide-setup"><h3>1. Download and prepare</h3><p>Open a terminal on your Linux lab server. Run each line separately. These commands download the scripts; they do not run account changes. Git must be installed. If the folder already exists, use it and run git pull --ff-only instead of cloning again.</p><pre><code>git clone https://github.com/ittraining2498/linux-sysadmin-scripts.git
 cd linux-sysadmin-scripts
 bash linux/bulk-delete-users.sh --help</code></pre><p>Copied the full script instead? Save only the script text in test.sh using a text editor and Unix LF line endings. Run bash ./test.sh --help. In the examples below, replace the script path with ./test.sh. No chmod is needed when using bash.</p><p>sudo runs as administrator. Type your own sudo password if asked; the terminal may show no characters. On a root shell, omit sudo. Never paste the terminal prompt ($ or #) as part of a command.</p></article><article class="guide" id="guide-delete"><h3>Thai menu: no username to remember</h3><p>Start on a Linux lab machine. The deletion script now opens a Thai menu when run without arguments in a terminal. All scripts now offer a Thai terminal menu.</p><h4>Step 1 — Create a file</h4><p>Open Terminal, then run each line below. nano is a text editor; if unavailable, install it using your distribution package manager or use an installed editor.</p><pre><code>mkdir -p ~/ittraining-lab
@@ -107,7 +124,10 @@ chmod 700 check-disk.sh
 chmod 700 cluster-health.sh
 sudo ./cluster-health.sh</code></pre><p>Create and run this file in the Proxmox VE host Shell. If logged in as root, omit sudo. Choose 1 for the full report or 2 for problems only, then set a percentage (Enter = 85). This does not restart services or change VMs. The menu and error paths are tested with fixtures; real Proxmox node/cluster verification is still pending.</p><p>Existing command-line examples remain available below. With no arguments in a terminal, every script opens its Thai menu. For cron or automation, use explicit options; exit codes remain unchanged.</p><h3>4. Check disk or Proxmox</h3><p>Disk: run on Linux without sudo. 90 means warn when usage is at least 90 percent; change it to your desired threshold from 0–100. --inodes also checks the filesystem file-entry capacity. No data is modified.</p><pre><code>bash linux/check-disk.sh --warn 90 --inodes
 echo $?</code></pre><p>Read the exit code immediately after running: 0 = healthy, 1 = warning, 2 = invalid input or collection error for the disk checker. OK means below the threshold, not an empty disk. WARN names the affected mount; investigate before deleting files.</p><p>Proxmox: open the Shell of the Proxmox VE host itself and download the repository there. Do not run inside an ordinary Ubuntu VM. In the root shell use the command below. It reads status only. Real Proxmox testing is still pending; exit 1 includes failed checks, and exit 2 means input/environment error.</p><pre><code>bash proxmox/cluster-health.sh --warn 90
-echo $?</code></pre></article><article class="guide" id="guide-errors"><h3>5. Common messages</h3><p>no users specified: add a login name, for example sudo bash ./test.sh alice. No such file or directory: check your current folder with pwd and files with ls; use the path where you saved the script. must run as root: use sudo for account scripts. protected account / below minimum: the account is intentionally blocked; do not bypass the protection.</p></article></section>
+echo $?</code></pre></article><article class="guide" id="guide-info"><h3>Get to know your Linux machine</h3><p>Create system-info.sh with nano, paste the full source from its card, save with Ctrl+O then Enter, and exit with Ctrl+X. Check syntax before granting permission and running:</p><pre><code>nano system-info.sh
+bash -n system-info.sh
+chmod 700 system-info.sh
+./system-info.sh</code></pre><p>No sudo is needed. Select 1 for everything, 2 for OS/CPU/uptime, 3 for RAM/swap, 4 for disk, or 0 to exit. For a direct report use bash system-info.sh --all. This displays information only; it does not clean files or fix problems. In containers, some values describe the host rather than container limits.</p></article><article class="guide" id="guide-errors"><h3>5. Common messages</h3><p>no users specified: add a login name, for example sudo bash ./test.sh alice. No such file or directory: check your current folder with pwd and files with ls; use the path where you saved the script. must run as root: use sudo for account scripts. protected account / below minimum: the account is intentionally blocked; do not bypass the protection.</p></article></section>
 <section class="start" id="get-started" aria-labelledby="start-title"><div><div class="eyebrow">A good first step</div><h2 id="start-title">Start with a local copy.</h2><p>Clone the repository, choose a script, then read its source and <code>--help</code>. Replace example usernames and file paths before running any command.</p><p class="note">Test in a disposable lab before production. Account previews still require root. “Copy command” copies the command to open a Thai menu; it never includes <code>--apply</code>.</p></div><div><div class="runbox"><div class="code-label">GET THE REPOSITORY<button class="copy" aria-label="Copy repository setup commands">Copy setup</button></div><pre><code>git clone https://github.com/ittraining2498/linux-sysadmin-scripts.git
 cd linux-sysadmin-scripts
 chmod +x linux/*.sh proxmox/*.sh
@@ -177,10 +197,10 @@ const translations = {
     "th": "ผลลัพธ์ตัวอย่าง · ผลจริงขึ้นอยู่กับระบบของคุณ",
     "lo": "ຜົນລັບຕົວຢ່າງ · ຜົນຈິງຂຶ້ນກັບລະບົບຂອງທ່ານ"
   },
-  "04 focused tools": {
-    "en": "04 focused tools",
-    "th": "04 เครื่องมือพร้อมเลือก",
-    "lo": "04 ເຄື່ອງມືໃຫ້ເລືອກ"
+  "05 focused tools": {
+    "en": "05 focused tools",
+    "th": "05 เครื่องมือพร้อมเลือก",
+    "lo": "05 ເຄື່ອງມືໃຫ້ເລືອກ"
   },
   "One script. A clear purpose.": {
     "en": "One script. A clear purpose.",
@@ -757,6 +777,63 @@ Object.assign(translations, {
     "en": "Existing command-line examples remain available below. With no arguments in a terminal, every script opens its Thai menu. For cron or automation, use explicit options; exit codes remain unchanged.",
     "th": "ตัวอย่างคำสั่งเดิมยังอยู่ด้านล่าง ทุกสคริปต์เปิดเมนูภาษาไทยเมื่อรันโดยไม่มีอาร์กิวเมนต์ใน Terminal หากใช้ cron หรืองานอัตโนมัติให้ระบุตัวเลือกชัดเจน รหัสผลลัพธ์ยังเหมือนเดิม",
     "lo": "ຕົວຢ່າງຄຳສັ່ງເດີມຢູ່ຂ້າງລຸ່ມ ທຸກສະຄຣິບເປີດເມນູເມື່ອຮັນໃນ Terminal ໂດຍບໍ່ໃສ່ອາກິວເມັນ ງານອັດຕະໂນມັດຄວນໃສ່ຕົວເລືອກໃຫ້ຊັດເຈນ"
+  }
+});
+Object.assign(translations, {
+  "Explore your Linux machine": {
+    "en": "Explore your Linux machine",
+    "th": "ดูข้อมูลเครื่อง Linux",
+    "lo": "ເບິ່ງຂໍ້ມູນເຄື່ອງ Linux"
+  },
+  "A beginner-friendly Thai menu for system, CPU, memory and disk information.": {
+    "en": "A beginner-friendly Thai menu for system, CPU, memory and disk information.",
+    "th": "เมนูภาษาไทยสำหรับมือใหม่ ดูระบบปฏิบัติการ CPU หน่วยความจำ และดิสก์",
+    "lo": "ເມນູພາສາໄທສຳລັບມືໃໝ່ ເບິ່ງລະບົບ CPU ໜ່ວຍຄວາມຈຳ ແລະ ດິສກ໌"
+  },
+  "Operating system, kernel and CPU count": {
+    "en": "Operating system, kernel and CPU count",
+    "th": "ระบบปฏิบัติการ เคอร์เนล และจำนวน CPU",
+    "lo": "ລະບົບປະຕິບັດການ ເຄີເນວ ແລະ ຈຳນວນ CPU"
+  },
+  "RAM, swap and filesystem usage": {
+    "en": "RAM, swap and filesystem usage",
+    "th": "การใช้ RAM, swap และพื้นที่ดิสก์",
+    "lo": "ການໃຊ້ RAM, swap ແລະ ດິສກ໌"
+  },
+  "Read-only; no administrator access needed": {
+    "en": "Read-only; no administrator access needed",
+    "th": "อ่านข้อมูลอย่างเดียว ไม่ต้องใช้สิทธิ์ผู้ดูแล",
+    "lo": "ອ່ານຂໍ້ມູນເທົ່ານັ້ນ ບໍ່ຕ້ອງສິດຜູ້ດູແລ"
+  },
+  "Reports collection errors without claiming healthy status": {
+    "en": "Reports collection errors without claiming healthy status",
+    "th": "แจ้งเมื่ออ่านข้อมูลไม่สำเร็จ ไม่สรุปว่าสุขภาพระบบปกติ",
+    "lo": "ແຈ້ງເມື່ອອ່ານຂໍ້ມູນບໍ່ສຳເລັດ ບໍ່ຕັດສິນສຸຂະພາບລະບົບ"
+  },
+  "Linux · procps and coreutils · no sudo": {
+    "en": "Linux · procps and coreutils · no sudo",
+    "th": "Linux · procps และ coreutils · ไม่ต้อง sudo",
+    "lo": "Linux · procps ແລະ coreutils · ບໍ່ຕ້ອງ sudo"
+  },
+  "Exit 0 means the report was collected, not that the machine is healthy. Exit 1 means incomplete collection; 2 means invalid input/environment.": {
+    "en": "Exit 0 means the report was collected, not that the machine is healthy. Exit 1 means incomplete collection; 2 means invalid input/environment.",
+    "th": "รหัส 0 หมายถึงอ่านรายงานสำเร็จ ไม่ใช่รับรองว่าเครื่องปกติ รหัส 1 คือรายงานไม่ครบ และ 2 คือค่าหรือระบบไม่ถูกต้อง",
+    "lo": "ລະຫັດ 0 ແມ່ນອ່ານລາຍງານສຳເລັດ ບໍ່ແມ່ນຢືນຢັນວ່າເຄື່ອງປົກກະຕິ 1 ແມ່ນລາຍງານບໍ່ຄົບ 2 ແມ່ນຄ່າຜິດ"
+  },
+  "Get to know your Linux machine": {
+    "en": "Get to know your Linux machine",
+    "th": "รู้จักเครื่อง Linux ของคุณ",
+    "lo": "ຮູ້ຈັກເຄື່ອງ Linux ຂອງທ່ານ"
+  },
+  "Create system-info.sh with nano, paste the full source from its card, save with Ctrl+O then Enter, and exit with Ctrl+X. Check syntax before granting permission and running:": {
+    "en": "Create system-info.sh with nano, paste the full source from its card, save with Ctrl+O then Enter, and exit with Ctrl+X. Check syntax before granting permission and running:",
+    "th": "สร้าง system-info.sh ด้วย nano วางสคริปต์เต็มจากการ์ด บันทึก Ctrl+O → Enter → Ctrl+X แล้วตรวจไฟล์ก่อนกำหนดสิทธิ์และรันดังนี้",
+    "lo": "ສ້າງ system-info.sh ດ້ວຍ nano ວາງສະຄຣິບເຕັມ ບັນທຶກ Ctrl+O → Enter → Ctrl+X ແລ້ວກວດໄຟລ໌ກ່ອນກຳນົດສິດ ແລະ ຮັນ"
+  },
+  "No sudo is needed. Select 1 for everything, 2 for OS/CPU/uptime, 3 for RAM/swap, 4 for disk, or 0 to exit. For a direct report use bash system-info.sh --all. This displays information only; it does not clean files or fix problems. In containers, some values describe the host rather than container limits.": {
+    "en": "No sudo is needed. Select 1 for everything, 2 for OS/CPU/uptime, 3 for RAM/swap, 4 for disk, or 0 to exit. For a direct report use bash system-info.sh --all. This displays information only; it does not clean files or fix problems. In containers, some values describe the host rather than container limits.",
+    "th": "ไม่ต้อง sudo เลือก 1 ดูทั้งหมด 2 ดูระบบ/CPU/เวลาทำงาน 3 ดู RAM/swap 4 ดูดิสก์ หรือ 0 ออก ถ้าต้องการรายงานทันทีใช้ bash system-info.sh --all อ่านข้อมูลอย่างเดียว ไม่ล้างไฟล์หรือแก้ปัญหาอัตโนมัติ หากรันใน container บางค่าอาจเป็นข้อมูลโฮสต์แทนขีดจำกัดของ container",
+    "lo": "ບໍ່ຕ້ອງ sudo ເລືອກ 1 ທັງໝົດ 2 ລະບົບ/CPU/ເວລາເຮັດວຽກ 3 RAM/swap 4 ດິສກ໌ ຫຼື 0 ອອກ ໃຊ້ bash system-info.sh --all ເພື່ອອ່ານທັນທີ ບໍ່ລຶບໄຟລ໌ ຫຼື ແກ້ບັນຫາ ໃນ container ບາງຄ່າອາດເປັນຂອງໂຮສ"
   }
 });
 let language = 'th';

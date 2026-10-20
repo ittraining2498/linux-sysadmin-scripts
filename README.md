@@ -18,6 +18,7 @@ dry-run first, protected system accounts, backups before destructive actions, an
 | [`linux/bulk-create-users.sh`](linux/bulk-create-users.sh) | Linux | Validate quoted CSV and groups before creating users; save passwords to a new mode-600 file |
 | [`linux/check-disk.sh`](linux/check-disk.sh) | Linux | Check space/inodes; exit 1 for thresholds and 2 for failed collection or invalid options |
 | [`proxmox/cluster-health.sh`](proxmox/cluster-health.sh) | Proxmox VE | Quorum, services, storage and guests; failed checks return non-zero, never a false healthy result |
+| [`linux/system-info.sh`](linux/system-info.sh) | Linux | Thai read-only menu for OS, CPU, uptime, RAM/swap and disk; no sudo required |
 
 ## Beginner guide
 
@@ -113,10 +114,11 @@ sudo ./linux/bulk-create-users.sh --file staff.csv --apply   # create
 | `linux/bulk-create-users.sh` | Ubuntu 24.04 container, 2026-10-20 — Thai single-user/CSV menu, real account creation, quoted CSV/BOM/CRLF, groups, password expiry and output permissions |
 | `linux/check-disk.sh` | Ubuntu 24.04 container, 2026-10-20 — Thai menu, real block/inode checks; simulated df failure must return 2 |
 | `proxmox/cluster-health.sh` | Ubuntu 24.04 container with simulated Proxmox commands, 2026-10-20 — Thai menu and quorum/storage/guest failure paths; **not tested on a real Proxmox node or cluster** |
+| `linux/system-info.sh` | Ubuntu 24.04 container, 2026-10-20 — CLI, Thai menu, non-root execution and failed collection; container values may reflect the host |
 
 CI runs ShellCheck, `bash -n`, and isolated Ubuntu container regression checks on every push and pull request. Proxmox command fixtures are not a substitute for a real-cluster test.
 
-Latest local run (2026-10-20): **119 checks passed** in an Ubuntu 24.04 container. Real terminal tests cover all four Thai menus, cancellation/EOF, invalid choices, new accounts from typed input and CSV, password-file permissions and overwrite refusal, disk thresholds and collection failure, and Proxmox fixture success/failure. Account creation/deletion and backup-content checks use real Linux accounts. **Proxmox remains fixture-only, not a real-node test.**
+Latest local run (2026-10-20): **137 checks passed** in an Ubuntu 24.04 container. Real terminal tests cover all five Thai menus, cancellation/EOF, invalid choices, new accounts from typed input and CSV, password-file permissions and overwrite refusal, disk thresholds and collection failure, and Proxmox fixture success/failure. Account creation/deletion and backup-content checks use real Linux accounts. **Proxmox remains fixture-only, not a real-node test.**
 
 Actual test output:
 
@@ -127,7 +129,7 @@ PASS disk menu healthy exit=0
 PASS disk menu alert exit=1
 PASS Proxmox menu healthy fixture exit=0
 PASS Proxmox menu failed fixture exit=1
-TOTAL: 119 checks passed; real Linux account operations, Proxmox command fixtures only.
+TOTAL: 137 checks passed; real Linux account operations, Proxmox command fixtures only.
 ```
 
 These results do not verify every distribution or the reporter's environment. Include the exact command, OS/version and full error when reporting a failure; remove credentials first.
@@ -189,3 +191,9 @@ Provided as is, without warranty. Test in a lab before running on production sys
 - ตรวจดิสก์: `./check-disk.sh` เลือกตรวจพื้นที่หรือ inode เพิ่ม แล้วใส่เปอร์เซ็นต์ กด Enter ใช้ 85
 - Proxmox: `sudo ./cluster-health.sh` บนโฮสต์ Proxmox VE เลือกรายงานทั้งหมดหรือเฉพาะปัญหา ใส่เปอร์เซ็นต์ หากเป็น root ไม่ต้อง sudo ยังทดสอบด้วยคำสั่งจำลองเท่านั้น
 - เลือก 0 เพื่อออก เมนูสร้างผู้ใช้ยกเลิกได้ที่คำถามยืนยันโดยกด Enter ห้ามนำไฟล์รหัสผ่านขึ้น GitHub
+
+### สคริปต์ใหม่: ดูข้อมูลเครื่อง Linux
+
+`linux/system-info.sh` อ่านข้อมูลอย่างเดียว ไม่ต้อง sudo เลือกดูภาพรวม ระบบปฏิบัติการ CPU เวลาทำงาน RAM/swap หรือดิสก์ได้ ไม่ตัดสินสุขภาพระบบและไม่แก้ข้อมูล
+
+สร้างด้วย `nano system-info.sh` วางโค้ดเต็ม บันทึก Ctrl+O → Enter → Ctrl+X ตรวจ `bash -n system-info.sh` แล้ว `chmod 700 system-info.sh` และ `./system-info.sh` เพื่อเปิดเมนู รายงานแบบไม่เปิดเมนูใช้ `./system-info.sh --all`
