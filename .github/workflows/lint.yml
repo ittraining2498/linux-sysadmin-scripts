@@ -167,5 +167,85 @@ jobs:
           cmd('pvesm','printf "Name Type Status Total Used Available %%\\nlocal dir active 100 10 90 10.00%%\\n"')
           cmd('qm','exit 1')
           script('proxmox/cluster-health.sh','--warn','100','--quiet',code=1,contains='qm list failed',env=env)
+          # Exercise a real terminal, not piped input, for the beginner menu.
+          import pty, select, time, re
+          menu_script=str(root/'linux/bulk-delete-users.sh')
+          def menu_run(label, steps, code=0, env=None, path=menu_script, direct=False):
+              global passed
+              master, slave=pty.openpty()
+              proc=subprocess.Popen(([path] if direct else ['bash',path]),stdin=slave,stdout=slave,stderr=slave,env=env)
+              os.close(slave)
+              output=b''; position=0
+              try:
+                  for marker, answer in steps:
+                      deadline=time.monotonic()+15
+                      while marker.encode() not in output[position:]:
+                          assert time.monotonic()<deadline,(label,output.decode(errors='replace'))
+                          if select.select([master],[],[],.1)[0]:
+                              try: chunk=os.read(master,65536)
+                              except OSError: chunk=b''
+                              assert chunk,(label,output.decode(errors='replace'))
+                              output+=chunk
+                      current=output[position:].decode(errors='replace')
+                      position=len(output)
+                      if callable(answer): answer=answer(current)
+                      os.write(master,answer.encode())
+                  deadline=time.monotonic()+15
+                  while proc.poll() is None or select.select([master],[],[],.1)[0]:
+                      assert time.monotonic()<deadline,(label,output.decode(errors='replace'))
+                      if select.select([master],[],[],.1)[0]:
+                          try: chunk=os.read(master,65536)
+                          except OSError: break
+                          if not chunk: break
+                          output+=chunk
+                  assert proc.wait(timeout=3)==code,(label,output.decode(errors='replace'))
+              finally:
+                  if proc.poll() is None: proc.kill();proc.wait()
+                  os.close(master)
+              passed+=1
+              print('PASS',label,'exit='+str(code))
+              return output.decode()
+
+          def choose(name):
+              def pick(text):
+                  match=re.search(r'(?m)^(\d+)\. '+re.escape(name)+r'  ',text)
+                  assert match,(name,text)
+                  return match[1]+'\n'
+              return pick
+
+          def flow(name,mode,confirmation):
+              return [('เลือกหมายเลข:', '2\n'),('เลือกหมายเลขบัญชี',choose(name)),('เลือกวิธีจัดการ:',mode+'\n'),('เพื่อยืนยันการลบจริง',confirmation+'\n')]
+
+          for name in ['menukeep','menuremove','menucancel','menuoperator','menuactive']:
+              check('create '+name,['useradd','-m','-s','/bin/bash',name])
+          P('/home/menuremove/proof.txt').write_text('menu backup proof')
+          r=menu_run('menu exit',[('เลือกหมายเลข:','0\n')]);assert 'ไม่มีการเปลี่ยนแปลง' in r
+          r=menu_run('invalid menu choice',[('เลือกหมายเลข:','x\n'),('เลือกหมายเลข:','0\n')]);assert 'กรุณาเลือก' in r
+          menu_run('invalid account choice',[('เลือกหมายเลข:','2\n'),('เลือกหมายเลขบัญชี','999999\n'),('เลือกหมายเลข:','0\n')])
+          menu_run('cancel action',[('เลือกหมายเลข:','2\n'),('เลือกหมายเลขบัญชี',choose('menucancel')),('เลือกวิธีจัดการ:','0\n')])
+          menu_run('wrong name cancels',flow('menucancel','1','wrongname'))
+          menu_run('empty confirmation cancels',flow('menucancel','2',''))
+          assert pwd.getpwnam('menucancel') and P('/home/menucancel').exists()
+          # A controlled who fixture verifies that logged-in users are excluded.
+          P('/tmp/menuwho').mkdir(exist_ok=True)
+          P('/tmp/menuwho/who').write_text('#!/bin/sh\necho "menuactive pts/0 2026-10-20 12:00"\n');P('/tmp/menuwho/who').chmod(0o755)
+          menv=dict(os.environ,SUDO_UID=str(pwd.getpwnam('menuoperator').pw_uid),PATH='/tmp/menuwho:'+os.environ['PATH'])
+          r=menu_run('protected operator and active users hidden',[('เลือกหมายเลข:','1\n'),('เลือกหมายเลข:','0\n')],env=menv)
+          assert not re.search(r'(?m)^\d+\. (root|nobody|labsystem|menuoperator|menuactive)  ',r)
+          r=menu_run('menu delete keep home',flow('menukeep','1','menukeep'))
+          assert 'DRY-RUN' in r and 'ดำเนินการสำเร็จ' in r and P('/home/menukeep').exists()
+          check('menu keep account deleted',['id','menukeep'],code=1)
+          r=menu_run('menu delete remove home',flow('menuremove','2','menuremove'))
+          print('THAI MENU REAL OUTPUT:\n'+r)
+          assert not P('/home/menuremove').exists()
+          check('menu remove account deleted',['id','menuremove'],code=1)
+          archive=next(P('/var/backups/deleted-users').glob('menuremove-*.tar.gz'))
+          with tarfile.open(archive) as t: assert t.extractfile('menuremove/proof.txt').read()==b'menu backup proof'
+          menu_run('renamed script menu',[('เลือกหมายเลข:','0\n')],path='/tmp/test.sh')
+          script('linux/bulk-delete-users.sh','--menu',code=2,contains='Terminal')
+          menu_run('terminal EOF cancels',[('เลือกหมายเลข:','\x04')])
+          P('/tmp/test.sh').chmod(0o700)
+          menu_run('chmod then direct execution',[('เลือกหมายเลข:','0\n')],path='/tmp/test.sh',direct=True)
+          script('linux/bulk-delete-users.sh','--menu','--apply',code=2,contains='unknown option')
           print('TOTAL:',passed,'checks passed; real Linux account operations, Proxmox command fixtures only.')
           PY
