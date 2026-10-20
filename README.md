@@ -27,6 +27,18 @@ Running the deletion script without arguments in a terminal opens a Thai menu. C
 
 Create a file in a Linux terminal with `nano bulk-delete-users.sh`, paste the full source, save with Ctrl+O then Enter, and exit with Ctrl+X. Check with `bash -n bulk-delete-users.sh`, then run `chmod 700 bulk-delete-users.sh` and `sudo ./bulk-delete-users.sh`. The web guide explains each step.
 
+### Thai menus for every script
+
+In a terminal, run any script without arguments (or with `--menu` alone). CLI options continue to work for automation. Creation offers a single-user form or CSV input, previews a private snapshot of the input and asks for explicit confirmation before invoking `--apply`. Monitoring asks for a threshold and preserves the underlying exit code.
+
+| File to create | Permission | Start menu |
+|---|---|---|
+| `nano bulk-create-users.sh` | `chmod 700 bulk-create-users.sh` | `sudo ./bulk-create-users.sh` |
+| `nano check-disk.sh` | `chmod 700 check-disk.sh` | `./check-disk.sh` |
+| `nano cluster-health.sh` | `chmod 700 cluster-health.sh` | `sudo ./cluster-health.sh` on the Proxmox host |
+
+Paste the matching full script, save with Ctrl+O then Enter, exit with Ctrl+X, and run `bash -n FILENAME` before granting permission. Omit sudo in a root shell. Python 3 is required for creation. Full menu instructions are in the web guide.
+
 ## Usage
 
 ```bash
@@ -98,23 +110,24 @@ sudo ./linux/bulk-create-users.sh --file staff.csv --apply   # create
 | Script | Tested on |
 |---|---|
 | `linux/bulk-delete-users.sh` | Ubuntu 24.04 container, 2026-10-20 — real Thai terminal menu, cancellation, exact-name confirmation, deletion, backup content, protected UIDs and unsafe-home checks |
-| `linux/bulk-create-users.sh` | Ubuntu 24.04 container, 2026-10-20 — real account creation, quoted CSV/BOM/CRLF, groups, password expiry and output permissions |
-| `linux/check-disk.sh` | Ubuntu 24.04 container, 2026-10-20 — real block/inode checks; simulated df failure must return 2 |
-| `proxmox/cluster-health.sh` | Ubuntu 24.04 container with simulated Proxmox commands, 2026-10-20 — quorum/storage/guest failure paths; **not tested on a real Proxmox node or cluster** |
+| `linux/bulk-create-users.sh` | Ubuntu 24.04 container, 2026-10-20 — Thai single-user/CSV menu, real account creation, quoted CSV/BOM/CRLF, groups, password expiry and output permissions |
+| `linux/check-disk.sh` | Ubuntu 24.04 container, 2026-10-20 — Thai menu, real block/inode checks; simulated df failure must return 2 |
+| `proxmox/cluster-health.sh` | Ubuntu 24.04 container with simulated Proxmox commands, 2026-10-20 — Thai menu and quorum/storage/guest failure paths; **not tested on a real Proxmox node or cluster** |
 
 CI runs ShellCheck, `bash -n`, and isolated Ubuntu container regression checks on every push and pull request. Proxmox command fixtures are not a substitute for a real-cluster test.
 
-Latest local run (2026-10-20): **89 regression checks plus 3 additional terminal/option checks passed**. This includes a real pseudo-terminal for menu selection, invalid input, cancellation, wrong/empty confirmation, hidden operator/logged-in accounts, keeping/removing homes, renamed scripts, EOF, and chmod followed by direct execution. Backups were opened and their contents checked. Proxmox checks still use fixtures only.
+Latest local run (2026-10-20): **119 checks passed** in an Ubuntu 24.04 container. Real terminal tests cover all four Thai menus, cancellation/EOF, invalid choices, new accounts from typed input and CSV, password-file permissions and overwrite refusal, disk thresholds and collection failure, and Proxmox fixture success/failure. Account creation/deletion and backup-content checks use real Linux accounts. **Proxmox remains fixture-only, not a real-node test.**
 
-Actual container output (UTC):
+Actual test output:
 
 ```text
-2026-10-20 10:37:11 [INFO] menuremove - deleted (home removed)
-2026-10-20 10:37:11 [INFO] finished: 1 deleted, 0 failed
-TOTAL: 89 checks passed; real Linux account operations, Proxmox command fixtures only.
-PASS terminal EOF cancels exit=0
-PASS chmod then direct execution exit=0
-PASS menu rejects mixed CLI options
+PASS single user Thai menu exit=0
+PASS CSV menu create exit=0
+PASS disk menu healthy exit=0
+PASS disk menu alert exit=1
+PASS Proxmox menu healthy fixture exit=0
+PASS Proxmox menu failed fixture exit=1
+TOTAL: 119 checks passed; real Linux account operations, Proxmox command fixtures only.
 ```
 
 These results do not verify every distribution or the reporter's environment. Include the exact command, OS/version and full error when reporting a failure; remove credentials first.
@@ -166,4 +179,13 @@ Provided as is, without warranty. Test in a lab before running on production sys
 
 ตัวอย่างบัญชี `panya`: เลือกหมายเลขที่อยู่ข้าง panya แล้วพิมพ์ `panya` ที่คำถามยืนยันสุดท้าย เฉพาะเมื่อตั้งใจลบบัญชีนั้นจริง เมนูเรียก `--apply` ให้หลังยืนยัน ไม่ต้องจำตัวเลือกเอง การเปิดเมนูยังไม่เปลี่ยนข้อมูล
 
-หากบันทึกชื่อ `test.sh` ให้เปลี่ยนชื่อไฟล์ในคำสั่งทั้งหมดเป็น `test.sh` ส่วนสคริปต์อื่นยังใช้คำสั่งตามคู่มือเดิม เมนูซ่อนบัญชีระบบ บัญชีผู้เรียกผ่าน sudo บัญชีที่ไม่มี login shell และผู้ล็อกอินตามรายงาน who แต่ยังต้องตรวจหน้าที่ของบัญชีก่อนลบ เพราะไม่ครอบคลุมทุกบริการเบื้องหลัง
+หากบันทึกชื่อ `test.sh` ให้เปลี่ยนชื่อไฟล์ในคำสั่งทั้งหมดเป็น `test.sh` สคริปต์ที่เหลือมีเมนูภาษาไทยเช่นกัน เมนูซ่อนบัญชีระบบ บัญชีผู้เรียกผ่าน sudo บัญชีที่ไม่มี login shell และผู้ล็อกอินตามรายงาน who แต่ยังต้องตรวจหน้าที่ของบัญชีก่อนลบ เพราะไม่ครอบคลุมทุกบริการเบื้องหลัง
+
+### เมนูของสคริปต์ที่เหลือ
+
+สร้างไฟล์ด้วย nano ตามชื่อสคริปต์ วางโค้ดเต็ม บันทึก Ctrl+O → Enter → Ctrl+X แล้วตรวจด้วย `bash -n ชื่อไฟล์` เมื่อไม่มี error ให้ `chmod 700 ชื่อไฟล์` ก่อนรัน
+
+- สร้างผู้ใช้: `sudo ./bulk-create-users.sh` เลือกกรอกทีละคนหรือ CSV ตรวจแผน เลือกไฟล์รหัสผ่านใหม่ แล้วพิมพ์ `สร้าง` เพื่อยืนยัน
+- ตรวจดิสก์: `./check-disk.sh` เลือกตรวจพื้นที่หรือ inode เพิ่ม แล้วใส่เปอร์เซ็นต์ กด Enter ใช้ 85
+- Proxmox: `sudo ./cluster-health.sh` บนโฮสต์ Proxmox VE เลือกรายงานทั้งหมดหรือเฉพาะปัญหา ใส่เปอร์เซ็นต์ หากเป็น root ไม่ต้อง sudo ยังทดสอบด้วยคำสั่งจำลองเท่านั้น
+- เลือก 0 เพื่อออก เมนูสร้างผู้ใช้ยกเลิกได้ที่คำถามยืนยันโดยกด Enter ห้ามนำไฟล์รหัสผ่านขึ้น GitHub

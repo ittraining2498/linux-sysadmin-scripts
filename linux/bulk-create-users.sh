@@ -3,11 +3,13 @@
 # bulk-create-users.sh — Create Linux users from validated CSV, dry-run by default.
 #
 # Usage:
+#   sudo ./bulk-create-users.sh                    # Thai menu in a terminal
 #   sudo bash bulk-create-users.sh --file staff.csv
 #   sudo bash bulk-create-users.sh --file staff.csv --apply --out new-users.txt
 #   CSV: username,full name,groups (header optional; quote comma-containing fields)
 #
 # Options:
+#   --menu             Thai terminal menu; preview then confirm before --apply
 #   --file FILE        CSV input (required; -f accepted); requires Python 3
 #   --apply            create users; otherwise preview only
 #   --shell SHELL      executable login shell (default /bin/bash)
@@ -28,6 +30,55 @@ CSV=''; APPLY=false; SHELL_PATH=/bin/bash; FORCE_EXPIRE=true
 OUT="./new-users-$(date +%Y%m%d-%H%M%S).txt"
 LOG_FILE=/var/log/bulk-create-users.log
 PROTECTED=(root daemon bin sys sync games man lp mail news uucp proxy www-data backup nobody systemd-network sshd)
+# Keep interactive input separate from the original non-interactive CLI.
+menu_cancel() { printf '\nยกเลิกแล้ว ไม่มีการเปลี่ยนแปลงข้อมูล\n'; exit 0; }
+menu_read() { IFS= read -r -p "$1" REPLY || menu_cancel; }
+thai_menu() {
+    [[ -t 0 && -t 1 ]] || die 'เมนูต้องเปิดใน Terminal'
+    [[ $(uname -s) == Linux && $EUID -eq 0 ]] || die 'ใช้บน Linux โดยรันด้วย sudo'
+    command -v python3 >/dev/null || die 'ต้องติดตั้ง Python 3 ก่อนใช้งาน'
+    local action username fullname groups input output result
+    while true; do
+        printf '\nสร้างบัญชีผู้ใช้ — IT Training\n1. กรอกข้อมูลผู้ใช้ใหม่ทีละคน\n2. สร้างหลายคนจากไฟล์ CSV\n0. ออกจากโปรแกรม\n'
+        menu_read 'เลือกหมายเลข: '; action=$REPLY
+        case "$action" in 0) menu_cancel ;; 1|2) break ;; *) printf 'กรุณาเลือก 0, 1 หรือ 2\n' ;; esac
+    done
+    MENU_TEMP=$(mktemp -d)
+    trap 'rm -rf -- "$MENU_TEMP"' EXIT
+    trap 'exit 130' INT TERM
+    if [[ "$action" == 1 ]]; then
+        menu_read 'ชื่อบัญชีใหม่ เช่น somchai (Enter = ยกเลิก): '; username=$REPLY
+        [[ -n "$username" ]] || menu_cancel
+        menu_read 'ชื่อแสดงผล เช่น สมชาย ใจดี: '; fullname=$REPLY
+        printf 'กลุ่มเสริมต้องมีอยู่แล้ว เว้นว่างได้ ไม่ควรให้ sudo/docker หากไม่จำเป็น\n'
+        menu_read 'กลุ่มเสริม คั่นด้วยจุลภาค หรือ Enter เพื่อไม่เพิ่ม: '; groups=$REPLY
+        python3 - "$MENU_TEMP/staff.csv" "$username" "$fullname" "$groups" <<'CSV'
+import csv, sys
+with open(sys.argv[1], 'w', newline='', encoding='utf-8') as f:
+    csv.writer(f).writerow(sys.argv[2:])
+CSV
+    else
+        printf 'CSV มี 3 ช่อง: username,full name,groups เช่น somchai,Somchai,\n'
+        menu_read 'เส้นทางไฟล์ CSV (Enter = ยกเลิก): '; input=$REPLY
+        [[ -n "$input" ]] || menu_cancel
+        [[ -f "$input" && -r "$input" ]] || die 'ไม่พบไฟล์ CSV ที่อ่านได้ กรุณาตรวจเส้นทาง'
+        cp -- "$input" "$MENU_TEMP/staff.csv"
+    fi
+    printf '\nตรวจข้อมูลและแสดงแผน ยังไม่สร้างบัญชี:\n'
+    bash "$0" --file "$MENU_TEMP/staff.csv" || die 'ข้อมูลไม่ผ่านการตรวจ ยังไม่สร้างบัญชี กรุณาแก้ข้อมูลแล้วเปิดใหม่'
+    menu_read 'ไฟล์ใหม่สำหรับเก็บรหัสผ่าน (Enter = ใช้ชื่ออัตโนมัติ): '; output=$REPLY
+    [[ -n "$output" ]] || output="./new-users-$(date +%Y%m%d-%H%M%S).txt"
+    printf '\nรหัสผ่านจะเก็บที่: %s (สิทธิ์ 600) ห้ามเผยแพร่ไฟล์นี้\nบัญชีใหม่ต้องเปลี่ยนรหัสผ่านเมื่อเข้าใช้ครั้งแรก\n' "$output"
+    menu_read 'พิมพ์ สร้าง เพื่อยืนยันสร้างจริง หรือ Enter เพื่อยกเลิก: '
+    [[ "$REPLY" == สร้าง ]] || menu_cancel
+    result=0
+    bash "$0" --file "$MENU_TEMP/staff.csv" --apply --out "$output" || result=$?
+    if (( result == 0 )); then printf '\nประมวลผลเสร็จ ตรวจจำนวนที่สร้าง/ข้ามด้านบน หากข้ามทั้งหมดจะไม่มีไฟล์รหัสผ่านใหม่\n';
+    else printf '\nพบข้อผิดพลาด บางบัญชีอาจสร้างแล้ว ตรวจ /var/log/bulk-create-users.log ก่อนลองใหม่\n'; fi
+    exit "$result"
+}
+if [[ $# -eq 0 && -t 0 && -t 1 ]] || [[ $# -eq 1 && "$1" == --menu ]]; then thai_menu; fi
+
 while [[ $# -gt 0 ]]; do
     case "$1" in
         -f|--file|-o|--out|--shell)

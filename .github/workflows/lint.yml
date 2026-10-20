@@ -247,5 +247,40 @@ jobs:
           P('/tmp/test.sh').chmod(0o700)
           menu_run('chmod then direct execution',[('เลือกหมายเลข:','0\n')],path='/tmp/test.sh',direct=True)
           script('linux/bulk-delete-users.sh','--menu','--apply',code=2,contains='unknown option')
+          create_menu=str(root/'linux/bulk-create-users.sh')
+          disk_menu=str(root/'linux/check-disk.sh')
+          pve_menu=str(root/'proxmox/cluster-health.sh')
+          for path in [create_menu,disk_menu,pve_menu]:
+              menu_run('menu exit '+path,[('เลือกหมายเลข:','0\n')],path=path)
+              menu_run('menu EOF '+path,[('เลือกหมายเลข:','\x04')],path=path)
+              menu_run('invalid menu '+path,[('เลือกหมายเลข:','bad\n'),('เลือกหมายเลข:','0\n')],path=path)
+              check('reject non-terminal menu '+path,['bash',path,'--menu'],code=2,contains='Terminal')
+          def create_flow(name,confirm='สร้าง',output='/tmp/menu-new-passwords.txt'):
+              return [('เลือกหมายเลข:','1\n'),('ชื่อบัญชีใหม่',name+'\n'),('ชื่อแสดงผล','สมชาย, ทดสอบ\n'),('กลุ่มเสริม คั่น','labteam\n'),('ไฟล์ใหม่สำหรับ',output+'\n'),('เพื่อยืนยันสร้างจริง',confirm+'\n')]
+          menu_run('creation cancelled',create_flow('menunewcancel',''),path=create_menu)
+          check('cancel created no account',['id','menunewcancel'],code=1)
+          r=menu_run('single user Thai menu',create_flow('menunew'),path=create_menu)
+          print('CREATE MENU OUTPUT:\n'+r)
+          assert pwd.getpwnam('menunew').pw_gecos=='สมชาย, ทดสอบ'
+          assert stat.S_IMODE(P('/tmp/menu-new-passwords.txt').stat().st_mode)==0o600
+          assert subprocess.check_output(['getent','shadow','menunew'],text=True).split(':')[2]=='0'
+          menu_run('existing output refused',create_flow('menuoutblocked'),path=create_menu,code=2)
+          check('existing output kept account absent',['id','menuoutblocked'],code=1)
+          menu_run('invalid username rejected',[('เลือกหมายเลข:','1\n'),('ชื่อบัญชีใหม่','Bad User\n'),('ชื่อแสดงผล','Bad\n'),('กลุ่มเสริม คั่น','\n')],path=create_menu,code=2)
+          menu_run('missing CSV rejected',[('เลือกหมายเลข:','2\n'),('เส้นทางไฟล์ CSV','/missing/menu.csv\n')],path=create_menu,code=2)
+          P('/tmp/menu staff.csv').write_text('menucsv,CSV Name,\n')
+          menu_run('CSV menu create',[('เลือกหมายเลข:','2\n'),('เส้นทางไฟล์ CSV','/tmp/menu staff.csv\n'),('ไฟล์ใหม่สำหรับ','/tmp/menu-csv-passwords.txt\n'),('เพื่อยืนยันสร้างจริง','สร้าง\n')],path=create_menu)
+          assert pwd.getpwnam('menucsv')
+          r=menu_run('disk menu healthy',[('เลือกหมายเลข:','2\n'),('กี่เปอร์เซ็นต์','100\n')],path=disk_menu);assert 'ผลตรวจ: ปกติ' in r
+          r=menu_run('disk menu alert',[('เลือกหมายเลข:','1\n'),('กี่เปอร์เซ็นต์','0\n')],path=disk_menu,code=1);assert 'แจ้งเตือน' in r
+          menu_run('disk invalid threshold retry',[('เลือกหมายเลข:','1\n'),('กี่เปอร์เซ็นต์','101\n'),('กี่เปอร์เซ็นต์','abc\n'),('กี่เปอร์เซ็นต์','100\n')],path=disk_menu)
+          r=menu_run('disk failed collection',[('เลือกหมายเลข:','1\n'),('กี่เปอร์เซ็นต์','100\n')],path=disk_menu,code=2,env=dict(os.environ,PATH='/tmp/faildf:'+os.environ['PATH']));assert 'ไม่สามารถตรวจได้' in r
+          menu_run('Proxmox unsupported host',[('เลือกหมายเลข:','1\n'),('กี่เปอร์เซ็นต์','100\n')],path=pve_menu,code=2)
+          cmd('qm','printf "VMID NAME STATUS MEM BOOTDISK PID\\n100 test running 1024 8 10\\n"')
+          menu_run('Proxmox menu healthy fixture',[('เลือกหมายเลข:','1\n'),('กี่เปอร์เซ็นต์','100\n')],path=pve_menu,env=env)
+          cmd('qm','exit 1')
+          r=menu_run('Proxmox menu failed fixture',[('เลือกหมายเลข:','2\n'),('กี่เปอร์เซ็นต์','100\n')],path=pve_menu,env=env,code=1)
+          assert 'แจ้งเตือน' in r and 'qm list failed' in r
+          print('PROXMOX MENU FIXTURE OUTPUT:\n'+r)
           print('TOTAL:',passed,'checks passed; real Linux account operations, Proxmox command fixtures only.')
           PY

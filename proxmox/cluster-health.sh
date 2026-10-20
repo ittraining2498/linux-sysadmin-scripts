@@ -3,11 +3,13 @@
 # cluster-health.sh — Report Proxmox VE node, cluster, storage and guest health.
 #
 # Usage:
+#   sudo ./cluster-health.sh --menu  # Thai terminal menu
 #   ./cluster-health.sh
 #   ./cluster-health.sh --warn 90
 #   ./cluster-health.sh --quiet
 #
 # Options:
+#   --menu            Thai interactive menu (terminal required)
 #   --warn PERCENT    alert at or above 0-100 (default 85; -w accepted)
 #   --quiet           print only warnings and errors (-q accepted)
 #   -h, --help        show this help
@@ -22,6 +24,38 @@ die() { printf '%s [ERROR] %s\n' "$(date '+%F %T')" "$*" >&2; exit 2; }
 WARN=85
 QUIET=false
 problems=0
+# Keep interactive input separate from the original non-interactive CLI.
+menu_cancel() { printf '\nยกเลิกแล้ว ไม่มีการเปลี่ยนแปลงข้อมูล\n'; exit 0; }
+menu_read() { IFS= read -r -p "$1" REPLY || menu_cancel; }
+thai_menu() {
+    [[ -t 0 && -t 1 ]] || die 'เมนูต้องเปิดใน Terminal'
+    printf 'ต้องรันบนโฮสต์ Proxmox VE ด้วย root ไม่ใช่ภายใน VM Linux ทั่วไป\n'
+    local action threshold result
+    local -a args=()
+    while true; do
+        printf '\nตรวจสถานะ Proxmox — IT Training\n1. รายงานสถานะทั้งหมด\n2. แสดงเฉพาะปัญหา\n0. ออกจากโปรแกรม\n'
+        menu_read 'เลือกหมายเลข: '; action=$REPLY
+        case "$action" in 0) menu_cancel ;; 1|2) break ;; *) printf 'กรุณาเลือก 0, 1 หรือ 2\n' ;; esac
+    done
+    while true; do
+        menu_read 'เตือนเมื่อใช้ถึงกี่เปอร์เซ็นต์ 0–100 (Enter = 85): '; threshold=${REPLY:-85}
+        if [[ "$threshold" =~ ^[0-9]{1,3}$ ]] && (( 10#$threshold <= 100 )); then break; fi
+        printf 'กรุณาใส่จำนวนเต็มตั้งแต่ 0 ถึง 100\n'
+    done
+    args=(--warn "$threshold")
+    [[ "$action" != 2 ]] || args+=(--quiet)
+    printf '\nกำลังตรวจแบบอ่านข้อมูล ไม่แก้ไขระบบ\n'
+    result=0
+    bash "$0" "${args[@]}" || result=$?
+    case "$result" in
+        0) printf '\nผลตรวจ: ปกติตามรายการและเกณฑ์ที่ตรวจ\n' ;;
+        1) printf '\nผลตรวจ: พบการแจ้งเตือนหรือบางรายการตรวจไม่สำเร็จ โปรดอ่านรายละเอียดด้านบน\n' ;;
+        *) printf '\nผลตรวจ: ไม่สามารถตรวจได้ กรุณาตรวจระบบที่ใช้ สิทธิ์ และคำสั่งที่จำเป็น\n' ;;
+    esac
+    exit "$result"
+}
+if [[ $# -eq 0 && -t 0 && -t 1 ]] || [[ $# -eq 1 && "$1" == --menu ]]; then thai_menu; fi
+
 while [[ $# -gt 0 ]]; do
     case "$1" in
         -w|--warn) [[ $# -ge 2 && -n "$2" ]] || die "$1 requires a percentage"; WARN=$2; shift 2 ;;
