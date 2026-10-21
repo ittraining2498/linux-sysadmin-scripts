@@ -12,11 +12,12 @@ body{background:radial-gradient(ellipse at 80% 5%,#edf8f4 0,transparent 35%),#ff
 @media(prefers-reduced-motion:reduce){.card{transition:none}}
 
 .guide{border:1px solid var(--line);border-radius:18px;padding:24px;margin:20px 0;background:white;scroll-margin-top:24px}.guide p{max-width:90ch;font-size:14px}.guide pre{background:#f4f7fa;border-radius:9px}.guide-link{display:block;color:var(--accent);margin:0 0 16px;font-weight:600;font-size:14px}#user-guide{margin-top:48px;scroll-margin-top:24px}
+.table-scroll{overflow-x:auto}.quickstart table{width:100%;border-collapse:collapse;font-size:14px}.quickstart th,.quickstart td{padding:12px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}.quickstart th{background:#edf7f3}.quickstart h4{margin-top:28px}.quickstart .runbox{margin:12px 0}.guide-nav{display:flex;flex-wrap:wrap;gap:14px;font-size:13px}.quickstart h3{overflow-wrap:anywhere}
 </style></head><body>
 <a class="skip" href="#catalog">Skip to scripts</a>
 <svg xmlns="http://www.w3.org/2000/svg" style="display:none"><symbol id="users" viewBox="0 0 24 24"><circle cx="9" cy="7" r="3"/><path d="M3 21v-3a6 6 0 0 1 12 0v3M16 4a3 3 0 0 1 0 6M17 14a5 5 0 0 1 4 5v2"/></symbol><symbol id="user-plus" viewBox="0 0 24 24"><circle cx="9" cy="7" r="3"/><path d="M3 21v-3a6 6 0 0 1 12 0v3M19 7v8M15 11h8"/></symbol><symbol id="disk" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="11" cy="11" r="4"/><path d="m11 11 5 5M6 17h1M18 7h.01"/></symbol><symbol id="server" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="7" rx="2"/><rect x="3" y="14" width="18" height="7" rx="2"/><path d="M7 6h.01M7 17h.01M12 6h5M12 17h5"/></symbol></svg>
 <div class="wrap"><nav class="nav" aria-label="Main navigation"><a class="brand" href="#"><span class="brandmark" aria-hidden="true">i</span>IT TRAINING <span style="color:var(--muted);font-weight:400">/ LAB</span></a><div class="navlinks"><a href="https://courses.ittraining.co.th">Explore courses</a><a href="https://github.com/ittraining2498">GitHub ↗</a><div class="language-picker"><label for="language">Language</label><select id="language" aria-label="Language"><option value="th" lang="th">ไทย</option><option value="en" lang="en">English</option><option value="lo" lang="lo">ລາວ</option></select></div></div></nav>
-<header class="hero"><div><div class="eyebrow">The sysadmin toolkit · Open source</div><h1>Less repetition.<br><span>More control.</span></h1><p class="intro">Practical scripts for Linux &amp; Proxmox. Find the right tool, understand what it changes, and review the code before you run it.</p><div class="hero-actions"><a class="primary" href="#catalog">Explore the scripts ↓</a><a class="secondary" href="#user-guide">First time here? Start here</a></div></div><div class="terminal" aria-label="Example of a disk check, illustrative output"><div class="terminal-bar"><span class="dots" aria-hidden="true">●●●</span><span>YOUR NEXT ROUTINE CHECK</span></div><div class="terminal-body"><span class="dim"># Example · a healthy filesystem</span><br><span class="green">$</span> ./linux/check-disk.sh --warn 90<br><br><span class="green">OK</span> - no filesystem is at or above 90%<br><span class="dim"># Choose. Review. Run in your lab.</span></div><div class="terminal-tag">ILLUSTRATIVE OUTPUT · YOUR RESULTS WILL VARY</div></div></header>
+<header class="hero"><div><div class="eyebrow">The sysadmin toolkit · Open source</div><h1>Less repetition.<br><span>More control.</span></h1><p class="intro">Practical scripts for Linux &amp; Proxmox. Find the right tool, understand what it changes, and review the code before you run it.</p><div class="hero-actions"><a class="primary" href="#catalog">Explore the scripts ↓</a><a class="secondary" href="#download-help">First time here? Start here</a></div></div><div class="terminal" aria-label="Example of a disk check, illustrative output"><div class="terminal-bar"><span class="dots" aria-hidden="true">●●●</span><span>YOUR NEXT ROUTINE CHECK</span></div><div class="terminal-body"><span class="dim"># Example · a healthy filesystem</span><br><span class="green">$</span> ./linux/check-disk.sh --warn 90<br><br><span class="green">OK</span> - no filesystem is at or above 90%<br><span class="dim"># Choose. Review. Run in your lab.</span></div><div class="terminal-tag">ILLUSTRATIVE OUTPUT · YOUR RESULTS WILL VARY</div></div></header>
 <div class="facts"><div><strong>05 focused tools</strong><span>One script. A clear purpose.</span></div><div><strong>02 platforms</strong><span>Linux &amp; Proxmox VE</span></div><div><strong>MIT licensed</strong><span>Read, adapt &amp; contribute.</span></div></div>
 <main><section class="catalog" id="catalog" aria-labelledby="library-title"><div class="section-head"><div><div class="eyebrow">Find your tool</div><h2 id="library-title">The script library</h2></div><p>Choose by platform and the job you need to do.</p></div><div class="toolbar"><div class="search"><label for="search">SEARCH THE LIBRARY</label><input type="search" id="search" placeholder="Try users, disk, quorum…" autocomplete="off"></div><div class="task"><label for="task">YOUR TASK</label><select id="task"><option value="all">All tasks</option><option value="accounts">Account management</option><option value="monitoring">Health &amp; monitoring</option></select></div><div class="pills" id="filters" aria-label="Filter by platform"><button class="pill" data-f="all" aria-pressed="true">All</button><button class="pill" data-f="linux" aria-pressed="false">Linux</button><button class="pill" data-f="proxmox" aria-pressed="false">Proxmox</button></div></div><p class="count" id="count" role="status">Showing 5 of 5 scripts</p><div id="cards">    <article class="card" data-p="linux" data-task="accounts" id="bulk-delete-users">
       <div class="card-heading"><span class="icon"><svg aria-hidden="true"><use href="#users"></use></svg></span><span class="number">01</span></div><div class="card-top">
@@ -30,7 +31,7 @@ body{background:radial-gradient(ellipse at 80% 5%,#edf8f4 0,transparent 35%),#ff
       <p class="status ">Ubuntu 24.04 container tested · see README</p>
       <div class="runbox"><div class="code-label">OPEN THAI MENU<button class="copy" aria-label="Copy command for bulk-delete-users.sh">Copy command</button></div><pre><code>sudo bash ./linux/bulk-delete-users.sh</code></pre></div>
       <details><summary>Usage notes &amp; limitations</summary><p>Deletion is irreversible. Review the source and home paths first. Do not lower --min-uid below 1000.</p><p>Run <code>bash ./linux/bulk-delete-users.sh --help</code> to read all options.</p></details>
-      <a class="guide-link" href="#guide-delete">Read the step-by-step guide</a>
+      <a class="guide-link" href="#start-bulk-delete-users">Read the step-by-step guide</a>
 <button class="source-button" data-source="linux/bulk-delete-users.sh">View &amp; copy full script <span aria-hidden="true">↗</span></button>
       <div class="links">
         <a href="https://raw.githubusercontent.com/ittraining2498/linux-sysadmin-scripts/main/linux/bulk-delete-users.sh">Download raw</a>
@@ -47,7 +48,7 @@ body{background:radial-gradient(ellipse at 80% 5%,#edf8f4 0,transparent 35%),#ff
       <p class="status ">Ubuntu 24.04 container tested · see README</p>
       <div class="runbox"><div class="code-label">OPEN THAI MENU<button class="copy" aria-label="Copy command for bulk-create-users.sh">Copy command</button></div><pre><code>sudo bash ./linux/bulk-create-users.sh --menu</code></pre></div>
       <details><summary>Usage notes &amp; limitations</summary><p>Preview first. CSV supports quoted commas, BOM and CRLF. Groups must exist. Use a new password output file for each run.</p><p>Run <code>bash ./linux/bulk-create-users.sh --help</code> to read all options.</p></details>
-      <a class="guide-link" href="#guide-create">Read the step-by-step guide</a>
+      <a class="guide-link" href="#start-bulk-create-users">Read the step-by-step guide</a>
 <button class="source-button" data-source="linux/bulk-create-users.sh">View &amp; copy full script <span aria-hidden="true">↗</span></button>
       <div class="links">
         <a href="https://raw.githubusercontent.com/ittraining2498/linux-sysadmin-scripts/main/linux/bulk-create-users.sh">Download raw</a>
@@ -64,7 +65,7 @@ body{background:radial-gradient(ellipse at 80% 5%,#edf8f4 0,transparent 35%),#ff
       <p class="status ">Ubuntu 24.04 container tested · see README</p>
       <div class="runbox"><div class="code-label">OPEN THAI MENU<button class="copy" aria-label="Copy command for check-disk.sh">Copy command</button></div><pre><code>bash ./linux/check-disk.sh --menu</code></pre></div>
       <details><summary>Usage notes &amp; limitations</summary><p>Returns 0 when healthy, 1 at the threshold, and 2 for invalid options or failed collection. Requires Linux and GNU df.</p><p>Run <code>bash ./linux/check-disk.sh --help</code> to read all options.</p></details>
-      <a class="guide-link" href="#guide-monitor">Read the step-by-step guide</a>
+      <a class="guide-link" href="#start-check-disk">Read the step-by-step guide</a>
 <button class="source-button" data-source="linux/check-disk.sh">View &amp; copy full script <span aria-hidden="true">↗</span></button>
       <div class="links">
         <a href="https://raw.githubusercontent.com/ittraining2498/linux-sysadmin-scripts/main/linux/check-disk.sh">Download raw</a>
@@ -81,7 +82,7 @@ body{background:radial-gradient(ellipse at 80% 5%,#edf8f4 0,transparent 35%),#ff
       <p class="status pending">Live cluster test pending</p>
       <div class="runbox"><div class="code-label">OPEN THAI MENU<button class="copy" aria-label="Copy command for cluster-health.sh">Copy command</button></div><pre><code>sudo bash ./proxmox/cluster-health.sh --menu</code></pre></div>
       <details><summary>Usage notes &amp; limitations</summary><p>Tested with simulated Proxmox commands only. Failed checks return a warning; real node and cluster verification is still pending.</p><p>Run <code>sudo bash ./proxmox/cluster-health.sh --help</code> to read all options.</p></details>
-      <a class="guide-link" href="#guide-monitor">Read the step-by-step guide</a>
+      <a class="guide-link" href="#start-cluster-health">Read the step-by-step guide</a>
 <button class="source-button" data-source="proxmox/cluster-health.sh">View &amp; copy full script <span aria-hidden="true">↗</span></button>
       <div class="links">
         <a href="https://raw.githubusercontent.com/ittraining2498/linux-sysadmin-scripts/main/proxmox/cluster-health.sh">Download raw</a>
@@ -97,13 +98,36 @@ body{background:radial-gradient(ellipse at 80% 5%,#edf8f4 0,transparent 35%),#ff
       <p class="status ">Ubuntu 24.04 container tested · see README</p>
       <div class="runbox"><div class="code-label">OPEN THAI MENU<button class="copy" aria-label="Copy command for system-info.sh">Copy command</button></div><pre><code>bash ./linux/system-info.sh --menu</code></pre></div>
       <details><summary>Usage notes &amp; limitations</summary><p>Exit 0 means the report was collected, not that the machine is healthy. Exit 1 means incomplete collection; 2 means invalid input/environment.</p><p>Run <code>bash ./linux/system-info.sh --help</code> to read all options.</p></details>
-      <a class="guide-link" href="#guide-info">Read the step-by-step guide</a>
+      <a class="guide-link" href="#start-system-info">Read the step-by-step guide</a>
 <button class="source-button" data-source="linux/system-info.sh">View &amp; copy full script <span aria-hidden="true">↗</span></button>
       <div class="links">
         <a href="https://raw.githubusercontent.com/ittraining2498/linux-sysadmin-scripts/main/linux/system-info.sh">Download raw</a>
       </div>
     </article>
 </div><div id="empty" class="empty" hidden>No matching scripts. Try another search or reset the filters.<br><button class="pill" id="reset">Reset filters</button></div></section>
+<section class="guide" id="download-help"><h2>Start here: download and follow the menu</h2><p>You need a Linux terminal and curl. Account creation also needs Python 3. On Ubuntu/Debian only, install missing tools with the commands below. Use your distribution package manager on other systems.</p><pre><code>sudo apt update
+sudo apt install curl python3 passwd procps coreutils</code></pre><nav class="guide-nav"><a href="#start-bulk-delete-users">bulk-delete-users.sh</a><a href="#start-bulk-create-users">bulk-create-users.sh</a><a href="#start-check-disk">check-disk.sh</a><a href="#start-cluster-health">cluster-health.sh</a><a href="#start-system-info">system-info.sh</a></nav></section>
+<article class="guide quickstart" id="start-bulk-delete-users"><h3>bulk-delete-users.sh</h3><h4>1. Download the latest script</h4><p>Run on Linux, one block at a time. Stop if a command shows an error. Downloads come from main and replace the same script filename only after a successful download and syntax check. Keep a separate copy of any personal edits.</p><div class="runbox"><div class="code-label">Prepare a folder<button class="copy">Copy command</button></div><pre><code>mkdir -p ~/ittraining-lab &amp;&amp; cd ~/ittraining-lab</code></pre></div><div class="runbox"><div class="code-label">Download → check → grant permission<button class="copy">Copy command</button></div><pre><code>curl -fL https://raw.githubusercontent.com/ittraining2498/linux-sysadmin-scripts/main/linux/bulk-delete-users.sh -o bulk-delete-users.sh.download &amp;&amp;
+bash -n bulk-delete-users.sh.download &amp;&amp;
+mv bulk-delete-users.sh.download bulk-delete-users.sh &amp;&amp;
+chmod 700 bulk-delete-users.sh</code></pre></div><h4>2. Open the menu</h4><div class="runbox"><div class="code-label">Run this script<button class="copy">Copy command</button></div><pre><code>sudo ./bulk-delete-users.sh</code></pre></div><p>When sudo asks, enter your own sudo password; typed characters may not appear. In a root shell, omit sudo. The menu itself is in Thai in every website language.</p><h4>3. Example: answer each prompt</h4><p>Choose an existing disposable test account. The account number varies by machine: do not blindly enter 1. Option 1 keeps its home; option 2 removes it too. Read the preview before typing the name to delete. Press Enter at final confirmation to cancel. Never select your current login or an active service account.</p><div class="table-scroll"><table><thead><tr><th>Prompt (Thai)</th><th>Example answer</th></tr></thead><tbody><tr><td lang="th">เลือกหมายเลข</td><td lang="th">2</td></tr><tr><td lang="th">เลือกหมายเลขบัญชี</td><td lang="th">หมายเลขข้าง labstudent01</td></tr><tr><td lang="th">เลือกวิธีจัดการ</td><td lang="th">1</td></tr><tr><td lang="th">พิมพ์ชื่อบัญชีเพื่อยืนยันการลบจริง</td><td lang="th">labstudent01</td></tr></tbody></table></div><h4>4. Check the result</h4><p>After successful deletion, id reports no such user. Backups are in /var/backups/deleted-users and the log is /var/log/bulk-delete-users.log. A backup is not automatic undo.</p><pre><code>id labstudent01</code></pre></article>
+<article class="guide quickstart" id="start-bulk-create-users"><h3>bulk-create-users.sh</h3><h4>1. Download the latest script</h4><p>Run on Linux, one block at a time. Stop if a command shows an error. Downloads come from main and replace the same script filename only after a successful download and syntax check. Keep a separate copy of any personal edits.</p><div class="runbox"><div class="code-label">Prepare a folder<button class="copy">Copy command</button></div><pre><code>mkdir -p ~/ittraining-lab &amp;&amp; cd ~/ittraining-lab</code></pre></div><div class="runbox"><div class="code-label">Download → check → grant permission<button class="copy">Copy command</button></div><pre><code>curl -fL https://raw.githubusercontent.com/ittraining2498/linux-sysadmin-scripts/main/linux/bulk-create-users.sh -o bulk-create-users.sh.download &amp;&amp;
+bash -n bulk-create-users.sh.download &amp;&amp;
+mv bulk-create-users.sh.download bulk-create-users.sh &amp;&amp;
+chmod 700 bulk-create-users.sh</code></pre></div><h4>2. Open the menu</h4><div class="runbox"><div class="code-label">Run this script<button class="copy">Copy command</button></div><pre><code>sudo ./bulk-create-users.sh</code></pre></div><p>When sudo asks, enter your own sudo password; typed characters may not appear. In a root shell, omit sudo. The menu itself is in Thai in every website language.</p><h4>3. Example: answer each prompt</h4><p>Use a new login name that does not exist yet. Leave extra groups blank for this first test. PLAN is a preview, not creation. Type สร้าง only after reviewing it; Enter cancels. Choose a new password filename each run.</p><div class="table-scroll"><table><thead><tr><th>Prompt (Thai)</th><th>Example answer</th></tr></thead><tbody><tr><td lang="th">เลือกหมายเลข</td><td lang="th">1</td></tr><tr><td lang="th">ชื่อบัญชีใหม่</td><td lang="th">labstudent01</td></tr><tr><td lang="th">ชื่อแสดงผล</td><td lang="th">นักเรียนทดลอง 01</td></tr><tr><td lang="th">กลุ่มเสริม</td><td lang="th">Enter</td></tr><tr><td lang="th">ตรวจแผน PLAN / SKIP</td><td lang="th">ตรวจว่าชื่อถูกต้องและไม่ขึ้น SKIP</td></tr><tr><td lang="th">ไฟล์ใหม่สำหรับเก็บรหัสผ่าน</td><td lang="th">labstudent01-password.txt</td></tr><tr><td lang="th">พิมพ์ สร้าง เพื่อยืนยันสร้างจริง</td><td lang="th">สร้าง</td></tr></tbody></table></div><h4>4. Check the result</h4><p>id shows the new account UID and groups. cat displays its generated password: use a private terminal and never share that output or upload the file. First login requires a password change. If all accounts were skipped, no new password file is created.</p><pre><code>id labstudent01
+sudo cat labstudent01-password.txt</code></pre></article>
+<article class="guide quickstart" id="start-check-disk"><h3>check-disk.sh</h3><h4>1. Download the latest script</h4><p>Run on Linux, one block at a time. Stop if a command shows an error. Downloads come from main and replace the same script filename only after a successful download and syntax check. Keep a separate copy of any personal edits.</p><div class="runbox"><div class="code-label">Prepare a folder<button class="copy">Copy command</button></div><pre><code>mkdir -p ~/ittraining-lab &amp;&amp; cd ~/ittraining-lab</code></pre></div><div class="runbox"><div class="code-label">Download → check → grant permission<button class="copy">Copy command</button></div><pre><code>curl -fL https://raw.githubusercontent.com/ittraining2498/linux-sysadmin-scripts/main/linux/check-disk.sh -o check-disk.sh.download &amp;&amp;
+bash -n check-disk.sh.download &amp;&amp;
+mv check-disk.sh.download check-disk.sh &amp;&amp;
+chmod 700 check-disk.sh</code></pre></div><h4>2. Open the menu</h4><div class="runbox"><div class="code-label">Run this script<button class="copy">Copy command</button></div><pre><code>./check-disk.sh</code></pre></div><p>When sudo asks, enter your own sudo password; typed characters may not appear. In a root shell, omit sudo. The menu itself is in Thai in every website language.</p><h4>3. Example: answer each prompt</h4><p>Option 2 checks both disk space and inode capacity. 90 means warn at 90% or above. Enter uses 85. It does not delete files or change the system.</p><div class="table-scroll"><table><thead><tr><th>Prompt (Thai)</th><th>Example answer</th></tr></thead><tbody><tr><td lang="th">เลือกหมายเลข</td><td lang="th">2</td></tr><tr><td lang="th">เตือนเมื่อใช้ถึงกี่เปอร์เซ็นต์</td><td lang="th">90</td></tr></tbody></table></div><h4>4. Check the result</h4><p>Run echo $? immediately after the script: 0 = below the selected thresholds, 1 = threshold warning, 2 = invalid input or collection error. An alert is not necessarily a script crash. Read the affected mount path before taking action.</p><pre><code>echo $?</code></pre></article>
+<article class="guide quickstart" id="start-cluster-health"><h3>cluster-health.sh</h3><h4>1. Download the latest script</h4><p>Run on Linux, one block at a time. Stop if a command shows an error. Downloads come from main and replace the same script filename only after a successful download and syntax check. Keep a separate copy of any personal edits.</p><div class="runbox"><div class="code-label">Prepare a folder<button class="copy">Copy command</button></div><pre><code>mkdir -p ~/ittraining-lab &amp;&amp; cd ~/ittraining-lab</code></pre></div><div class="runbox"><div class="code-label">Download → check → grant permission<button class="copy">Copy command</button></div><pre><code>curl -fL https://raw.githubusercontent.com/ittraining2498/linux-sysadmin-scripts/main/proxmox/cluster-health.sh -o cluster-health.sh.download &amp;&amp;
+bash -n cluster-health.sh.download &amp;&amp;
+mv cluster-health.sh.download cluster-health.sh &amp;&amp;
+chmod 700 cluster-health.sh</code></pre></div><h4>2. Open the menu</h4><div class="runbox"><div class="code-label">Run this script<button class="copy">Copy command</button></div><pre><code>sudo ./cluster-health.sh</code></pre></div><p>When sudo asks, enter your own sudo password; typed characters may not appear. In a root shell, omit sudo. The menu itself is in Thai in every website language.</p><h4>3. Example: answer each prompt</h4><p>Run on the Proxmox VE host Shell, not inside an ordinary Ubuntu VM. If already root, omit sudo. Option 1 shows the full report; option 2 shows only problems. Real Proxmox verification is pending: tests currently use simulated Proxmox commands.</p><div class="table-scroll"><table><thead><tr><th>Prompt (Thai)</th><th>Example answer</th></tr></thead><tbody><tr><td lang="th">เลือกหมายเลข</td><td lang="th">1</td></tr><tr><td lang="th">เตือนเมื่อใช้ถึงกี่เปอร์เซ็นต์</td><td lang="th">90</td></tr></tbody></table></div><h4>4. Check the result</h4><p>Read-only: no VM changes or service restarts. Exit 0 means checks passed; 1 includes warnings and failed checks; 2 means wrong environment/options. Missing pveversion usually means this is not the Proxmox host.</p><pre><code>echo $?</code></pre></article>
+<article class="guide quickstart" id="start-system-info"><h3>system-info.sh</h3><h4>1. Download the latest script</h4><p>Run on Linux, one block at a time. Stop if a command shows an error. Downloads come from main and replace the same script filename only after a successful download and syntax check. Keep a separate copy of any personal edits.</p><div class="runbox"><div class="code-label">Prepare a folder<button class="copy">Copy command</button></div><pre><code>mkdir -p ~/ittraining-lab &amp;&amp; cd ~/ittraining-lab</code></pre></div><div class="runbox"><div class="code-label">Download → check → grant permission<button class="copy">Copy command</button></div><pre><code>curl -fL https://raw.githubusercontent.com/ittraining2498/linux-sysadmin-scripts/main/linux/system-info.sh -o system-info.sh.download &amp;&amp;
+bash -n system-info.sh.download &amp;&amp;
+mv system-info.sh.download system-info.sh &amp;&amp;
+chmod 700 system-info.sh</code></pre></div><h4>2. Open the menu</h4><div class="runbox"><div class="code-label">Run this script<button class="copy">Copy command</button></div><pre><code>./system-info.sh</code></pre></div><p>When sudo asks, enter your own sudo password; typed characters may not appear. In a root shell, omit sudo. The menu itself is in Thai in every website language.</p><h4>3. Example: answer each prompt</h4><p>Select 1 for all information, 2 for OS/CPU/uptime, 3 for RAM/swap or 4 for disk. Select 0 to exit. No sudo is needed.</p><div class="table-scroll"><table><thead><tr><th>Prompt (Thai)</th><th>Example answer</th></tr></thead><tbody><tr><td lang="th">เลือกหมายเลข</td><td lang="th">1</td></tr></tbody></table></div><h4>4. Check the result</h4><p>Exit 0 means the report was collected, not that the machine is healthy. Exit 1 means incomplete data; 2 means invalid input/environment. available is RAM available to applications; Use% is disk utilization. Container values may reflect the host.</p><pre><code>echo $?</code></pre></article>
 <section id="user-guide" aria-label="Step-by-step user guide"><h2>Step-by-step user guide</h2><article class="guide" id="guide-setup"><h3>1. Download and prepare</h3><p>Open a terminal on your Linux lab server. Run each line separately. These commands download the scripts; they do not run account changes. Git must be installed. If the folder already exists, use it and run git pull --ff-only instead of cloning again.</p><pre><code>git clone https://github.com/ittraining2498/linux-sysadmin-scripts.git
 cd linux-sysadmin-scripts
 bash linux/bulk-delete-users.sh --help</code></pre><p>Copied the full script instead? Save only the script text in test.sh using a text editor and Unix LF line endings. Run bash ./test.sh --help. In the examples below, replace the script path with ./test.sh. No chmod is needed when using bash.</p><p>sudo runs as administrator. Type your own sudo password if asked; the terminal may show no characters. On a root shell, omit sudo. Never paste the terminal prompt ($ or #) as part of a command.</p></article><article class="guide" id="guide-delete"><h3>Thai menu: no username to remember</h3><p>Start on a Linux lab machine. The deletion script now opens a Thai menu when run without arguments in a terminal. All scripts now offer a Thai terminal menu.</p><h4>Step 1 — Create a file</h4><p>Open Terminal, then run each line below. nano is a text editor; if unavailable, install it using your distribution package manager or use an installed editor.</p><pre><code>mkdir -p ~/ittraining-lab
@@ -834,6 +858,123 @@ Object.assign(translations, {
     "en": "No sudo is needed. Select 1 for everything, 2 for OS/CPU/uptime, 3 for RAM/swap, 4 for disk, or 0 to exit. For a direct report use bash system-info.sh --all. This displays information only; it does not clean files or fix problems. In containers, some values describe the host rather than container limits.",
     "th": "ไม่ต้อง sudo เลือก 1 ดูทั้งหมด 2 ดูระบบ/CPU/เวลาทำงาน 3 ดู RAM/swap 4 ดูดิสก์ หรือ 0 ออก ถ้าต้องการรายงานทันทีใช้ bash system-info.sh --all อ่านข้อมูลอย่างเดียว ไม่ล้างไฟล์หรือแก้ปัญหาอัตโนมัติ หากรันใน container บางค่าอาจเป็นข้อมูลโฮสต์แทนขีดจำกัดของ container",
     "lo": "ບໍ່ຕ້ອງ sudo ເລືອກ 1 ທັງໝົດ 2 ລະບົບ/CPU/ເວລາເຮັດວຽກ 3 RAM/swap 4 ດິສກ໌ ຫຼື 0 ອອກ ໃຊ້ bash system-info.sh --all ເພື່ອອ່ານທັນທີ ບໍ່ລຶບໄຟລ໌ ຫຼື ແກ້ບັນຫາ ໃນ container ບາງຄ່າອາດເປັນຂອງໂຮສ"
+  }
+});
+Object.assign(translations, {
+  "1. Download the latest script": {
+    "en": "1. Download the latest script",
+    "th": "1. ดาวน์โหลดสคริปต์ฉบับล่าสุด",
+    "lo": "1. ດາວໂຫຼດສະຄຣິບລ່າສຸດ"
+  },
+  "Run on Linux, one block at a time. Stop if a command shows an error. Downloads come from main and replace the same script filename only after a successful download and syntax check. Keep a separate copy of any personal edits.": {
+    "en": "Run on Linux, one block at a time. Stop if a command shows an error. Downloads come from main and replace the same script filename only after a successful download and syntax check. Keep a separate copy of any personal edits.",
+    "th": "รันบน Linux ทีละบล็อก หากขึ้น error ให้หยุดก่อน คำสั่งดาวน์โหลดจาก main และแทนที่ไฟล์สคริปต์ชื่อเดิมหลังดาวน์โหลดและตรวจไวยากรณ์สำเร็จเท่านั้น หากเคยแก้โค้ดเองให้เก็บสำเนาแยกก่อน",
+    "lo": "ຮັນໃນ Linux ເທື່ອລະບລັອກ ຖ້າມີ error ໃຫ້ຢຸດ ດາວໂຫຼດຈາກ main ແລະ ແທນໄຟລ໌ເດີມຫຼັງດາວໂຫຼດ ແລະ ກວດສຳເລັດ ຖ້າເຄີຍແກ້ເອງໃຫ້ເກັບສຳເນົາກ່ອນ"
+  },
+  "Prepare a folder": {
+    "en": "Prepare a folder",
+    "th": "เตรียมโฟลเดอร์",
+    "lo": "ກຽມໂຟນເດີ"
+  },
+  "Download → check → grant permission": {
+    "en": "Download → check → grant permission",
+    "th": "ดาวน์โหลด → ตรวจไฟล์ → กำหนดสิทธิ์",
+    "lo": "ດາວໂຫຼດ → ກວດ → ກຳນົດສິດ"
+  },
+  "2. Open the menu": {
+    "en": "2. Open the menu",
+    "th": "2. เปิดเมนู",
+    "lo": "2. ເປີດເມນູ"
+  },
+  "Run this script": {
+    "en": "Run this script",
+    "th": "รันสคริปต์นี้",
+    "lo": "ຮັນສະຄຣິບນີ້"
+  },
+  "When sudo asks, enter your own sudo password; typed characters may not appear. In a root shell, omit sudo. The menu itself is in Thai in every website language.": {
+    "en": "When sudo asks, enter your own sudo password; typed characters may not appear. In a root shell, omit sudo. The menu itself is in Thai in every website language.",
+    "th": "หาก sudo ถามรหัสผ่าน ให้ใส่รหัส sudo ของคุณ หน้าจออาจไม่แสดงตัวอักษร ถ้าเป็น root ให้ตัด sudo ออก ตัวเมนูสคริปต์เป็นภาษาไทยเสมอ แม้เปลี่ยนภาษาบนเว็บ",
+    "lo": "ຖ້າ sudo ຖາມ ໃຫ້ໃສ່ລະຫັດ sudo ຂອງທ່ານ ໜ້າຈໍອາດບໍ່ສະແດງຕົວອັກສອນ ຖ້າເປັນ root ໃຫ້ຕັດ sudo ອອກ ເມນູສະຄຣິບເປັນພາສາໄທສະເໝີ"
+  },
+  "3. Example: answer each prompt": {
+    "en": "3. Example: answer each prompt",
+    "th": "3. ตัวอย่างกรอกเมนูทีละช่อง",
+    "lo": "3. ຕົວຢ່າງຕອບແຕ່ລະຊ່ອງ"
+  },
+  "Choose an existing disposable test account. The account number varies by machine: do not blindly enter 1. Option 1 keeps its home; option 2 removes it too. Read the preview before typing the name to delete. Press Enter at final confirmation to cancel. Never select your current login or an active service account.": {
+    "en": "Choose an existing disposable test account. The account number varies by machine: do not blindly enter 1. Option 1 keeps its home; option 2 removes it too. Read the preview before typing the name to delete. Press Enter at final confirmation to cancel. Never select your current login or an active service account.",
+    "th": "เลือกบัญชีทดสอบที่มีอยู่และตั้งใจลบ เช่น labstudent01 หมายเลขบัญชีขึ้นอยู่กับเครื่อง ห้ามกรอก 1 ตามตัวอย่างโดยไม่ดูชื่อ วิธีจัดการ 1 เก็บโฟลเดอร์ ส่วน 2 ลบโฟลเดอร์ด้วย ตรวจผลทดลองก่อนพิมพ์ชื่อเพื่อลบจริง กด Enter ที่คำถามยืนยันเพื่อยกเลิก ห้ามเลือกบัญชีที่กำลังใช้หรือบัญชีบริการที่ยังทำงาน",
+    "lo": "ເລືອກບັນຊີທົດລອງທີ່ຕັ້ງໃຈລຶບ ເລກບັນຊີຂຶ້ນກັບເຄື່ອງ ວິທີ 1 ເກັບໂຟນເດີ ວິທີ 2 ລຶບນຳ ກວດຜົນທົດລອງກ່ອນພິມຊື່ຢືນຢັນ ຫຼື Enter ເພື່ອຍົກເລີກ"
+  },
+  "Prompt (Thai)": {
+    "en": "Prompt (Thai)",
+    "th": "คำถามบนหน้าจอ",
+    "lo": "ຄຳຖາມໃນໜ້າຈໍ"
+  },
+  "Example answer": {
+    "en": "Example answer",
+    "th": "ตัวอย่างที่กรอก",
+    "lo": "ຕົວຢ່າງທີ່ກອກ"
+  },
+  "4. Check the result": {
+    "en": "4. Check the result",
+    "th": "4. ตรวจผลลัพธ์",
+    "lo": "4. ກວດຜົນ"
+  },
+  "After successful deletion, id reports no such user. Backups are in /var/backups/deleted-users and the log is /var/log/bulk-delete-users.log. A backup is not automatic undo.": {
+    "en": "After successful deletion, id reports no such user. Backups are in /var/backups/deleted-users and the log is /var/log/bulk-delete-users.log. A backup is not automatic undo.",
+    "th": "เมื่อลบสำเร็จ id จะขึ้น no such user สำรองอยู่ใน /var/backups/deleted-users และบันทึกอยู่ใน /var/log/bulk-delete-users.log ไม่มีการย้อนคืนอัตโนมัติ",
+    "lo": "ຫຼັງລຶບສຳເລັດ id ຈະຂຶ້ນ no such user ສຳຮອງຢູ່ /var/backups/deleted-users ບັນທຶກຢູ່ /var/log/bulk-delete-users.log ບໍ່ມີການຍ້ອນຄືນອັດຕະໂນມັດ"
+  },
+  "Use a new login name that does not exist yet. Leave extra groups blank for this first test. PLAN is a preview, not creation. Type สร้าง only after reviewing it; Enter cancels. Choose a new password filename each run.": {
+    "en": "Use a new login name that does not exist yet. Leave extra groups blank for this first test. PLAN is a preview, not creation. Type สร้าง only after reviewing it; Enter cancels. Choose a new password filename each run.",
+    "th": "ใช้ชื่อบัญชีใหม่ที่ยังไม่มี ครั้งแรกให้กด Enter ข้ามกลุ่มเสริม PLAN เป็นแผน ยังไม่ได้สร้าง พิมพ์ สร้าง หลังตรวจแล้วเท่านั้น หรือ Enter เพื่อยกเลิก ต้องใช้ชื่อไฟล์รหัสผ่านใหม่ทุกครั้ง",
+    "lo": "ໃຊ້ຊື່ບັນຊີໃໝ່ທີ່ຍັງບໍ່ມີ ກົດ Enter ຂ້າມກຸ່ມ PLAN ແມ່ນແຜນ ຍັງບໍ່ສ້າງ ພິມ สร้าง ເມື່ອກວດແລ້ວ ຫຼື Enter ເພື່ອຍົກເລີກ ໃຊ້ຊື່ໄຟລ໌ລະຫັດຜ່ານໃໝ່"
+  },
+  "id shows the new account UID and groups. cat displays its generated password: use a private terminal and never share that output or upload the file. First login requires a password change. If all accounts were skipped, no new password file is created.": {
+    "en": "id shows the new account UID and groups. cat displays its generated password: use a private terminal and never share that output or upload the file. First login requires a password change. If all accounts were skipped, no new password file is created.",
+    "th": "id แสดง UID และกลุ่มบัญชี ส่วน cat แสดงรหัสผ่านที่สร้างให้ ใช้ในหน้าจอส่วนตัว ห้ามแชร์ผลลัพธ์หรืออัปโหลดไฟล์ ต้องเปลี่ยนรหัสผ่านเมื่อเข้าใช้ครั้งแรก หากข้ามทุกบัญชีจะไม่มีไฟล์รหัสผ่านใหม่",
+    "lo": "id ສະແດງ UID ແລະ ກຸ່ມ cat ສະແດງລະຫັດຜ່ານ ໃຊ້ໜ້າຈໍສ່ວນຕົວ ຫ້າມແຊຣ໌ ຫຼື ອັບໂຫຼດໄຟລ໌ ຕ້ອງປ່ຽນລະຫັດຜ່ານເມື່ອເຂົ້າຄັ້ງທຳອິດ"
+  },
+  "Option 2 checks both disk space and inode capacity. 90 means warn at 90% or above. Enter uses 85. It does not delete files or change the system.": {
+    "en": "Option 2 checks both disk space and inode capacity. 90 means warn at 90% or above. Enter uses 85. It does not delete files or change the system.",
+    "th": "เลือก 2 ตรวจทั้งพื้นที่และ inode เลข 90 หมายถึงเตือนเมื่อใช้ตั้งแต่ 90% กด Enter ใช้ 85 ไม่ลบไฟล์หรือแก้ไขระบบ",
+    "lo": "ເລືອກ 2 ກວດພື້ນທີ່ ແລະ inode ເລກ 90 ແມ່ນເຕືອນເມື່ອໃຊ້ຮອດ 90% Enter ໃຊ້ 85 ບໍ່ລຶບໄຟລ໌"
+  },
+  "Run echo $? immediately after the script: 0 = below the selected thresholds, 1 = threshold warning, 2 = invalid input or collection error. An alert is not necessarily a script crash. Read the affected mount path before taking action.": {
+    "en": "Run echo $? immediately after the script: 0 = below the selected thresholds, 1 = threshold warning, 2 = invalid input or collection error. An alert is not necessarily a script crash. Read the affected mount path before taking action.",
+    "th": "รัน echo $? ทันทีหลังสคริปต์จบ 0 = ต่ำกว่าเกณฑ์ 1 = ถึงเกณฑ์แจ้งเตือน 2 = ค่าผิดหรืออ่านข้อมูลไม่ได้ การแจ้งเตือนไม่ได้แปลว่าสคริปต์พัง อ่านชื่อ mount ที่มีปัญหาก่อนแก้ไข",
+    "lo": "ຮັນ echo $? ທັນທີຫຼັງຈົບ 0 = ຕ່ຳກວ່າເກນ 1 = ເຕືອນ 2 = ຄ່າຜິດ ຫຼື ອ່ານບໍ່ໄດ້ ອ່ານ mount ທີ່ມີບັນຫາກ່ອນແກ້ໄຂ"
+  },
+  "Run on the Proxmox VE host Shell, not inside an ordinary Ubuntu VM. If already root, omit sudo. Option 1 shows the full report; option 2 shows only problems. Real Proxmox verification is pending: tests currently use simulated Proxmox commands.": {
+    "en": "Run on the Proxmox VE host Shell, not inside an ordinary Ubuntu VM. If already root, omit sudo. Option 1 shows the full report; option 2 shows only problems. Real Proxmox verification is pending: tests currently use simulated Proxmox commands.",
+    "th": "รันใน Shell ของโฮสต์ Proxmox VE ไม่ใช่ใน VM Ubuntu ทั่วไป ถ้าเป็น root ให้ตัด sudo ออก เลือก 1 รายงานทั้งหมด หรือ 2 เฉพาะปัญหา ยังไม่ได้ทดสอบบน Proxmox จริง ผลทดสอบปัจจุบันใช้คำสั่งจำลอง",
+    "lo": "ຮັນໃນ Shell ຂອງໂຮສ Proxmox VE ບໍ່ແມ່ນ VM Ubuntu ຖ້າເປັນ root ໃຫ້ຕັດ sudo ອອກ 1 ລາຍງານທັງໝົດ 2 ສະເພາະບັນຫາ ຍັງທົດສອບດ້ວຍຄຳສັ່ງຈຳລອງເທົ່ານັ້ນ"
+  },
+  "Read-only: no VM changes or service restarts. Exit 0 means checks passed; 1 includes warnings and failed checks; 2 means wrong environment/options. Missing pveversion usually means this is not the Proxmox host.": {
+    "en": "Read-only: no VM changes or service restarts. Exit 0 means checks passed; 1 includes warnings and failed checks; 2 means wrong environment/options. Missing pveversion usually means this is not the Proxmox host.",
+    "th": "อ่านข้อมูลอย่างเดียว ไม่แก้ VM หรือรีสตาร์ตบริการ รหัส 0 = ผ่านรายการตรวจ 1 = แจ้งเตือนหรือตรวจบางส่วนไม่สำเร็จ 2 = ระบบหรือตัวเลือกไม่ถูกต้อง หากไม่มี pveversion มักหมายถึงไม่ได้รันบนโฮสต์ Proxmox",
+    "lo": "ອ່ານຂໍ້ມູນເທົ່ານັ້ນ ບໍ່ແກ້ VM ຫຼື ເລີ່ມບໍລິການໃໝ່ 0 = ຜ່ານ 1 = ເຕືອນ ຫຼື ກວດບໍ່ສຳເລັດ 2 = ລະບົບຫຼືຄ່າຜິດ"
+  },
+  "Select 1 for all information, 2 for OS/CPU/uptime, 3 for RAM/swap or 4 for disk. Select 0 to exit. No sudo is needed.": {
+    "en": "Select 1 for all information, 2 for OS/CPU/uptime, 3 for RAM/swap or 4 for disk. Select 0 to exit. No sudo is needed.",
+    "th": "เลือก 1 ดูทั้งหมด 2 ดูระบบ/CPU/เวลาทำงาน 3 ดู RAM/swap หรือ 4 ดูดิสก์ เลือก 0 ออก ไม่ต้อง sudo",
+    "lo": "ເລືອກ 1 ທັງໝົດ 2 ລະບົບ/CPU/ເວລາເຮັດວຽກ 3 RAM/swap 4 ດິສກ໌ 0 ອອກ ບໍ່ຕ້ອງ sudo"
+  },
+  "Exit 0 means the report was collected, not that the machine is healthy. Exit 1 means incomplete data; 2 means invalid input/environment. available is RAM available to applications; Use% is disk utilization. Container values may reflect the host.": {
+    "en": "Exit 0 means the report was collected, not that the machine is healthy. Exit 1 means incomplete data; 2 means invalid input/environment. available is RAM available to applications; Use% is disk utilization. Container values may reflect the host.",
+    "th": "รหัส 0 หมายถึงอ่านรายงานสำเร็จ ไม่ใช่ยืนยันว่าเครื่องปกติ 1 คือข้อมูลไม่ครบ 2 คือค่าหรือระบบไม่ถูกต้อง available คือ RAM ที่พร้อมให้โปรแกรมใช้ Use% คือเปอร์เซ็นต์ดิสก์ที่ใช้ ใน container บางค่าอาจเป็นของโฮสต์",
+    "lo": "0 ແມ່ນອ່ານລາຍງານສຳເລັດ ບໍ່ໄດ້ຢືນຢັນສຸຂະພາບເຄື່ອງ 1 ຂໍ້ມູນບໍ່ຄົບ 2 ຄ່າຜິດ available ແມ່ນ RAM ທີ່ພ້ອມໃຊ້ Use% ແມ່ນດິສກ໌ທີ່ໃຊ້"
+  },
+  "Start here: download and follow the menu": {
+    "en": "Start here: download and follow the menu",
+    "th": "เริ่มตรงนี้: ดาวน์โหลดแล้วทำตามเมนู",
+    "lo": "ເລີ່ມທີ່ນີ້: ດາວໂຫຼດແລ້ວເຮັດຕາມເມນູ"
+  },
+  "You need a Linux terminal and curl. Account creation also needs Python 3. On Ubuntu/Debian only, install missing tools with the commands below. Use your distribution package manager on other systems.": {
+    "en": "You need a Linux terminal and curl. Account creation also needs Python 3. On Ubuntu/Debian only, install missing tools with the commands below. Use your distribution package manager on other systems.",
+    "th": "ต้องใช้ Terminal บน Linux และ curl ตัวสร้างผู้ใช้ต้องมี Python 3 ด้วย หาก Ubuntu/Debian แจ้งว่าขาดเครื่องมือ ให้ติดตั้งด้วยคำสั่งด้านล่าง ระบบอื่นใช้ตัวจัดการแพ็กเกจของระบบนั้น",
+    "lo": "ຕ້ອງໃຊ້ Terminal ໃນ Linux ແລະ curl ຕົວສ້າງຜູ້ໃຊ້ຕ້ອງມີ Python 3 ຖ້າ Ubuntu/Debian ຂາດເຄື່ອງມື ໃຫ້ຕິດຕັ້ງຕາມນີ້ ລະບົບອື່ນໃຊ້ຕົວຈັດການແພັກເກດຂອງລະບົບ"
   }
 });
 let language = 'th';
